@@ -285,6 +285,7 @@ $(document).on('submit','.class_search_form',function(e){
     var url = form.attr('action');
     var form_data = form.serializeArray();
     form_data.push({name: 'search_type', value: $this.attr('value')});
+    //form_data.push({name: 'search_type', value: 'kam'});
     $.ajax({
            url: url,
            type: "POST",

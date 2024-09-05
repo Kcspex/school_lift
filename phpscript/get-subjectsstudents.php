@@ -93,7 +93,9 @@
                 <tbody>';
                     $cnt=1;
                     
-                    $sqlGetstudent_session = "SELECT * FROM `score` INNER JOIN students ON score.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND SubjectID = '$subjects' AND Term = '$term' AND Session = '$session'";
+                    //$sqlGetstudent_session = "SELECT * FROM `score` INNER JOIN students ON score.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND SubjectID = '$subjects' AND Term = '$term' AND Session = '$session'";
+                    $sqlGetstudent_session = "SELECT * FROM `score` INNER JOIN students ON score.StudentID = students.id WHERE `Session` = '$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND SubjectID = '$subjects' AND Term = '$term' AND students.is_active = 'yes'";
+
                     $queryGetstudent_session = mysqli_query($link, $sqlGetstudent_session);
                     $rowGetstudent_session = mysqli_fetch_assoc($queryGetstudent_session);
                     $countGetstudent_session = mysqli_num_rows($queryGetstudent_session);
@@ -108,488 +110,492 @@
                     			
                     			if($rowGetGradingSystem['NumberOfCA'] =='1')
                                 {
-                                    echo '<td class="edit_td">
-                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA1"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
-                                            </td>
-                                            <td style="display:none;">
-                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA2"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
-                                            </td>
-                                            <td style="display:none;">
-                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA3"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>
-                                        <td style="display:none;">
-                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA4"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>
-                                        <td style="display:none;">
-                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA5"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>
-                                        <td style="display:none;">
-                                              <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA6"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
-                                            </td>
-                                            <td style="display:none;">
-                                               <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA7"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
-                                            </td>
-                                            <td style="display:none;">
-                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA8"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>
-                                        <td style="display:none;">
-                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA9"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>
-                                        <td style="display:none;">
-                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA10"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>';
+
+				echo '<td class="edit_td">
+	  <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca1"].'</span>
+	  <input type="text" value="'.$rowGetstudent_session["ca1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
+	</td>
+	<td style="display:none;">
+	   <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca2"].'</span>
+	   <input type="text" value="'.$rowGetstudent_session["ca2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
+	</td>
+	<td style="display:none;">
+   <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca3"].'</span>
+   <input type="text" value="'.$rowGetstudent_session["ca3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
+</td>
+<td style="display:none;">
+	<span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca4"].'</span>
+   <input type="text" value="'.$rowGetstudent_session["ca4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
+</td>
+<td style="display:none;">
+	<span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca5"].'</span>
+	<input type="text" value="'.$rowGetstudent_session["ca5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
+</td>
+<td style="display:none;">
+	  <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca6"].'</span>
+	  <input type="text" value="'.$rowGetstudent_session["ca6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
+	</td>
+	<td style="display:none;">
+	   <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca7"].'</span>
+	   <input type="text" value="'.$rowGetstudent_session["ca7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
+	</td>
+	<td style="display:none;">
+   <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca8"].'</span>
+   <input type="text" value="'.$rowGetstudent_session["ca8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
+</td>
+<td style="display:none;">
+	<span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca9"].'</span>
+   <input type="text" value="'.$rowGetstudent_session["ca9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
+</td>
+<td style="display:none;">
+	<span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca10"].'</span>
+	<input type="text" value="'.$rowGetstudent_session["ca10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
+</td>';
+
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='2')
                                 {
                                     echo '<td class="edit_td">
-                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA1"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
+                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca1"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA2"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca2"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td style="display:none;">
-                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA3"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca3"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA4"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca4"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA5"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca5"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                              <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA6"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
+                                              <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca6"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td style="display:none;">
-                                               <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA7"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca7"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td style="display:none;">
-                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA8"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca8"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA9"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca9"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA10"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca10"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>';
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='3')
                                 {
-                                    echo '<td class="edit_td">
-                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA1"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
+				echo '<td class="edit_td">
+                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca1"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA2"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca2"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA3"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca3"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA4"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca4"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA5"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca5"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                              <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA6"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
+                                              <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca6"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td style="display:none;">
-                                               <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA7"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca7"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td style="display:none;">
-                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA8"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca8"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA9"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca9"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA10"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca10"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>';
                                 }        
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='4')
                                 {
-                                    echo '<td class="edit_td">
-                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA1"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
+				echo '<td class="edit_td">
+                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca1"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA2"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca2"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA3"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca3"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA4"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca4"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA5"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca5"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                              <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA6"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
+                                              <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca6"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td style="display:none;">
-                                               <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA7"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca7"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td style="display:none;">
-                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA8"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca8"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA9"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca9"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA10"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca10"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>';
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='5')
                                 {
-                                    echo '<td class="edit_td">
-                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA1"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
-                                            </td>
-                                            <td>
-                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA2"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
-                                            </td>
-                                            <td>
-                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA3"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>
-                                        <td>
-                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA4"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>
-                                        <td>
-                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA5"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>
-                                        <td style="display:none;">
-                                              <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA6"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
-                                            </td>
-                                            <td style="display:none;">
-                                               <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA7"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
-                                            </td>
-                                            <td style="display:none;">
-                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA8"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>
-                                        <td style="display:none;">
-                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA9"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>
-                                        <td style="display:none;">
-                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA10"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
-                                        </td>';
+				 echo '<td class="edit_td">
+	  <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca1"].'</span>
+	  <input type="text" value="'.$rowGetstudent_session["ca1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
+	</td>
+	<td>
+	   <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca2"].'</span>
+	   <input type="text" value="'.$rowGetstudent_session["ca2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
+	</td>
+	<td>
+   <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca3"].'</span>
+   <input type="text" value="'.$rowGetstudent_session["ca3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
+</td>
+<td>
+	<span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca4"].'</span>
+   <input type="text" value="'.$rowGetstudent_session["ca4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
+</td>
+<td>
+	<span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca5"].'</span>
+	<input type="text" value="'.$rowGetstudent_session["ca5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
+</td>
+<td style="display:none;">
+	  <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca6"].'</span>
+	  <input type="text" value="'.$rowGetstudent_session["ca6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
+	</td>
+	<td style="display:none;">
+	   <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca7"].'</span>
+	   <input type="text" value="'.$rowGetstudent_session["ca7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
+	</td>
+	<td style="display:none;">
+   <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca8"].'</span>
+   <input type="text" value="'.$rowGetstudent_session["ca8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
+</td>
+<td style="display:none;">
+	<span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca9"].'</span>
+   <input type="text" value="'.$rowGetstudent_session["ca9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
+</td>
+<td style="display:none;">
+	<span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca10"].'</span>
+	<input type="text" value="'.$rowGetstudent_session["ca10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
+</td>';
+
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='6')
                                 {
-                                    echo '<td class="edit_td">
-                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA1"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
+				echo '<td class="edit_td">
+                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca1"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA2"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca2"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA3"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca3"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA4"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca4"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA5"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca5"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA6"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca6"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                             <td style="display:none;">
-                                               <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA7"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca7"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td style="display:none;">
-                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA8"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca8"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA9"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca9"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA10"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca10"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>';
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='7')
                                 {
-                                    echo '<td class="edit_td">
-                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA1"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
+				echo '<td class="edit_td">
+                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca1"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA2"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca2"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA3"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca3"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA4"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca4"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA5"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca5"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA6"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca6"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA7"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca7"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA8"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca8"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA9"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca9"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA10"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca10"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>';
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='8')
                                 {
-                                    echo '<td class="edit_td">
-                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA1"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
+					echo '<td class="edit_td">
+                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca1"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA2"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca2"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA3"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca3"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA4"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca4"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA5"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca5"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA6"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca6"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA7"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca7"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA8"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca8"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA9"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca9"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA10"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca10"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>';
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='9')
                                 {
-                                    echo '<td class="edit_td">
-                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA1"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
+					echo '<td class="edit_td">
+                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca1"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA2"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca2"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA3"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca3"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA4"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca4"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA5"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca5"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA6"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca6"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA7"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca7"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA8"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca8"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA9"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca9"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td style="display:none;">
-                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA10"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca10"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>';
-                                }
+
+				}
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='10')
                                 {
-                                    echo '<td class="edit_td">
-                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA1"].'</span>
-                                              <input type="text" value="'.$rowGetstudent_session["CA1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
+				echo '<td class="edit_td">
+                                              <span id="ca1_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca1"].'</span>
+                                              <input type="text" value="'.$rowGetstudent_session["ca1"].'" class="editbox" id="ca1_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA2"].'</span>
-                                               <input type="text" value="'.$rowGetstudent_session["CA2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
+                                               <span id="ca2_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca2"].'</span>
+                                               <input type="text" value="'.$rowGetstudent_session["ca2"].'" class="editbox" id="ca2_input_'.$rowGetstudent_session["ID"].'"/>
                                             </td>
                                             <td>
-                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA3"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
+                                           <span id="ca3_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca3"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca3"].'" class="editbox" id="ca3_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA4"].'</span>
-                                           <input type="text" value="'.$rowGetstudent_session["CA4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca4_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca4"].'</span>
+                                           <input type="text" value="'.$rowGetstudent_session["ca4"].'" class="editbox" id="ca4_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA5"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca5_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca5"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca5"].'" class="editbox" id="ca5_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA6"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca6_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca6"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca6"].'" class="editbox" id="ca6_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA7"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca7_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca7"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca7"].'" class="editbox" id="ca7_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA8"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca8_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca8"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca8"].'" class="editbox" id="ca8_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA9"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca9_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca9"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca9"].'" class="editbox" id="ca9_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>
                                         <td>
-                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["CA10"].'</span>
-                                            <input type="text" value="'.$rowGetstudent_session["CA10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
+                                            <span id="ca10_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["ca10"].'</span>
+                                            <input type="text" value="'.$rowGetstudent_session["ca10"].'" class="editbox" id="ca10_input_'.$rowGetstudent_session["ID"].'"/>
                                         </td>';
-                                }
+				}
                                 else{
                                     echo '';
                                 }
                                 
                                 if($rowGetGradingSystem['NumberOfCA'] =='1')
                                 {
-                                    $ca1 = $rowGetstudent_session['CA1'];
+                                    $ca1 = $rowGetstudent_session['ca1'];
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='2')
                                 {
-                                    $ca1 = $rowGetstudent_session['CA1'] + $rowGetstudent_session['CA2'];
+                                    $ca1 = $rowGetstudent_session['ca1'] + $rowGetstudent_session['ca2'];
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='3')
                                 {
-                                    $ca1 = $rowGetstudent_session['CA1'] + $rowGetstudent_session['CA2'] + $rowGetstudent_session['CA3'];
+                                    $ca1 = $rowGetstudent_session['ca1'] + $rowGetstudent_session['ca2'] + $rowGetstudent_session['ca3'];
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='4')
                                 {
-                                    $ca1 = $rowGetstudent_session['CA1'] + $rowGetstudent_session['CA2'] + $rowGetstudent_session['CA3'] + $rowGetstudent_session['CA4'];
+                                    $ca1 = $rowGetstudent_session['ca1'] + $rowGetstudent_session['ca2'] + $rowGetstudent_session['ca3'] + $rowGetstudent_session['ca4'];
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='5')
                                 {
-                                    $ca1 = $rowGetstudent_session['CA1'] + $rowGetstudent_session['CA2'] + $rowGetstudent_session['CA3'] + $rowGetstudent_session['CA4'] + $rowGetstudent_session['CA5'];
+                                    $ca1 = $rowGetstudent_session['ca1'] + $rowGetstudent_session['ca2'] + $rowGetstudent_session['ca3'] + $rowGetstudent_session['ca4'] + $rowGetstudent_session['ca5'];
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='6')
                                 {
-                                    $ca1 = $rowGetstudent_session['CA1'] + $rowGetstudent_session['CA2'] + $rowGetstudent_session['CA3'] + $rowGetstudent_session['CA4'] + $rowGetstudent_session['CA5'] + $rowGetstudent_session['CA6'];
+                                    $ca1 = $rowGetstudent_session['ca1'] + $rowGetstudent_session['ca2'] + $rowGetstudent_session['ca3'] + $rowGetstudent_session['ca4'] + $rowGetstudent_session['ca5'] + $rowGetstudent_session['ca6'];
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='7')
                                 {
-                                    $ca1 = $rowGetstudent_session['CA1'] + $rowGetstudent_session['CA2'] + $rowGetstudent_session['CA3'] + $rowGetstudent_session['CA4'] + $rowGetstudent_session['CA5'] + $rowGetstudent_session['CA6'] + $rowGetstudent_session['CA7'];
+                                    $ca1 = $rowGetstudent_session['ca1'] + $rowGetstudent_session['ca2'] + $rowGetstudent_session['ca3'] + $rowGetstudent_session['ca4'] + $rowGetstudent_session['ca5'] + $rowGetstudent_session['ca6'] + $rowGetstudent_session['ca7'];
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='8')
                                 {
-                                    $ca1 = $rowGetstudent_session['CA1'] + $rowGetstudent_session['CA2'] + $rowGetstudent_session['CA3'] + $rowGetstudent_session['CA4'] + $rowGetstudent_session['CA5'] + $rowGetstudent_session['CA6'] + $rowGetstudent_session['CA7'] + $rowGetstudent_session['CA8'];
+                                    $ca1 = $rowGetstudent_session['ca1'] + $rowGetstudent_session['ca2'] + $rowGetstudent_session['ca3'] + $rowGetstudent_session['ca4'] + $rowGetstudent_session['ca5'] + $rowGetstudent_session['ca6'] + $rowGetstudent_session['ca7'] + $rowGetstudent_session['ca8'];
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='9')
                                 {
-                                    $ca1 = $rowGetstudent_session['CA1'] + $rowGetstudent_session['CA2'] + $rowGetstudent_session['CA3'] + $rowGetstudent_session['CA4'] + $rowGetstudent_session['CA5'] + $rowGetstudent_session['CA6'] + $rowGetstudent_session['CA7'] + $rowGetstudent_session['CA8'] + $rowGetstudent_session['CA9'];
+                                    $ca1 = $rowGetstudent_session['ca1'] + $rowGetstudent_session['ca2'] + $rowGetstudent_session['ca3'] + $rowGetstudent_session['ca4'] + $rowGetstudent_session['ca5'] + $rowGetstudent_session['ca6'] + $rowGetstudent_session['ca7'] + $rowGetstudent_session['ca8'] + $rowGetstudent_session['ca9'];
                                 }
                                 elseif($rowGetGradingSystem['NumberOfCA'] =='10')
                                 {
-                                    $ca1 = $rowGetstudent_session['CA1'] + $rowGetstudent_session['CA2'] + $rowGetstudent_session['CA3'] + $rowGetstudent_session['CA4'] + $rowGetstudent_session['CA5'] + $rowGetstudent_session['CA6'] + $rowGetstudent_session['CA7'] + $rowGetstudent_session['CA8'] + $rowGetstudent_session['CA9'] + $rowGetstudent_session['CA10'];
+                                    $ca1 = $rowGetstudent_session['ca1'] + $rowGetstudent_session['ca2'] + $rowGetstudent_session['ca3'] + $rowGetstudent_session['ca4'] + $rowGetstudent_session['ca5'] + $rowGetstudent_session['ca6'] + $rowGetstudent_session['ca7'] + $rowGetstudent_session['ca8'] + $rowGetstudent_session['ca9'] + $rowGetstudent_session['ca10'];
                                 }
                                 else{
                                     $ca1 = 0;
                                 }
-                                $exam = $rowGetstudent_session['Exam'];
+                                $exam = $rowGetstudent_session['exam'];
                                
                                $total = $ca1 + $exam;
                                 
                                 echo '<td>
-                                    <span id="exam_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["Exam"].'</span>
-                                    <input type="text" value="'.$rowGetstudent_session["Exam"].'" class="editbox" id="exam_input_'.$rowGetstudent_session["ID"].'"/>
+                                    <span id="exam_'.$rowGetstudent_session["ID"].'" class="text">'.$rowGetstudent_session["exam"].'</span>
+                                    <input type="text" value="'.$rowGetstudent_session["exam"].'" class="editbox" id="exam_input_'.$rowGetstudent_session["ID"].'"/>
                                 </td>
                                 <td>
                                     <span id="total_'.$rowGetstudent_session["ID"].'" class="text">'.$total.'</span>

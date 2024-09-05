@@ -6,16 +6,49 @@
 
 
     $server = 'localhost';
-    if ($domain == 'kencrestacademy'){
-        $username = 'trixschool';
-	    $password = 'De1ve2lop3ment4@';
-	    $database = 'trixschool_kencrestacademy';
+    if ($domain == 'demo.schoollift'){
+        $username = 'trixschool_boldstepadmin';
+        $password = 'boldstep@1111';
+        $database = 'schoollift_demo';
     }
+    if ($domain == 'mercygold.schoollift'){
+        $username = 'trixschool_boldstepadmin';
+        $password = 'boldstep@1111';
+        $database = 'schoollift_mercygold';
+    }
+
+
+     if ($domain == 'royalland.schoollift'){
+        $username = 'trixschool_boldstepadmin';
+        $password = 'boldstep@1111';
+        $database = 'schoollift_royalland';
+    }
+
+
+    if ($domain == 'kencrestacademy'){
+	$username = 'trixschool_boldstepadmin';
+        $password = 'boldstep@1111';
+        $database = 'trixschool_kencrestacademy';
+    }
+
+    if ($domain == 'lekced'){
+        $username = 'trixschool_boldstepadmin';
+        $password = 'boldstep@1111';
+        $database = 'schoollift_lekced';
+    }
+
+
+    if ($domain == 'idealvictorybaptistschool'){
+        $username = 'trixschool_boldstepadmin';
+        $password = 'boldstep@1111';
+        $database = 'trixschool_ivbs';
+    }
+
     
     if ($domain == 'boldstepschool'){
-        $username = 'trixschool';
-	    $password = 'De1ve2lop3ment4@';
-	    $database = 'trixschool_boldstepschool';
+        $username = 'trixschool_boldstepadmin';
+	$password = 'boldstep@1111';
+	$database = 'trixschool_boldstepschool';
     }
     
     if ($domain == 'joyfoundationacademy'){
@@ -25,21 +58,22 @@
     }
     
     if ($domain == 'apexstaracademy'){
-        $username = 'trixschool_apexstaradmin';
-	    $password = 'apexstar@1111';
+        $username = 'trixschool_boldstepadmin';
+	    $password = 'boldstep@1111';
 	    $database = 'trixschool_apexstaracademy';
     }
     
     if ($domain == 'apexstaracademyaso'){
-        $username = 'trixschool_apexstarasoadmin';
-	    $password = 'apexstaraso@1111';
+        $username = 'trixschool_boldstepadmin';
+	    $password = 'boldstep@1111';
 	    $database = 'trixschool_apexstaracademyaso';
     }
     
     if ($domain == 'royalcreedacademy'){
-        $username = 'trixschool_royalcreedadmin';
-	    $password = 'royalcreed@1111';
-	    $database = 'trixschool_royalcreedacademy';
+        $username = 'trixschool_boldstepadmin';
+        $password = 'boldstep@1111';
+	$database = 'trixschool_royalcreedacademy';
+
     }
     
     if ($domain == 'topstepsacademy'){
@@ -147,3 +181,4 @@
     }
     
 ?>
+

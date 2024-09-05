@@ -1,4 +1,8 @@
 <?php
+ require  '/var/www/trixschool/vendor/autoload.php'; // Adjust the path as needed
+
+use Aws\S3\S3Client;
+use Aws\S3\Exception\S3Exception;
 
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
@@ -494,10 +498,9 @@ class Student extends Admin_Controller
                 $data_insert['admission_no'] = $this->input->post('admission_no');
             }
             if ($insert) {
-                $domain = $_SERVER['HTTP_HOST'];
-                $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
-                $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
-
+		$domain = $_SERVER['HTTP_HOST'];
+            $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+            $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
                 $insert_id = $this->student_model->add($data_insert, $data_setting);
                 if (!empty($custom_value_array)) {
                     $this->customfield_model->insertRecord($custom_value_array, $insert_id);
@@ -546,13 +549,50 @@ class Student extends Admin_Controller
                     );
                     $this->student_model->add($update_student);
                 }
-
                 if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
+
                     $fileInfo = pathinfo($_FILES["file"]["name"]);
-                    $img_name = $domian. $insert_id . '.' . $fileInfo['extension'];
-                    move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                    $data_img = array('id' => $insert_id, 'image' => 'uploads/student_images/' . $img_name);
-                    $this->student_model->add($data_img);
+                    $img_name = $domain . $insert_id . '.' . $fileInfo['extension'];
+		    $contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
+		    try {
+                        $s3 = new S3Client([
+                            'version' => 'latest',
+                            'region'  => 'us-east-2',
+                            'credentials' => [
+                                'key'    => 'AKIAXC7XRFGT25OMXJ22',
+                                'secret' => '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',
+                            ],
+                        ]);
+
+                     } catch (Exception $e) {
+                        $array = array('success' => false, 'error' => '', 'message' => 'error connecting to s3');
+                        echo json_encode($array);
+                     }
+		    
+		    $bucket = 'schoollift';
+                $key = 'uploads/student_images/' . $img_name;
+
+                try {
+                   $result = $s3->putObject([
+                       'Bucket' => $bucket,
+                       'Key'    => $key,
+                       'Body'   => fopen($_FILES["file"]["tmp_name"], 'r'),
+                        //'ACL'    => 'public-read', // Adjust permissions as needed
+                        'ContentType' => $contentType,
+                        //'acl' => AmazonS3::ACL_PUBLIC
+                        ]);
+
+		     $data_img = array('id' => $insert_id, 'image' => 'uploads/student_images/' . $img_name);
+
+ 
+		   $this->student_model->add($data_img);
+
+                } catch (S3Exception $e) {
+                   // Handle upload failure
+                   $array = array('success' => true, 'error' => 'Error uploading to S3: ', 'message' => 'hi');
+                   echo json_encode($array);
+                }
+
                 }
 
                 if (isset($_FILES["father_pic"]) && !empty($_FILES['father_pic']['name'])) {
@@ -1435,11 +1475,56 @@ class Student extends Admin_Controller
             );
             $insert_id = $this->student_model->add_student_session($data_new);
             if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
-                $fileInfo = pathinfo($_FILES["file"]["name"]);
-                $img_name = $id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                $data_img = array('id' => $id, 'image' => 'uploads/student_images/' . $img_name);
-                $this->student_model->add($data_img);
+
+		$fileInfo = pathinfo($_FILES["file"]["name"]);
+		$domain = $_SERVER['HTTP_HOST'];
+            $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+            $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
+
+		$img_name = $domain . $id . '.' . $fileInfo['extension'];
+                // echo $id;
+                // exit();
+
+			  $contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
+                    try {
+                        $s3 = new S3Client([
+                            'version' => 'latest',
+                            'region'  => 'us-east-2',
+                            'credentials' => [
+                                'key'    => 'AKIAXC7XRFGT25OMXJ22',
+                                'secret' => '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',
+                            ],
+                        ]);
+
+                     } catch (Exception $e) {
+                        $array = array('success' => false, 'error' => '', 'message' => 'error connecting to s3');
+                        echo json_encode($array);
+                     }
+
+                    $bucket = 'schoollift';
+                $key = 'uploads/student_images/' . $img_name;
+
+                try {
+                   $result = $s3->putObject([
+                       'Bucket' => $bucket,
+                       'Key'    => $key,
+                       'Body'   => fopen($_FILES["file"]["tmp_name"], 'r'),
+                        //'ACL'    => 'public-read', // Adjust permissions as needed
+                        'ContentType' => $contentType,
+                        //'acl' => AmazonS3::ACL_PUBLIC
+                        ]);
+
+                     $data_img = array('id' => $id, 'image' => 'uploads/student_images/' . $img_name);
+
+
+                   $this->student_model->add($data_img);
+
+                } catch (S3Exception $e) {
+                   // Handle upload failure
+                   $array = array('success' => true, 'error' => 'Error uploading to S3: ', 'message' => 'hi');
+                   echo json_encode($array);
+                }
+
             }
 
             if (isset($_FILES["father_pic"]) && !empty($_FILES['father_pic']['name'])) {

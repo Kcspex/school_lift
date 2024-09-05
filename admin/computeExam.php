@@ -17,13 +17,12 @@
 	 <!--My New Stylesheet CSS -->
 	 <link rel="stylesheet" href="../assets/css/myStyleSheet.css">
     <title>Mark Examination</title>
-    
-    <style type="text/css">
+	<style type="text/css">
         .editbox
         {
-            
+
             display:none
-         
+
         }
         .editbox
         {
@@ -39,6 +38,7 @@
             cursor:pointer;
         }
     </style>
+
   </head>
   
   <?php include ('../layout/style.php');?>
@@ -113,7 +113,7 @@
                                     {
                                         if($rowstaffcheck['name'] == 'Teacher')
                                         {
-                                            $sqlclasses = "SELECT DISTINCT(subjecttables.class_id),class FROM `subjecttables` INNER JOIN class_sections ON subjecttables.class_id=class_sections.class_id INNER JOIN classes ON class_sections.class_id=classes.id INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND assigncatoclass.ResultType != 'british' AND subjecttables.staff_id = '$id' ORDER BY class";
+                                            $sqlclasses = "SELECT DISTINCT(subjecttables.class_id),class FROM `subjecttables` INNER JOIN class_sections ON subjecttables.class_id=class_sections.class_id INNER JOIN classes ON class_sections.class_id=classes.id INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND subjecttables.staff_id = '$id' ORDER BY class";
                                             $resultclasses = mysqli_query($link, $sqlclasses);
                                             $rowclasses = mysqli_fetch_assoc($resultclasses);
                                             $row_cntclasses = mysqli_num_rows($resultclasses);
@@ -133,7 +133,7 @@
                                         }
                                         else
                                         {
-                                            $sqlclasses = "SELECT * FROM `classes` INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND assigncatoclass.ResultType != 'british' ORDER BY class";
+                                            $sqlclasses = "SELECT * FROM `classes` INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID ORDER BY class";
                                             $resultclasses = mysqli_query($link, $sqlclasses);
                                             $rowclasses = mysqli_fetch_assoc($resultclasses);
                                             $row_cntclasses = mysqli_num_rows($resultclasses);
@@ -585,7 +585,7 @@
             
             var dataString = 'classid=' + classid + '&classsection=' + classsection + '&session=' + session + '&term=' + term + '&subjects=' + subjects + '&classsectionactual=' + classsectionactual;
                 
-            // alert(dataString);
+            //alert(dataString);
             if(classid != '' && classid != '0' && classsection != '' && classsection != '0' && session != '' && session != '0' && term != '' && term != '0' && subjects != '' && subjects != '0')
             {
                 
@@ -596,7 +596,7 @@
                     
                     success: function(maindata2) {
                         
-                        // alert(maindata2);
+                        //alert(maindata2);
                     
                         $.ajax({
                             url: '../../../phpscript/get-subjectsstudents.php',
@@ -604,7 +604,7 @@
                             data:dataString,
                             
                             success: function(maindata3) {
-                            
+			//alert(maindata3)                            
                                 $('#tbl_data').html(maindata3);
                                 
                             }
@@ -656,7 +656,6 @@
     
         $(document).on('change', '.edit_tr', function () {
             var ID = $(this).attr('id');
-        
             var ca1 = parseFloat($("#ca1_input_"+ID).val());
             var ca2 = parseFloat($("#ca2_input_"+ID).val());
             var ca3 = parseFloat($("#ca3_input_"+ID).val());
@@ -669,6 +668,18 @@
             var ca10 = parseFloat($("#ca10_input_"+ID).val());
             var exam = parseFloat($("#exam_input_"+ID).val());
             
+	    ca1 = isNaN(ca1) ? 0 : ca1;
+ca2 = isNaN(ca2) ? 0 : ca2;
+ca3 = isNaN(ca3) ? 0 : ca3;
+ca4 = isNaN(ca4) ? 0 : ca4;
+ca5 = isNaN(ca5) ? 0 : ca5;
+ca6 = isNaN(ca6) ? 0 : ca6;
+ca7 = isNaN(ca7) ? 0 : ca7;
+ca8 = isNaN(ca8) ? 0 : ca8;
+ca9 = isNaN(ca9) ? 0 : ca9;
+ca10 = isNaN(ca10) ? 0 : ca10;
+exam = isNaN(exam) ? 0 : exam;
+
             var studname = $("#studname_"+ID).val();
             
             var term = $("#term").val();
@@ -676,7 +687,7 @@
             var session = $("#session").val();
     
             var totall = (ca1 + ca2 + ca3 + ca4 + ca5 + ca6 + ca7 + ca8 + ca9 + ca10 + exam);
-            
+//            alert(totall)
             var dataString = 'ID='+ ID + '&ca1='+ ca1 + '&ca2='+ ca2 + '&ca3='+ ca3 + '&ca4='+ ca4 + '&ca5='+ ca5 + '&ca6='+ ca6 + '&ca7='+ ca7 + '&ca8='+ ca8 + '&ca9='+ ca9 + '&ca10='+ ca10 + '&exam='+ exam + '&term='+ term + '&session='+ session;
             //$("#ca1_"+ID).html('>>>'); // Loading image
             
@@ -696,6 +707,7 @@
                     cache: false,
                     success: function(result)
                         {
+	//alert(result)
                             $("#ca1_"+ID).html(ca1);
                             $("#ca2_"+ID).html(ca2);
                             $("#ca3_"+ID).html(ca3);

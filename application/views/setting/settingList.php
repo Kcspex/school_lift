@@ -18,11 +18,11 @@
                         <?php
                         if ($result->image == "") {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/logo/images.png" class="img-thumbnail" alt="Cinque Terre" width="304" height="236">
+                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_content/logo/images.png" class="img-thumbnail" alt="Cinque Terre" width="304" height="236">
                             <?php
                         } else {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/logo/<?php echo $result->image; ?>" class="img-thumbnail" alt="Cinque Terre" width="304" height="236">
+                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $result->image; ?>" class="img-thumbnail" alt="Cinque Terre" width="304" height="236">
                             <?php
                         }
                         ?>
@@ -37,11 +37,11 @@
                         <?php
                         if ($result->admin_logo == "") {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/admin_logo/images.png" class="img-thumbnail " alt="Cinque Terre" width="204" height="60">
+                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_content/admin_logo/images.png" class="img-thumbnail " alt="Cinque Terre" width="204" height="60">
                             <?php
                         } else {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/admin_logo/<?php echo $result->admin_logo; ?>" class="img-thumbnail" alt="" width="204" height="60">
+                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $result->admin_logo; ?>" class="img-thumbnail" alt="" width="204" height="60">
                             <?php
                         }
                         ?>
@@ -55,11 +55,11 @@
                         <?php
                         if ($result->admin_small_logo == "") {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/logo/images.png" class="img-thumbnail" alt="Cinque Terre" width="" height="">
+                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_content/logo/images.png" class="img-thumbnail" alt="Cinque Terre" width="" height="">
                             <?php
                         } else {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/admin_small_logo/<?php echo $result->admin_small_logo; ?>" class="" alt="Cinque Terre" width="" height="">
+                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $result->admin_small_logo; ?>" class="" alt="Cinque Terre" width="" height="">
                             <?php
                         }
                         ?>
@@ -74,11 +74,11 @@
                         <?php
                         if ($result->app_logo == "") {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/logo/images.png" class="img-thumbnail img-responsive " alt="" width="" height="">
+                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_content/logo/images.png" class="img-thumbnail img-responsive " alt="" width="" height="">
                             <?php
                         } else {
                             ?>
-                            <img src="<?php echo base_url() ?>uploads/school_content/logo/app_logo/<?php echo $result->app_logo; ?>" class="img-responsive" alt="" width="" height="">
+                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $result->app_logo; ?>" class="img-responsive" alt="" width="" height="">
                             <?php
                         }
                         ?>

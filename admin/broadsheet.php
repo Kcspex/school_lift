@@ -185,7 +185,7 @@
                                 <div class="row">
                                   <div class="col-sm-3 col-md-3 col-xs-3 col-lg-3">
                                       <div style="margin-top: 60px; margin-left: 10px;">
-                                          <img src="<?php echo $defRUl;?>uploads/school_content/logo/<?php echo $rowsch_settings['admin_logo']; ?>" class="img-fluid" alt="..." style="width: 80%;">
+                                          <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $rowsch_settings['app_logo']; ?>" class="img-fluid" alt="..." style="width: 80%;">
                                       </div>
                                   </div>
                                   <div class="col-sm-9 col-md-9 col-xs-9 col-lg-9">

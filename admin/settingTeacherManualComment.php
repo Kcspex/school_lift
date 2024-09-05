@@ -115,7 +115,7 @@
 							<!--They would need to select Term in-order to display the Exam Group Created for that term-->
                         </div>
                         <div class="form-group col-sm">
-                            <select class="form-control" id="staffid">
+			<select class="form-control" id="staffid">
                                 <option value="0">Select Class Teacher</option>
                                 <?php
                                     $sqlstaffcheck = "SELECT * FROM `staff_roles` INNER JOIN roles ON staff_roles.role_id=roles.id WHERE staff_roles.staff_id='$id'";
@@ -127,7 +127,7 @@
                                     {
                                         if($rowstaffcheck['name'] == 'Teacher')
                                         {
-                                            $sqlstaff = "SELECT staff.id AS staff_id,staff.name AS staff_name,staff.surname AS staff_surname FROM `staff` INNER JOIN class_teacher ON staff.id=class_teacher.staff_id WHERE staff.id='$id' ORDER BY surname ASC";
+                                            $sqlstaff = "SELECT DISTINCT staff.id AS staff_id,staff.name AS staff_name,staff.surname AS staff_surname FROM `staff` INNER JOIN class_teacher ON staff.id=class_teacher.staff_id WHERE staff.id='$id' ORDER BY surname ASC";
                                             $resultstaff = mysqli_query($link, $sqlstaff);
                                             $rowstaff = mysqli_fetch_assoc($resultstaff);
                                             $row_cntstaff = mysqli_num_rows($resultstaff);
@@ -143,7 +143,7 @@
                                         }
                                         else
                                         {
-                                            $sqlstaff = "SELECT staff.id AS staff_id,staff.name AS staff_name,staff.surname AS staff_surname FROM `staff` INNER JOIN class_teacher ON staff.id=class_teacher.staff_id ORDER BY surname ASC";
+                                            $sqlstaff = "SELECT DISTINCT staff.id AS staff_id,staff.name AS staff_name,staff.surname AS staff_surname FROM `staff` INNER JOIN class_teacher ON staff.id=class_teacher.staff_id ORDER BY surname ASC";
                                             $resultstaff = mysqli_query($link, $sqlstaff);
                                             $rowstaff = mysqli_fetch_assoc($resultstaff);
                                             $row_cntstaff = mysqli_num_rows($resultstaff);

@@ -16,11 +16,11 @@
                     <div class="row">
                         <div class="col">
                             <label style="font-weight: 500;">Ranges:</label>
-                            <input type="number" name="commentfrom" class="form-control" placeholder="80" value="'.$rowexamsubjects['RangeStart'].'">
+                            <input type="number" step=".01" name="commentfrom" class="form-control" placeholder="80" value="'.$rowexamsubjects['RangeStart'].'">
                         </div>
                         <div class="col">
                             <label style="font-weight: 500;">&nbsp;&nbsp;&nbsp;</label>
-                          <input type="number" name="commentfromto" class="form-control" placeholder="100" value="'.$rowexamsubjects['RangeEnd'].'">
+                          <input type="number" step=".01" name="commentfromto" class="form-control" placeholder="100" value="'.$rowexamsubjects['RangeEnd'].'">
                         </div>
                     </div>
                     <div class="form-group">

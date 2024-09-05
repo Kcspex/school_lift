@@ -103,9 +103,99 @@ $db['default'] = array(
 
 
 $database_configs = array(
-    'boldstepschool.org' => array(
+     'demo.schoollift.com.ng' => array(
+        'dsn'   => '',
+        'hostname' => 'localhost',
+        'username' => 'trixschool_boldstepadmin',
+        'password' => 'boldstep@1111',
+        'database' => 'schoollift_demo',
+        'dbdriver' => 'mysqli',
+        'dbprefix' => '',
+        'pconnect' => FALSE,
+        'db_debug' => (ENVIRONMENT !== 'production'),
+        'cache_on' => FALSE,
+        'cachedir' => '',
+        'char_set' => 'utf8',
+        'dbcollat' => 'utf8_general_ci',
+        'swap_pre' => '',
+        'encrypt' => FALSE,
+        'compress' => FALSE,
+        'stricton' => FALSE,
+        'failover' => array(),
+        'save_queries' => TRUE
+    ),
+
+
+     'royalland.schoollift.com.ng' => array(
+        'dsn'   => '',
+        'hostname' => 'localhost',
+        'username' => 'trixschool_boldstepadmin',
+        'password' => 'boldstep@1111',
+        'database' => 'schoollift_royalland',
+        'dbdriver' => 'mysqli',
+        'dbprefix' => '',
+        'pconnect' => FALSE,
+        'db_debug' => (ENVIRONMENT !== 'production'),
+        'cache_on' => FALSE,
+        'cachedir' => '',
+        'char_set' => 'utf8',
+        'dbcollat' => 'utf8_general_ci',
+        'swap_pre' => '',
+        'encrypt' => FALSE,
+        'compress' => FALSE,
+        'stricton' => FALSE,
+        'failover' => array(),
+        'save_queries' => TRUE
+    ),
+
+    'mercygold.schoollift.com.ng' => array(
+        'dsn'   => '',
+        'hostname' => 'localhost',
+        'username' => 'trixschool_boldstepadmin',
+        'password' => 'boldstep@1111',
+        'database' => 'schoollift_mercygold',
+        'dbdriver' => 'mysqli',
+        'dbprefix' => '',
+        'pconnect' => FALSE,
+        'db_debug' => (ENVIRONMENT !== 'production'),
+        'cache_on' => FALSE,
+        'cachedir' => '',
+        'char_set' => 'utf8',
+        'dbcollat' => 'utf8_general_ci',
+        'swap_pre' => '',
+        'encrypt' => FALSE,
+        'compress' => FALSE,
+        'stricton' => FALSE,
+        'failover' => array(),
+        'save_queries' => TRUE
+    ),
+
+
+    'lekced.com.ng' => array(
+        'dsn'   => '',
+        'hostname' => 'localhost',
+        'username' => 'trixschool_boldstepadmin',
+        'password' => 'boldstep@1111',
+        'database' => 'schoollift_lekced',
+        'dbdriver' => 'mysqli',
+        'dbprefix' => '',
+        'pconnect' => FALSE,
+        'db_debug' => (ENVIRONMENT !== 'production'),
+        'cache_on' => FALSE,
+        'cachedir' => '',
+        'char_set' => 'utf8',
+        'dbcollat' => 'utf8_general_ci',
+        'swap_pre' => '',
+        'encrypt' => FALSE,
+        'compress' => FALSE,
+        'stricton' => FALSE,
+        'failover' => array(),
+        'save_queries' => TRUE
+    ),
+
+      'boldstepschool.org' => array(
         'dsn'	=> '',
-    	'hostname' => 'premium265.web-hosting.com',
+    	'hostname' => 'localhost',
     	'username' => 'trixschool_boldstepadmin',
     	'password' => 'boldstep@1111',
     	'database' => 'trixschool_boldstepschool',
@@ -125,11 +215,34 @@ $database_configs = array(
     	'save_queries' => TRUE
     ),
     
+    'idealvictorybaptistschool.com.ng' => array(
+        'dsn'   => '',
+        'hostname' => 'localhost',
+        'username' => 'trixschool_boldstepadmin',
+        'password' => 'boldstep@1111',
+        'database' => 'trixschool_ivbs',
+        'dbdriver' => 'mysqli',
+        'dbprefix' => '',
+        'pconnect' => FALSE,
+        'db_debug' => (ENVIRONMENT !== 'production'),
+        'cache_on' => FALSE,
+        'cachedir' => '',
+        'char_set' => 'utf8',
+        'dbcollat' => 'utf8_general_ci',
+        'swap_pre' => '',
+        'encrypt' => FALSE,
+        'compress' => FALSE,
+        'stricton' => FALSE,
+        'failover' => array(),
+        'save_queries' => TRUE
+    ),
+ 
+   
     'kencrestacademy.com' => array(
         'dsn'	=> '',
-    	'hostname' => 'premium265.web-hosting.com',
-    	'username' => 'trixschool_kencrestadmin',
-    	'password' => 'kencrest@1111',
+    	'hostname' => 'localhost',
+	'username' => 'trixschool_boldstepadmin',
+        'password' => 'boldstep@1111',
     	'database' => 'trixschool_kencrestacademy',
     	'dbdriver' => 'mysqli',
     	'dbprefix' => '',
@@ -171,9 +284,9 @@ $database_configs = array(
     
     'apexstaracademy.com.ng' => array(
         'dsn'	=> '',
-    	'hostname' => 'premium265.web-hosting.com',
-    	'username' => 'trixschool_apexstaradmin',
-    	'password' => 'apexstar@1111',
+    	'hostname' => 'localhost',
+    	'username' => 'trixschool_boldstepadmin',
+    	'password' => 'boldstep@1111',
     	'database' => 'trixschool_apexstaracademy',
     	'dbdriver' => 'mysqli',
     	'dbprefix' => '',
@@ -193,9 +306,9 @@ $database_configs = array(
     
     'apexstaracademyaso.com.ng' => array(
         'dsn'	=> '',
-    	'hostname' => 'premium265.web-hosting.com',
-    	'username' => 'trixschool_apexstarasoadmin',
-    	'password' => 'apexstaraso@1111',
+    	'hostname' => 'localhost',
+    	'username' => 'trixschool_boldstepadmin',
+    	'password' => 'boldstep@1111',
     	'database' => 'trixschool_apexstaracademyaso',
     	'dbdriver' => 'mysqli',
     	'dbprefix' => '',
@@ -215,9 +328,9 @@ $database_configs = array(
     
     'royalcreedacademy.com.ng' => array(
         'dsn'	=> '',
-    	'hostname' => 'premium265.web-hosting.com',
-    	'username' => 'trixschool_royalcreedadmin',
-    	'password' => 'royalcreed@1111',
+        'hostname' => 'localhost',
+        'username' => 'trixschool_boldstepadmin',
+        'password' => 'boldstep@1111',
     	'database' => 'trixschool_royalcreedacademy',
     	'dbdriver' => 'mysqli',
     	'dbprefix' => '',
@@ -261,7 +374,9 @@ $database_configs = array(
 
 if (isset($database_configs[$domain])) {
     $active_group = $domain;
-} 
+}
+
+//$active_group = 'boldstepschool.org';
 
 $db['active_group'] = $active_group;
 $db['active_record'] = TRUE;

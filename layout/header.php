@@ -4,7 +4,7 @@
     echo'<header class="row" style="padding:10px;">
 
 	    <div class="col-md-12 col-lg-2">
-	        <img class="logoImg" src="'.$defRUl.'uploads/school_content/admin_logo/'.$rowsch_settings['app_logo'].'" width="70%">
+	        <img class="logoImg" src="https://schoollift.s3.us-east-2.amazonaws.com/'.$rowsch_settings['app_logo'].'" width="70%">
 	    </div>
 	    
 	</header>

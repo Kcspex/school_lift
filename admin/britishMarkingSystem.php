@@ -113,7 +113,9 @@
                                     {
                                         if($rowstaffcheck['name'] == 'Teacher')
                                         {
-                                            $sqlclasses = "SELECT DISTINCT(subject_timetable.class_id),class FROM `subject_timetable` INNER JOIN class_sections ON subject_timetable.class_id=class_sections.class_id INNER JOIN classes ON class_sections.class_id=classes.id INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND assigncatoclass.ResultType = 'british' AND subject_timetable.staff_id = '$id' ORDER BY class";
+                                            $sqlclasses = "SELECT DISTINCT(subjecttables.class_id),class FROM `subjecttables` INNER JOIN class_sections ON subjecttables.class_id=class_sections.class_id INNER JOIN classes ON class_sections.class_id=classes.id INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND assigncatoclass.ResultType = 'british' AND subjecttables.staff_id = '$id' ORDER BY class";
+                                            
+					    //$sqlclasses = "SELECT DISTINCT(subject_timetable.class_id),class FROM `subject_timetable` INNER JOIN class_sections ON subject_timetable.class_id=class_sections.class_id INNER JOIN classes ON class_sections.class_id=classes.id INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND assigncatoclass.ResultType = 'british' AND subject_timetable.staff_id = '$id' ORDER BY class";
                                             $resultclasses = mysqli_query($link, $sqlclasses);
                                             $rowclasses = mysqli_fetch_assoc($resultclasses);
                                             $row_cntclasses = mysqli_num_rows($resultclasses);
@@ -413,7 +415,6 @@
                             data:dataString,
                             
                             success: function(maindata3) {
-                            
                                 $('#tbl_data').html(maindata3);
                                 
                             }
@@ -461,7 +462,8 @@
             
             var rowID = $(this).data('id');
             
-            var extcomment = $("#"+remarkID).val();
+            //var extcomment = $("#"+remarkID).val();
+            var extcomment = $(this).data('extcom')
         
             var remark = $(this).val();
             
@@ -474,7 +476,7 @@
                 cache: false,
                 success: function(result)
                 {
-                    
+                
                 }
             });
        

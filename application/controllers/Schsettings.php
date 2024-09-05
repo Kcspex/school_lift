@@ -1,9 +1,9 @@
 <?php
+require  '/var/www/trixschool/vendor/autoload.php'; // Adjust the path as needed
 
+use Aws\S3\S3Client; 
+use Aws\S3\Exception\S3Exception;
 
-if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
 
 class Schsettings extends Admin_Controller
 {
@@ -46,15 +46,15 @@ class Schsettings extends Admin_Controller
         $data['currencyPlace']  = $currencyPlace;
         $data['result']         = $this->setting_model->getSetting();
 		
-        $data['app_response']   = $this->auth->andapp_validate();
+        //$data['app_response']   = $this->auth->andapp_validate();
         $this->load->view('layout/header', $data);
         $this->load->view('setting/settingList', $data);
         $this->load->view('layout/footer', $data);
     }
 
     public function ajax_editlogo()
-    {
-        $this->form_validation->set_rules('id', $this->lang->line('id'), 'trim|required|xss_clean');
+    {	
+	$this->form_validation->set_rules('id', $this->lang->line('id'), 'trim|required|xss_clean');
         $this->form_validation->set_rules('file', $this->lang->line('image'), 'callback_handle_upload');
         if ($this->form_validation->run() == false) {
             $data = array(
@@ -67,104 +67,287 @@ class Schsettings extends Admin_Controller
             $domain = $_SERVER['HTTP_HOST'];
             $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
             $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
-
-            if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
+	    
+	    if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
                 $fileInfo = pathinfo($_FILES["file"]["name"]);
-                $img_name = $domain. '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/school_content/logo/" . $img_name);
-            }
-            $data_record = array('id' => $id, 'image' => $img_name);
-            $this->setting_model->add($data_record);
-            $array = array('success' => true, 'error' => '', 'message' => $this->lang->line('success_message'));
-            echo json_encode($array);
-        }
+                $img_name = $domain . '.' . $fileInfo['extension'];
+
+		$fileExtension = strtolower($fileInfo['extension']);
+        $mimeTypes = [
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'png' => 'image/png',
+            // Add more mappings as needed
+        ];
+        $contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
+	    	
+		try {
+    			$s3 = new S3Client([
+        		    'version' => 'latest',
+        		    'region'  => 'us-east-2',
+        		    'credentials' => [
+            			'key'    => 'AKIAXC7XRFGT25OMXJ22',
+            			'secret' => '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',
+        		    ],
+    			]);
+
+		} catch (Exception $e) {
+			$array = array('success' => false, 'error' => '', 'message' => 'error connecting to s3');
+                	echo json_encode($array);
+		}
+
+		$bucket = 'schoollift';
+                $key = 'uploads/school_content/logo/' . $img_name;
+
+		try {
+             	   $result = $s3->putObject([
+                       'Bucket' => $bucket,
+                       'Key'    => $key,
+                       'Body'   => fopen($_FILES["file"]["tmp_name"], 'r'),
+			//'ACL'    => 'public-read', // Adjust permissions as needed
+                   	'ContentType' => $contentType,
+			//'acl' => AmazonS3::ACL_PUBLIC
+			]);
+
+                    // Save data to database
+                    $data_record = array('id' => $id, 'image' => $key);
+                    $this->setting_model->add($data_record);
+
+                    $array = array('success' => true, 'error' => '', 'message' => 'success_message');
+                    echo json_encode($array);
+                } catch (S3Exception $e) {
+                   // Handle upload failure
+                   $array = array('success' => true, 'error' => 'Error uploading to S3: ', 'message' => 'hi');
+                   echo json_encode($array);
+                }
+	    }
+	}
+	
     }
 
-    public function ajax_editadmin_smalllogo()
-    {
 
-        $this->form_validation->set_rules('id', $this->lang->line('id'), 'trim|required|xss_clean');
-        $this->form_validation->set_rules('file', $this->lang->line('image'), 'callback_handle_upload');
-        if ($this->form_validation->run() == false) {
-            $data = array(
-                'file' => form_error('file'),
-            );
-            $array = array('success' => false, 'error' => $data);
-            echo json_encode($array);
-        } else {
-            $id = $this->input->post('id');
-            $domain = $_SERVER['HTTP_HOST'];
-            $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
-            $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
-            
-            if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
-                $fileInfo = pathinfo($_FILES["file"]["name"]);
-                $img_name = $domain. '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/school_content/admin_small_logo/" . $img_name);
-            }
-            $data_record = array('id' => $id, 'admin_small_logo' => $img_name);
-            $this->setting_model->add($data_record);
-            $array = array('success' => true, 'error' => '', 'message' => $this->lang->line('success_message'));
-            echo json_encode($array);
-        }
+ public function ajax_editadmin_smalllogo()
+{
+	$this->form_validation->set_rules('id', $this->lang->line('id'), 'trim|required|xss_clean');
+	$this->form_validation->set_rules('file', $this->lang->line('image'), 'callback_handle_upload');
+	if ($this->form_validation->run() == false) {
+		$data = array(
+			'file' => form_error('file'),
+		);
+		$array = array('success' => false, 'error' => $data);
+		echo json_encode($array);
+	} else {
+		$id = $this->input->post('id');
+		$domain = $_SERVER['HTTP_HOST'];
+		$full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+		$domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
+
+		if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
+			$fileInfo = pathinfo($_FILES["file"]["name"]);
+			$img_name = $domain . '.' . $fileInfo['extension'];
+
+			$fileExtension = strtolower($fileInfo['extension']);
+	$mimeTypes = [
+		'jpg' => 'image/jpeg',
+		'jpeg' => 'image/jpeg',
+		'png' => 'image/png',
+		// Add more mappings as needed
+	];
+	$contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
+
+			try {
+					$s3 = new S3Client([
+						'version' => 'latest',
+						'region'  => 'us-east-2',
+						'credentials' => [
+							'key'    => 'AKIAXC7XRFGT25OMXJ22',
+							'secret' => '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',
+						],
+					]);
+
+			} catch (Exception $e) {
+					$array = array('success' => false, 'error' => '', 'message' => 'error connecting to s3');
+					echo json_encode($array);
+			}
+			$bucket = 'schoollift';
+			$key = 'uploads/school_content/admin_small_logo/' . $img_name;
+
+			try {
+			   $result = $s3->putObject([
+				   'Bucket' => $bucket,
+				   'Key'    => $key,
+				   'Body'   => fopen($_FILES["file"]["tmp_name"], 'r'),
+					//'ACL'    => 'public-read', // Adjust permissions as needed
+					'ContentType' => $contentType,
+					//'acl' => AmazonS3::ACL_PUBLIC
+					]);
+
+				// Save data to database
+				$data_record = array('id' => $id, 'admin_small_logo' => $key);
+				$this->setting_model->add($data_record);
+
+				$array = array('success' => true, 'error' => '', 'message' => 'success_message');
+				echo json_encode($array);
+			} catch (S3Exception $e) {
+			   // Handle upload failure
+			   $array = array('success' => true, 'error' => 'Error uploading to S3: ', 'message' => 'hi');
+			   echo json_encode($array);
+			}
+		}
+	}
+
+}
+
+
+
+ public function ajax_editadmin_adminlogo()
+{
+	$this->form_validation->set_rules('id', $this->lang->line('id'), 'trim|required|xss_clean');
+	$this->form_validation->set_rules('file', $this->lang->line('image'), 'callback_handle_upload');
+	if ($this->form_validation->run() == false) {
+		$data = array(
+			'file' => form_error('file'),
+		);
+		$array = array('success' => false, 'error' => $data);
+		echo json_encode($array);
+	} else {
+		$id = $this->input->post('id');
+		$domain = $_SERVER['HTTP_HOST'];
+		$full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+		$domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
+
+		if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
+			$fileInfo = pathinfo($_FILES["file"]["name"]);
+			$img_name = $domain . '.' . $fileInfo['extension'];
+
+			$fileExtension = strtolower($fileInfo['extension']);
+	$mimeTypes = [
+		'jpg' => 'image/jpeg',
+		'jpeg' => 'image/jpeg',
+		'png' => 'image/png',
+		// Add more mappings as needed
+	];
+	$contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
+
+			try {
+					$s3 = new S3Client([
+						'version' => 'latest',
+						'region'  => 'us-east-2',
+						'credentials' => [
+							'key'    => 'AKIAXC7XRFGT25OMXJ22',
+							'secret' => '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',
+						],
+					]);
+
+			} catch (Exception $e) {
+					$array = array('success' => false, 'error' => '', 'message' => 'error connecting to s3');
+					echo json_encode($array);
+			}
+			$bucket = 'schoollift';
+			$key = 'uploads/school_content/admin_logo/' . $img_name;
+
+			try {
+			   $result = $s3->putObject([
+				   'Bucket' => $bucket,
+				   'Key'    => $key,
+				   'Body'   => fopen($_FILES["file"]["tmp_name"], 'r'),
+					//'ACL'    => 'public-read', // Adjust permissions as needed
+					'ContentType' => $contentType,
+					//'acl' => AmazonS3::ACL_PUBLIC
+					]);
+
+				// Save data to database
+
+				$data_record = array('id' => $id, 'admin_logo' => $key);
+				$this->setting_model->add($data_record);
+
+				$array = array('success' => true, 'error' => '', 'message' => 'success_message');
+				echo json_encode($array);
+			} catch (S3Exception $e) {
+			   // Handle upload failure
+			   $array = array('success' => true, 'error' => 'Error uploading to S3: ', 'message' => 'hi');
+			   echo json_encode($array);
+			}
+		}
+	}
+
     }
 
-    public function ajax_editadmin_adminlogo()
-    {
+    public function editLogo()
+{
+	$this->form_validation->set_rules('id', $this->lang->line('id'), 'trim|required|xss_clean');
+	$this->form_validation->set_rules('file', $this->lang->line('image'), 'callback_handle_upload');
+	if ($this->form_validation->run() == false) {
+		$data = array(
+			'file' => form_error('file'),
+		);
+		$array = array('success' => false, 'error' => $data);
+		echo json_encode($array);
+	} else {
+		$id = $this->input->post('id');
+		$domain = $_SERVER['HTTP_HOST'];
+		$full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+		$domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
 
-        $this->form_validation->set_rules('id', $this->lang->line('id'), 'trim|required|xss_clean');
-        $this->form_validation->set_rules('file', $this->lang->line('image'), 'callback_handle_upload');
-        if ($this->form_validation->run() == false) {
-            $data = array(
-                'file' => form_error('file'),
-            );
-            $array = array('success' => false, 'error' => $data);
-            echo json_encode($array);
-        } else {
-            $id = $this->input->post('id');
-            $domain = $_SERVER['HTTP_HOST'];
-            $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
-            $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
-            
-            if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
-                $fileInfo = pathinfo($_FILES["file"]["name"]);
-                $img_name = $domain. '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/school_content/admin_logo/" . $img_name);
-            }
-            $data_record = array('id' => $id, 'admin_logo' => $img_name);
-            $this->setting_model->add($data_record);
-            $array = array('success' => true, 'error' => '', 'message' => $this->lang->line('success_message'));
-            echo json_encode($array);
-        }
+		if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
+			$fileInfo = pathinfo($_FILES["file"]["name"]);
+			$img_name = $domain . '.' . $fileInfo['extension'];
+
+			$fileExtension = strtolower($fileInfo['extension']);
+	$mimeTypes = [
+		'jpg' => 'image/jpeg',
+		'jpeg' => 'image/jpeg',
+		'png' => 'image/png',
+		// Add more mappings as needed
+	];
+	$contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
+
+			try {
+					$s3 = new S3Client([
+						'version' => 'latest',
+						'region'  => 'us-east-2',
+						'credentials' => [
+							'key'    => 'AKIAXC7XRFGT25OMXJ22',
+							'secret' => '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',
+						],
+					]);
+
+			} catch (Exception $e) {
+					$array = array('success' => false, 'error' => '', 'message' => 'error connecting to s3');
+					echo json_encode($array);
+			}
+			$bucket = 'schoollift';
+			$key = 'uploads/school_content/logo/' . $img_name;
+
+			try {
+			   $result = $s3->putObject([
+				   'Bucket' => $bucket,
+				   'Key'    => $key,
+				   'Body'   => fopen($_FILES["file"]["tmp_name"], 'r'),
+					//'ACL'    => 'public-read', // Adjust permissions as needed
+					'ContentType' => $contentType,
+					//'acl' => AmazonS3::ACL_PUBLIC
+					]);
+
+				// Save data to database
+
+				$data_record = array('id' => $id, 'image' => $key);
+				$this->setting_model->add($data_record);
+
+				$array = array('success' => true, 'error' => '', 'message' => 'success_message');
+				echo json_encode($array);
+			} catch (S3Exception $e) {
+			   // Handle upload failure
+			   $array = array('success' => true, 'error' => 'Error uploading to S3: ', 'message' => 'hi');
+			   echo json_encode($array);
+			}
+		}
+	}
+
     }
 
-    public function editLogo($id)
-    {
-        $data['title']       = 'School Logo';
-        $setting_result      = $this->setting_model->get();
-        $data['settinglist'] = $setting_result;
-        $data['id']          = $id;
-        $this->form_validation->set_rules('file', $this->lang->line('image'), 'callback_handle_upload');
-        if ($this->form_validation->run() == false) {
-            $this->load->view('layout/header', $data);
-            $this->load->view('setting/editLogo', $data);
-            $this->load->view('layout/footer', $data);
-        } else {
-            if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
-                $domain = $_SERVER['HTTP_HOST'];
-                $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
-                $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
-            
-                $fileInfo = pathinfo($_FILES["file"]["name"]);
-                $img_name = $domain. '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/school_content/logo/" . $img_name);
-            }
-            $data_record = array('id' => $id, 'image' => $img_name);
-            $this->setting_model->add($data_record);
-            $this->session->set_flashdata('msg', '<div class="alert alert-left">' . $this->lang->line('update_message') . '</div>');
-            redirect('schsettings/index');
-        }
-    }
+
+
 
     public function handle_upload()
     {
@@ -389,36 +572,80 @@ class Schsettings extends Admin_Controller
         }
     }
 
-    public function ajax_applogo()
-    {
-        $this->form_validation->set_rules('id', 'ID', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('file', 'Image', 'callback_handle_upload');
 
-        if ($this->form_validation->run() == false) {
-            $data = array(
-                'file' => form_error('file'),
-            );
-            $array = array('success' => false, 'error' => $data);
-            echo json_encode($array);
-        } else {
-            $domain = $_SERVER['HTTP_HOST'];
-            $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
-            $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
-            
-            $id = $this->input->post('id');
+    
 
-            if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
-                $fileInfo = pathinfo($_FILES["file"]["name"]);
-                $img_name = $domain. '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/school_content/logo/app_logo/" . $img_name);
-            }
+public function ajax_applogo()
+{
+	$this->form_validation->set_rules('id', $this->lang->line('id'), 'trim|required|xss_clean');
+	$this->form_validation->set_rules('file', $this->lang->line('image'), 'callback_handle_upload');
+	if ($this->form_validation->run() == false) {
+		$data = array(
+			'file' => form_error('file'),
+		);
+		$array = array('success' => false, 'error' => $data);
+		echo json_encode($array);
+	} else {
+		$id = $this->input->post('id');
+		$domain = $_SERVER['HTTP_HOST'];
+		$full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+		$domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
 
-            $data_record = array('id' => $id, 'app_logo' => $img_name);
+		if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
+			$fileInfo = pathinfo($_FILES["file"]["name"]);
+			$img_name = $domain . '.' . $fileInfo['extension'];
 
-            $this->setting_model->add($data_record);
-            $array = array('success' => true, 'error' => '', 'message' => 'Record Updated Successfully');
-            echo json_encode($array);
-        }
+			$fileExtension = strtolower($fileInfo['extension']);
+	$mimeTypes = [
+		'jpg' => 'image/jpeg',
+		'jpeg' => 'image/jpeg',
+		'png' => 'image/png',
+		// Add more mappings as needed
+	];
+	$contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
+
+			try {
+					$s3 = new S3Client([
+						'version' => 'latest',
+						'region'  => 'us-east-2',
+						'credentials' => [
+							'key'    => 'AKIAXC7XRFGT25OMXJ22',
+							'secret' => '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',
+						],
+					]);
+
+			} catch (Exception $e) {
+					$array = array('success' => false, 'error' => '', 'message' => 'error connecting to s3');
+					echo json_encode($array);
+			}
+			$bucket = 'schoollift';
+			$key = 'uploads/school_content/logo/app_logo/' . $img_name;
+
+			try {
+			   $result = $s3->putObject([
+				   'Bucket' => $bucket,
+				   'Key'    => $key,
+				   'Body'   => fopen($_FILES["file"]["tmp_name"], 'r'),
+					//'ACL'    => 'public-read', // Adjust permissions as needed
+					'ContentType' => $contentType,
+					//'acl' => AmazonS3::ACL_PUBLIC
+					]);
+
+				// Save data to database
+
+				$data_record = array('id' => $id, 'app_logo' => $key);
+				$this->setting_model->add($data_record);
+
+				$array = array('success' => true, 'error' => '', 'message' => 'success_message');
+				echo json_encode($array);
+			} catch (S3Exception $e) {
+			   // Handle upload failure
+			   $array = array('success' => true, 'error' => 'Error uploading to S3: ', 'message' => 'hi');
+			   echo json_encode($array);
+			}
+		}
+	}
+
     }
 
     public function check_admission_digit()

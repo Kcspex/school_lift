@@ -224,7 +224,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                                 
                                                             }
                                                             ?>
-                                                            <img  src="<?php echo base_url() . "uploads/staff_images/" . $image ?>" />
+                                                            <img  src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/staff_images/<?php echo $image ?>" />
                                                         </div>
                                                         <div class="staffleft-content">
                                                             <h5><span data-toggle="tooltip" title="<?php echo $this->lang->line('name'); ?>" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing"><?php echo $staff["name"] . " " . $staff["surname"]; ?></span></h5>

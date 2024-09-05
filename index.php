@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -63,6 +64,7 @@
  
 
 	define('ENVIRONMENT', 'production');
+	//define('ENVIRONMENT', 'development');
 	
 	
 	if( ! ini_get('date.timezone') )
@@ -305,3 +307,4 @@ switch (ENVIRONMENT)
  * And away we go...
  */
 require_once BASEPATH.'core/CodeIgniter.php';
+//echo BASEPATH;

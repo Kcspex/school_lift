@@ -73,7 +73,7 @@
                                 $selectedEmerging= '';
                             }
                             
-                            if($rowGetRemark == 'Exceeding ')
+                            if($rowGetRemark == 'Exceeding')
                             {
                                 $selectedExceeding = 'selected';
                             }

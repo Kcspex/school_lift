@@ -138,7 +138,6 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript">
 
-
     $(document).ready(function () {
 
         var class_id = $('#class_id').val();

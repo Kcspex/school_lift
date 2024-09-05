@@ -183,7 +183,7 @@ class Studentfee extends Admin_Controller
                 $row[] = $student->section;
                 $row[] = $student->admission_no;
                 $row[] = $student->lastname. ' '. $student->firstname;
-                //$row[] = $student->father_name;
+                $row[] = $student->father_name;
                 $row[] = $this->customlib->dateformat($student->dob);
                 $row[] = $student->guardian_phone;
                 $row[] = "<a href=" . site_url('studentfee/addfee/' . $student->student_session_id) . "  class='btn btn-info btn-xs'>" . $this->lang->line('collect_fees') . "</a>";

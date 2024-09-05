@@ -6,7 +6,7 @@
         <title><?php echo $this->customlib->getAppName(); ?></title>        
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <meta name="theme-color" content="#424242" />
-        <link href="<?php echo base_url(); ?>uploads/school_content/admin_small_logo/<?php $this->setting_model->getAdminsmalllogo();?>" rel="shortcut icon" type="image/x-icon">
+        <link href="https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_content/admin_small_logo/<?php $this->setting_model->getAdminsmalllogo();?>" rel="shortcut icon" type="image/x-icon">
         <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css">
        
 
@@ -114,8 +114,8 @@ if (!$this->config->item('SSLK') == "") {
         <div class="wrapper">
             <header class="main-header" id="alert">              
                 <a href="<?php echo base_url(); ?>user/user/dashboard" class="logo">
-                    <span class="logo-mini"><img src="<?php echo base_url(); ?>uploads/school_content/admin_small_logo/<?php $this->setting_model->getAdminsmalllogo();?>" alt="<?php echo $this->customlib->getAppName() ?>" /></span>
-                    <span class="logo-lg"><img src="<?php echo base_url(); ?>uploads/school_content/admin_logo/<?php $this->setting_model->getAdminlogo();?>" alt="<?php echo $this->customlib->getAppName() ?>" /></span>
+                    <span class="logo-mini"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php $this->setting_model->getAdminsmalllogo();?>" alt="<?php echo $this->customlib->getAppName() ?>" /></span>
+                    <span class="logo-lg"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php $this->setting_model->getAdminlogo();?>" alt="<?php echo $this->customlib->getAppName() ?>" /></span>
                 </a>         
                 <nav class="navbar navbar-static-top" role="navigation">                  
                     <a onclick="collapseSidebar()" href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -214,7 +214,7 @@ if($this->studentmodule_lib->hasActive('multi_class')){
                                         <a class="dropdown-toggle" style="padding: 15px 13px;" data-toggle="dropdown" href="#" aria-expanded="false">
                                             <?php if($sch_setting->student_photo){
                                                 ?>
-                                                <img src="<?php echo base_url() . $file; ?>" class="topuser-image" alt="User Image">
+                                                <img src="<?php echo 'https://schoollift.s3.us-east-2.amazonaws.com/' . $file; ?>" class="topuser-image" alt="User Image">
                                                 <?php
                                             }?>
                                             
@@ -226,7 +226,7 @@ if($this->studentmodule_lib->hasActive('multi_class')){
                                                     <div class="ssuserleft">  
                                                     <?php if($sch_setting->student_photo){
                                                 ?> 
-                                                        <img src="<?php echo base_url() . $file; ?>" alt="User Image">
+                                                        <img src="<?php echo 'https://schoollift.s3.us-east-2.amazonaws.com/' . $file; ?>" alt="User Image">
                                                     <?php } ?>
                                                     </div>
 

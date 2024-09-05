@@ -9,9 +9,8 @@ include ('../database/config.php');
     $session = $_POST['session'];
     
     $term = $_POST['term'];
-    
+    echo $classsection;
     $subjects = $_POST['subjects'];
-    
     $sqlGetstudent_session = "SELECT * FROM `student_session` INNER JOIN students ON student_session.student_id=students.id WHERE session_id='$session' AND class_id = '$classid' AND section_id = '$classsectionactual'";
     
     $queryGetstudent_session = mysqli_query($link, $sqlGetstudent_session);
@@ -21,7 +20,7 @@ include ('../database/config.php');
     if($countGetstudent_session > 0)
     {
         do{
-            echo $studentid = $rowGetstudent_session['student_id'];
+            $studentid = $rowGetstudent_session['student_id'];
             
             $sqlGetscore = "SELECT * FROM `score` WHERE StudentID='$studentid' AND ClassID = '$classid' AND SectionID = '$classsectionactual' AND SubjectID = '$subjects' AND Session = '$session' AND Term = '$term'";
             $queryGetscore = mysqli_query($link, $sqlGetscore);
@@ -34,17 +33,15 @@ include ('../database/config.php');
             }
             else
             {
-                
+               
                 $sqlInsert =("INSERT INTO `score` (`StudentID`, `ClassID`, `SectionID`, `SubjectID`, `Session`, `Term`) 
                 VALUES ('$studentid','$classid','$classsectionactual','$subjects','$session','$term')");
-                
-                if(mysqli_query($link,$sqlInsert))
+
+                if(mysqli_query($link, $sqlInsert))
                 {
-                    
                 }
                 else
                 {
-                    
                 }
                 
             }

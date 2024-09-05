@@ -68,7 +68,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                         ?>
                                         <div class="studentname">
                                             <a  href="<?php echo base_url() . "admin/staff/profile/" . $svalue["id"] ?>">
-                                                <div class="icon"><img src="<?php echo base_url() . "uploads/staff_images/" . $image; ?>" alt="User Image"></div>
+                                                <div class="icon"><img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/staff_images/<?php echo $image; ?>" alt="User Image"></div>
                                                 <div class="student-tittle"><?php echo $svalue['name'] . " " . $svalue['surname']; ?></div></a>
                                         </div>
                                         <?php
@@ -106,7 +106,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                             
                         }
                         ?>
-                        <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url() . "uploads/staff_images/" . $file ?>" alt="User profile picture">
+                        <img class="profile-user-img img-responsive img-circle" src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/staff_images/<?php echo $file ?>" alt="User profile picture">
                         <h3 class="profile-username text-center"><?php echo $staff['name'] . " " . $staff['surname']; ?></h3>
 <?php if($staff['user_type']=='Teacher'){ ?>
                         

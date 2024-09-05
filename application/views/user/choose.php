@@ -205,13 +205,21 @@ foreach ($student_lists as $student_key => $student_value) {
 </html>
 
 <script type="text/javascript">
+    $('.clschg').click(function(){
+        var staffid = $(this).val() // Replace 'your_staff_id_value' with the actual value you want to store
+        localStorage.setItem('kidid', staffid);
+      
+    })
     $('body').on('click','#choosechild',function () {
         
         // var username = $('.form-username').val();
         // var password = $('.form-password').val();
         // var utype = 'Admin';
         
-        alert('working');
+
+    // Set the value in localStorage
+    
+
         
         // $.ajax({
         //     type: "POST",

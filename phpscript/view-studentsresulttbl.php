@@ -26,7 +26,13 @@
     
     $reltypenew = $rowGetassigncatoclass['ResultType'];
     
-    if($rolefirst == 'student'){
+    if($rolefirst == 'parent'){
+        $student_id_sql = "SELECT student_id FROM student_session WHERE id = '$staffid'";
+        $student_id_sql_2 = mysqli_query($link, $student_id_sql);
+        $staffid = mysqli_fetch_assoc($student_id_sql_2)['student_id'];
+    }
+    
+    if($rolefirst == 'student' || $rolefirst == 'parent'){
         
         if($reltype == 'cummulative')
         {
@@ -88,18 +94,18 @@
                         
                         if($reltypenew == 'british')
                         {
-                            $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `britishresult` INNER JOIN students ON britishresult.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND Term = '$term' AND britishresult.StudentID='$staffid'";
+                            $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `britishresult` INNER JOIN students ON britishresult.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND Term = '$term' AND britishresult.StudentID='$staffid' AND students.is_active = 'yes'";
                             
                         }
                         else
                         {
                             if($reltype == 'cummulative')
                             {
-                                $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `score` INNER JOIN students ON score.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND score.StudentID='$staffid'";
+                                $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `score` INNER JOIN students ON score.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND score.StudentID='$staffid' AND students.is_active = 'yes'";
                             }
                             else
                             {
-                                $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `score` INNER JOIN students ON score.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND Term = '$term' AND score.StudentID='$staffid'";
+                                $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `score` INNER JOIN students ON score.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND Term = '$term' AND score.StudentID='$staffid' AND students.is_active = 'yes'";
                             }
                         
                         }
@@ -206,18 +212,18 @@
                     
                     if($reltypenew == 'british')
                     {
-                        $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `britishresult` INNER JOIN students ON britishresult.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND Term = '$term'";
+                        $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `britishresult` INNER JOIN students ON britishresult.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND Term = '$term' AND students.is_active = 'yes'";
                         
                     }
                     else
                     {
                         if($reltype == 'cummulative')
                         {
-                            $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `score` INNER JOIN students ON score.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew'";
+                            $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `score` INNER JOIN students ON score.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND students.is_active = 'yes'";
                         }
                         else
                         {
-                            $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `score` INNER JOIN students ON score.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND Term = '$term'";
+                            $sqlGetstudent_session = "SELECT DISTINCT StudentID,lastname,middlename,firstname,admission_no FROM `score` INNER JOIN students ON score.StudentID=students.id AND `Session`='$session' AND ClassID = '$classid' AND SectionID = '$sectionnew' AND Term = '$term' AND students.is_active = 'yes'";
                         }
                     
                     }

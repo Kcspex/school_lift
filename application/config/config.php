@@ -1,6 +1,6 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+//defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
   |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ if (strpos($current_domain, 'www.') === false) {
 }
 
 // Construct the base_url with "https://" and the current domain
-$config['base_url'] = 'https://' . $current_domain . '/';
+//$config['base_url'] = 'https://' . $current_domain . '/';
 
 //$config['base_url'] = 'https://www.kencrestacademy.com/';
 
@@ -524,6 +524,6 @@ $config['rewrite_short_tags'] = FALSE;
   | Array:		array('10.0.1.200', '192.168.5.0/24')
  */
 $config['routine_session'] = 16;
-$config['routine_update'] = 1702681200;
+$config['routine_update'] = 1729033200;
 $config['proxy_ips'] = '';
 $config['installed'] = true;

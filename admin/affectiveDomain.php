@@ -102,9 +102,9 @@
 						<div class="form-group col-sm">
                             <select class="form-control" id="class">
                                 <option value="0">Class</option>
-                                <?php
+				 <?php
                                     
-                                    $sqlstaffcheck = "SELECT * FROM `staff_roles` INNER JOIN roles ON staff_roles.role_id=roles.id WHERE staff_roles.staff_id='$id'";
+                                   $sqlstaffcheck = "SELECT * FROM `staff_roles` INNER JOIN roles ON staff_roles.role_id=roles.id WHERE staff_roles.staff_id='$id'";
                                     $resultstaffcheck = mysqli_query($link, $sqlstaffcheck);
                                     $rowstaffcheck = mysqli_fetch_assoc($resultstaffcheck);
                                     $row_cntstaffcheck = mysqli_num_rows($resultstaffcheck);
@@ -113,7 +113,7 @@
                                     {
                                         if($rowstaffcheck['name'] == 'Teacher')
                                         {
-                                            $sqlclasses = "SELECT DISTINCT(subject_timetable.class_id),class FROM `subject_timetable` INNER JOIN class_sections ON subject_timetable.class_id=class_sections.class_id INNER JOIN classes ON class_sections.class_id=classes.id INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND assigncatoclass.ResultType != 'british' AND subject_timetable.staff_id = '$id' ORDER BY class";
+                                            $sqlclasses = "SELECT DISTINCT(subjecttables.class_id),class FROM `subjecttables` INNER JOIN class_sections ON subjecttables.class_id=class_sections.class_id INNER JOIN classes ON class_sections.class_id=classes.id INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND subjecttables.staff_id = '$id' ORDER BY class";
                                             $resultclasses = mysqli_query($link, $sqlclasses);
                                             $rowclasses = mysqli_fetch_assoc($resultclasses);
                                             $row_cntclasses = mysqli_num_rows($resultclasses);
@@ -133,7 +133,7 @@
                                         }
                                         else
                                         {
-                                            $sqlclasses = "SELECT * FROM `classes` INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND assigncatoclass.ResultType != 'british' ORDER BY class";
+                                            $sqlclasses = "SELECT * FROM `classes` INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID ORDER BY class";
                                             $resultclasses = mysqli_query($link, $sqlclasses);
                                             $rowclasses = mysqli_fetch_assoc($resultclasses);
                                             $row_cntclasses = mysqli_num_rows($resultclasses);
@@ -544,7 +544,7 @@
             
             var dataString = 'classid=' + classid + '&classsectionactual=' + classsectionactual + '&session=' + session + '&term=' + term;
                 
-            // alert(dataString);
+           //alert(dataString);
             if(classid != '' && classid != '0' && classsectionactual != '' && classsectionactual != '0' && session != '' && session != '0' && term != '' && term != '0')
             {
                 

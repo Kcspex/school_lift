@@ -23,7 +23,7 @@ if (!empty($students->data)) {
              <a href="<?php echo base_url(); ?>student/view/<?php echo $student->id ?>">
            <?php if ($sch_setting->student_photo) {
             ?>
-           <img class="img-responsive img-thumbnail width150" alt="<?php echo $student->firstname . " " . $student->lastname ?>" src="<?php echo base_url() . $image; ?>" alt="Image">
+           <img class="img-responsive img-thumbnail width150" alt="<?php echo $student->firstname . " " . $student->lastname ?>" src="<?php echo 'https://schoollift.s3.us-east-2.amazonaws.com/' . $image; ?>" alt="Image">
            <?php
 }
         ?></a>

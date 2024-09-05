@@ -25,5 +25,5 @@
 
 	$sqlUpdateScore ="UPDATE `score` SET `Exam` = '$exam', `CA1` = '$ca1', `CA2` = '$ca2', `CA3` = '$ca3', `CA4` = '$ca4', `CA5` = '$ca5', `CA6` = '$ca6', `CA7` = '$ca7', `CA8` = '$ca8', `CA9` = '$ca9', `CA10` = '$ca10' WHERE `ID` = '$ID' AND Term = '$term' AND Session = '$session'";
 	$queryUpdateScore = mysqli_query($link, $sqlUpdateScore);
-
+	echo $sqlUpdateScore;
 ?>

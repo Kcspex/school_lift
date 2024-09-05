@@ -192,7 +192,7 @@
 
             <div class="modal-content">
 
-                <div class="modal-header">
+                <div class="modal-header pub-result">
                     <h6 style="margin-left: 25%;" class="modal-title" id="exampleModalLabel">Publish Result For Session And Term</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -241,24 +241,25 @@
 	<script src="../assets/js/vfs_fonts.js"></script>
 
     <script>
+        $(document).ready(function(){
+            var rolefirstold = '<?php echo $rolefirst ; ?>';
+            if (rolefirstold == 'parent'){
+                $('.pub-result').hide()
+            }
+        })
         
         $("body").on("change", "#session", function(){
-  
             var rolefirstold = '<?php echo $rolefirst ; ?>';
-            
+            var staffid = "<?php echo $id; ?>";
             if(rolefirstold == 'parent')
             {
-                var rolefirst = 'student';
                 var staffid = localStorage.getItem('kidid');
                 
             }
-            else
-            {
-                var rolefirst = '<?php echo $rolefirst ; ?>';
-                var staffid = "<?php echo $id; ?>";
             
-            }
+            var rolefirst = '<?php echo $rolefirst ; ?>';
             
+          
             var session = $(this).val();
             
             $('#class').html('<option value="0">Loading...</option>');
@@ -268,7 +269,7 @@
 
                 var dataString = 'rolefirst=' + rolefirst + '&staffid=' + staffid + '&session=' + session;
                 
-                // alert(dataString);
+               // alert(dataString);
                 $.ajax({
                     url: '../../../phpscript/get-class-new.php',
                     method:'POST',
@@ -288,6 +289,7 @@
             }
         });
         
+        
         $("body").on("change", "#class", function(){
   
             var classid = $(this).val();
@@ -295,33 +297,28 @@
             $('#classsection').html('<option value="0">Loading...</option>');
             
             var rolefirstold = '<?php echo $rolefirst ; ?>';
-            
+            var staffid = "<?php echo $id; ?>";
             if(rolefirstold == 'parent')
             {
-                var rolefirst = 'student';
                 var staffid = localStorage.getItem('kidid');
                 
             }
-            else
-            {
-                var rolefirst = '<?php echo $rolefirst ; ?>';
-                var staffid = "<?php echo $id; ?>";
             
-            }
+            var rolefirst = '<?php echo $rolefirst ; ?>';
+            
             
             if(classid != '' && classid != '0')
             {
 
                 var dataString = 'classid=' + classid + '&staffid=' + staffid + '&rolefirst=' + rolefirst;
                 
-                // alert(dataString);
                 $.ajax({
                     url: '../../../phpscript/get-class-section.php',
                     method:'POST',
                     data:dataString,
                     
                     success: function(maindata2) {
-                    
+                        
                         $('#classsection').html(maindata2);
                         
                     }
@@ -358,19 +355,14 @@
             $('#tbl_data').html('<i class="fa fa-circle-o-notch fa-spin"></i> ...Processing');
             
             var rolefirstold = '<?php echo $rolefirst ; ?>';
-            
+            var staffid = "<?php echo $id; ?>";
             if(rolefirstold == 'parent')
             {
-                var rolefirst = 'student';
                 var staffid = localStorage.getItem('kidid');
                 
             }
-            else
-            {
-                var rolefirst = '<?php echo $rolefirst ; ?>';
-                var staffid = "<?php echo $id; ?>";
             
-            }
+            var rolefirst = '<?php echo $rolefirst ; ?>';
             
             var classsectionactual = $("#classsection").val();
             
@@ -409,13 +401,13 @@
                         data:dataString,
                         
                         success: function(maindata3) {
-                        
-                            $('.statusdiv').html(maindata3);
-                            
-                            var datee = $("#datee").val();
-                            
-                            $('#displaydte').val(datee);
-                                  
+                            if (rolefirstold != 'parent'){
+                                $('.statusdiv').html(maindata3);
+                                
+                                var datee = $("#datee").val();
+                                
+                                $('#displaydte').val(datee);
+                            }     
                                   
                         }
                     });
@@ -447,12 +439,13 @@
                             data:dataString,
                             
                             success: function(maindata3) {
-                            
-                                $('.statusdiv').html(maindata3);
-                                
-                                var datee = $("#datee").val();
-                                
-                                $('#displaydte').val(datee);
+                                if (rolefirstold != 'parent'){
+                                    $('.statusdiv').html(maindata3);
+                                    
+                                    var datee = $("#datee").val();
+                                    
+                                    $('#displaydte').val(datee);
+                                }
                                       
                             }
                         });

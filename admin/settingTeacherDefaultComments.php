@@ -1,4 +1,8 @@
-<?php include ('../database/config.php');?>
+<?php include ('../database/config.php');
+require '../vendor/autoload.php';
+use Aws\S3\S3Client;
+use Aws\S3\Exception\S3Exception;
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -336,11 +340,12 @@
                             $resultstaffsignature = mysqli_query($link, $sqlstaffsignature);
                             $rowstaffsignature = mysqli_fetch_assoc($resultstaffsignature);
                             $row_cntstaffsignature = mysqli_num_rows($resultstaffsignature);
-        
-                            if($row_cntstaffsignature > 0)
+           
+                 if($row_cntstaffsignature > 0)
                             {
-                                //Upload file to server
-                                if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
+                                
+				//Upload file to server
+                                if(move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
                                 {
                                     //Get current user ID from session
                                     
@@ -367,8 +372,9 @@
                             }
                             else
                             {
+				
                                 //Upload file to server
-                                if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
+                                if(move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
                                 {
                                     //Get current user ID from session
                                     
@@ -460,11 +466,11 @@
                                 <div class="row">
                                     <div class="col">
                                         <label style="font-weight: 500;">Ranges:</label>
-                                        <input type="number" name="commentfrom" class="form-control" placeholder="example 80">
+                                        <input type="number" step=".01" name="commentfrom" class="form-control" placeholder="example 80">
                                     </div>
                                     <div class="col">
                                         <label style="font-weight: 500;">&nbsp;&nbsp;&nbsp;</label>
-                                      <input type="number" name="commentfromto" class="form-control" placeholder="example 100">
+                                      <input type="number" step=".01" name="commentfromto" class="form-control" placeholder="example 100">
                                     </div>
                                 </div>
                                 <div class="form-group">

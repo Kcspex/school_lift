@@ -8,7 +8,7 @@
         <title>Login : <?php echo $name; ?></title>
         <!--favican-->
         <!-- <link href="<?php echo base_url(); ?>backend/images/s-favican.png" rel="shortcut icon" type="image/x-icon"> -->
-        <link href="<?php echo base_url(); ?>uploads/school_content/admin_small_logo/<?php $this->setting_model->getAdminsmalllogo(); ?>" rel="shortcut icon" type="image/x-icon">
+        <link href="https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_content/admin_small_logo/<?php $this->setting_model->getAdminsmalllogo(); ?>" rel="shortcut icon" type="image/x-icon">
         <!-- CSS -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link rel="stylesheet" href="<?php echo base_url(); ?>backend/usertemplate/assets/bootstrap/css/bootstrap.min.css">
@@ -54,7 +54,7 @@
                                 <div class="loginbg loginradius login390">  
                                     <div class="form-top">
                                         <div class="form-top-left logowidth">
-                                            <img src="<?php echo base_url(); ?>uploads/school_content/admin_logo/<?php $this->setting_model->getAdminlogo(); ?>" />    
+                                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php $this->setting_model->getAdminlogo(); ?>" />    
                                         </div>
                                         <!-- <div class="form-top-right"><i class="fa fa-key"></i></div> -->
                                     </div>

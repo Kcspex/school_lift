@@ -8,7 +8,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <meta http-equiv="Cache-control" content="no-cache">
         <meta name="theme-color" content="#424242" />
-        <link href="<?php echo base_url(); ?>uploads/school_content/admin_small_logo/<?php $this->setting_model->getAdminsmalllogo();?>" rel="shortcut icon" type="image/x-icon">
+        <link href="https://schoollift.s3.us-east-2.amazonaws.com/<?php $this->setting_model->getAdminsmalllogo();?>" rel="shortcut icon" type="image/x-icon">
         
         <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/jquery.mCustomScrollbar.min.css">
@@ -110,8 +110,8 @@ if (!$this->config->item('SSLK') == "") {
 
             <header class="main-header" id="alert">
                 <a href="<?php echo base_url(); ?>admin/admin/dashboard" class="logo">
-                    <span class="logo-mini"><img src="<?php echo base_url(); ?>uploads/school_content/admin_small_logo/<?php $this->setting_model->getAdminsmalllogo();?>" alt="<?php echo $this->customlib->getAppName() ?>" /></span>
-                    <span class="logo-lg"><img src="<?php echo base_url(); ?>uploads/school_content/admin_logo/<?php $this->setting_model->getAdminlogo();?>" alt="<?php echo $this->customlib->getAppName() ?>" /></span>
+                    <span class="logo-mini"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php $this->setting_model->getAdminsmalllogo();?>" alt="<?php echo $this->customlib->getAppName() ?>" /></span>
+                    <span class="logo-lg"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php $this->setting_model->getAdminlogo();?>" alt="<?php echo $this->customlib->getAppName() ?>" /></span>
                 </a>
                 <nav class="navbar navbar-static-top" role="navigation">
                     <a onclick="collapseSidebar()"  class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -143,7 +143,7 @@ if (!$this->config->item('SSLK') == "") {
                             <div class="navbar-custom-menu">
                                 <?php if($this->rbac->hasPrivilege('language_switcher','can_view')){
                                     ?>
-                                    <div class="langdiv"><select class="languageselectpicker" onchange="set_languages(this.value)"  type="text" id="languageSwitcher" >
+                                   <div class="langdiv"><select class="languageselectpicker" onchange="set_languages(this.value)"  type="text" id="languageSwitcher" >
                                           
                                            <?php $this->load->view('admin/language/languageSwitcher')?>
 
@@ -234,14 +234,15 @@ if (!empty($image)) {
 ?>
                                     <li class="dropdown user-menu">
                                         <a class="dropdown-toggle" style="padding: 15px 13px;" data-toggle="dropdown" href="#" aria-expanded="false">
-                                            <img src="<?php echo base_url() . $file; ?>" class="topuser-image" alt="User Image">
-                                        </a>
+                                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $file; ?>" class="topuser-image" alt="User Image">
+			                </a>
                                         <ul class="dropdown-menu dropdown-user menuboxshadow">
                                             <li>
                                                 <div class="sstopuser">
                                                     <div class="ssuserleft">
-                                                        <a href="<?php echo base_url() . "admin/staff/profile/" . $id ?>"><img src="<?php echo base_url() . $file; ?>" alt="User Image"></a>
-                                                    </div>
+                                            		 <a href="<?php echo base_url() . "admin/staff/profile/" . $id ?>"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $file; ?>" alt="User Image"></a>
+                                                    
+					            </div>
 
                                                     <div class="sstopuser-test">
                                                         <h4 class="text-capitalize"><?php echo $this->customlib->getAdminSessionUserName(); ?></h4>

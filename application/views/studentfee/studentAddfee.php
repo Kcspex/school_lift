@@ -49,7 +49,7 @@ foreach ($studentlistbysection as $stkey => $stvalue) {
             ?>
                                         <div class="studentname">
                                             <a class="" href="<?php echo base_url() . "studentfee/addfee/" . $stvalue["id"] ?>">
-                                                <div class="icon"><img src="<?php echo base_url() . $stvalue["image"]; ?>" alt="User Image"></div>
+                                                <div class="icon"><img src="<?php echo 'https://schoollift.s3.us-east-2.amazonaws.com/' . $stvalue["image"]; ?>" alt="User Image"></div>
                                                 <div class="student-tittle"><?php echo $stvalue["firstname"] . " " . $stvalue["lastname"]; ?></div></a>
                                         </div>
                                         <?php
@@ -100,9 +100,9 @@ foreach ($studentlistbysection as $stkey => $stvalue) {
                                     <div class="col-md-2">
                                         <img width="115" height="115" class="round5" src="<?php
 if (!empty($student['image'])) {
-    echo base_url() . $student['image'];
+    echo 'https://schoollift.s3.us-east-2.amazonaws.com/' . $student['image'];
 } else {
-    echo base_url() . "uploads/student_images/no_image.png";
+    echo 'https://schoollift.s3.us-east-2.amazonaws.com/' . "uploads/student_images/no_image.png";
 }
 ?>" alt="No Image">
                                     </div>

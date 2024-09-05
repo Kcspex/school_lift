@@ -99,11 +99,12 @@
                         </div>
                         
 						<div class="form-group col-sm">
-                            <select class="form-control" id="class">
+
+							<select class="form-control" id="class">
                                 <option value="0">Class</option>
                                 <?php
                                     
-                                    $sqlstaffcheck = "SELECT * FROM `staff_roles` INNER JOIN roles ON staff_roles.role_id=roles.id WHERE staff_roles.staff_id='$id'";
+                                   $sqlstaffcheck = "SELECT * FROM `staff_roles` INNER JOIN roles ON staff_roles.role_id=roles.id WHERE staff_roles.staff_id='$id'";
                                     $resultstaffcheck = mysqli_query($link, $sqlstaffcheck);
                                     $rowstaffcheck = mysqli_fetch_assoc($resultstaffcheck);
                                     $row_cntstaffcheck = mysqli_num_rows($resultstaffcheck);
@@ -112,7 +113,7 @@
                                     {
                                         if($rowstaffcheck['name'] == 'Teacher')
                                         {
-                                            $sqlclasses = "SELECT DISTINCT(subject_timetable.class_id),class FROM `subject_timetable` INNER JOIN class_sections ON subject_timetable.class_id=class_sections.class_id INNER JOIN classes ON class_sections.class_id=classes.id INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND assigncatoclass.ResultType != 'british' AND subject_timetable.staff_id = '$id' ORDER BY class";
+                                            $sqlclasses = "SELECT DISTINCT(subjecttables.class_id),class FROM `subjecttables` INNER JOIN class_sections ON subjecttables.class_id=class_sections.class_id INNER JOIN classes ON class_sections.class_id=classes.id INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND subjecttables.staff_id = '$id' ORDER BY class";
                                             $resultclasses = mysqli_query($link, $sqlclasses);
                                             $rowclasses = mysqli_fetch_assoc($resultclasses);
                                             $row_cntclasses = mysqli_num_rows($resultclasses);
@@ -132,7 +133,7 @@
                                         }
                                         else
                                         {
-                                            $sqlclasses = "SELECT * FROM `classes` INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID AND assigncatoclass.ResultType != 'british' ORDER BY class";
+                                            $sqlclasses = "SELECT * FROM `classes` INNER JOIN assigncatoclass ON classes.id=assigncatoclass.ClassID ORDER BY class";
                                             $resultclasses = mysqli_query($link, $sqlclasses);
                                             $rowclasses = mysqli_fetch_assoc($resultclasses);
                                             $row_cntclasses = mysqli_num_rows($resultclasses);
@@ -156,7 +157,7 @@
                                     }
                                         
                                 ?>
-                            </select>
+                            </select>	
 							<!--They would need to select class and section in-order to display the Exam Names assigned to a particular class-->
 						</div>
 
@@ -604,25 +605,11 @@
             $("#ca2_"+ID).hide();
             $("#ca3_"+ID).hide();
             $("#ca4_"+ID).hide();
-            $("#ca5_"+ID).hide();
-            $("#ca6_"+ID).hide();
-            $("#ca7_"+ID).hide();
-            $("#ca8_"+ID).hide();
-            $("#ca9_"+ID).hide();
-            $("#ca10_"+ID).hide();
-            $("#exam_"+ID).hide();
-            //Show all the input box
+
             $("#ca1_input_"+ID).fadeIn(1000);
             $("#ca2_input_"+ID).fadeIn(1000);
             $("#ca3_input_"+ID).fadeIn(1000);
             $("#ca4_input_"+ID).fadeIn(1000);
-            $("#ca5_input_"+ID).fadeIn(1000);
-            $("#ca6_input_"+ID).fadeIn(1000);
-            $("#ca7_input_"+ID).fadeIn(1000);
-            $("#ca8_input_"+ID).fadeIn(1000);
-            $("#ca9_input_"+ID).fadeIn(1000);
-            $("#ca10_input_"+ID).fadeIn(1000);
-            $("#exam_input_"+ID).fadeIn(1000);
             
         });
     
@@ -634,13 +621,6 @@
             var ca2 = parseFloat($("#ca2_input_"+ID).val());
             var ca3 = parseFloat($("#ca3_input_"+ID).val());
             var ca4 = parseFloat($("#ca4_input_"+ID).val());
-            var ca5 = parseFloat($("#ca5_input_"+ID).val());
-            var ca6 = parseFloat($("#ca6_input_"+ID).val());
-            var ca7 = parseFloat($("#ca7_input_"+ID).val());
-            var ca8 = parseFloat($("#ca8_input_"+ID).val());
-            var ca9 = parseFloat($("#ca9_input_"+ID).val());
-            var ca10 = parseFloat($("#ca10_input_"+ID).val());
-            var exam = parseFloat($("#exam_input_"+ID).val());
             
             var studname = $("#studname_"+ID).val();
             
@@ -648,13 +628,12 @@
             
             var session = $("#session").val();
     
-            var totall = (ca1 + ca2 + ca3 + ca4 + ca5 + ca6 + ca7 + ca8 + ca9 + ca10 + exam);
             
-            var dataString = 'ID='+ ID + '&ca1='+ ca1 + '&ca2='+ ca2 + '&ca3='+ ca3 + '&ca4='+ ca4 + '&ca5='+ ca5 + '&ca6='+ ca6 + '&ca7='+ ca7 + '&ca8='+ ca8 + '&ca9='+ ca9 + '&ca10='+ ca10 + '&exam='+ exam + '&term='+ term + '&session='+ session;
+            var dataString = 'ID='+ ID + '&ca1='+ ca1 + '&ca2='+ ca2 + '&ca3='+ ca3 + '&ca4='+ ca4 + '&term='+ term + '&session='+ session;
             //$("#ca1_"+ID).html('>>>'); // Loading image
             
             // alert(dataString);
-            if(totall > 100)
+            if(0)
             {
                 $('#displaysmg').html('<div class="alert alert-warning" role="alert">Sorry but the total score for '+studname+' is greater than 100.</div>');
             }
@@ -664,26 +643,15 @@
                 
                 $.ajax({
                     type: "POST",
-                    url: "../../../phpscript/updateStudentScoreLiveTable.php",
+                    url: "../../../phpscript/manualattendance/updateStudentScoreLiveTable.php",
                     data: dataString,
                     cache: false,
                     success: function(result)
-                        {
+                        {	//alert(result)
                             $("#ca1_"+ID).html(ca1);
                             $("#ca2_"+ID).html(ca2);
                             $("#ca3_"+ID).html(ca3);
                             $("#ca4_"+ID).html(ca4);
-                            $("#ca5_"+ID).html(ca5);
-                            $("#ca6_"+ID).html(ca6);
-                            $("#ca7_"+ID).html(ca7);
-                            $("#ca8_"+ID).html(ca8);
-                            $("#ca9_"+ID).html(ca9);
-                            $("#ca10_"+ID).html(ca10);
-                            $("#exam_"+ID).html(exam);
-    
-                            var total = ca1 + ca2 + ca3 + ca4 + ca5 + ca6 + ca7 + ca8 + ca9 + ca10 + exam;
-    
-                            $("#total_"+ID).html(total);
     
                         }
                 });

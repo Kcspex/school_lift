@@ -1,7 +1,4 @@
-<?php
-$currency_symbol = $this->customlib->getSchoolCurrencyFormat();
-?>
-<style type="text/css">
+<?php $currency_symbol = $this->customlib->getSchoolCurrencyFormat(); ?> <style type="text/css">
     /*.table td:last-child, th:last-child {float: none;text-align: start;}*/
 </style>
 <div class="content-wrapper">
@@ -55,13 +52,13 @@ foreach ($studentlistbysection as $stkey => $stvalue) {
                 ?>
                                                 <img src="<?php
 if (!empty($stvalue["image"])) {
-                    echo base_url() . $stvalue["image"];
+                    echo "https://schoollift.s3.us-east-2.amazonaws.com/" . $stvalue["image"];
                 } else {
 
                     if ($student['gender'] == 'Female') {
-                        echo base_url() . "uploads/student_images/default_female.jpg";
+                        echo "https://schoollift.s3.us-east-2.amazonaws.com/" . "uploads/student_images/default_female.jpg";
                     } elseif ($student['gender'] == 'Male') {
-                        echo base_url() . "uploads/student_images/default_male.jpg";
+                        echo "https://schoollift.s3.us-east-2.amazonaws.com/" . "uploads/student_images/default_male.jpg";
                     }
 
                 }
@@ -108,13 +105,13 @@ if ($student["is_active"] == "no") {
     ?>
                         <img class="profile-user-img img-responsive img-circle" src="<?php
 if (!empty($student["image"])) {
-        echo base_url() . $student["image"];
+        echo "https://schoollift.s3.us-east-2.amazonaws.com/" . $student["image"];
     } else {
 
         if ($student['gender'] == 'Female') {
-            echo base_url() . "uploads/student_images/default_female.jpg";
+            "https://schoollift.s3.us-east-2.amazonaws.com/" . "uploads/student_images/default_female.jpg";
         } else {
-            echo base_url() . "uploads/student_images/default_male.jpg";
+            "https://schoollift.s3.us-east-2.amazonaws.com/" . "uploads/student_images/default_male.jpg";
         }
 
     }
@@ -186,7 +183,7 @@ foreach ($siblings as $sibling_key => $sibling_value) {
                                 <div class="box box-widget widget-user-2">
                                     <!-- Add the bg color to the header using any of the bg-* classes -->
                                     <div class="siblingview">
-                                        <img class="" src="<?php echo base_url() . $sibling_value->image; ?>" alt="User Avatar">
+                                        <img class="" src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $sibling_value->image; ?>" alt="User Avatar">
                                         <h4><a href="<?php echo site_url('student/view/' . $sibling_value->id) ?>"><?php echo $this->customlib->getFullName($sibling_value->firstname, $sibling_value->middlename, $sibling_value->lastname, $sch_setting->middlename, $sch_setting->lastname); ?></a></h4>
                                     </div>
                                     <div class="box-footer no-padding">
@@ -462,9 +459,9 @@ if ($sch_setting->student_note) {
                                             <td class="col-md-5"><?php echo $student['father_name']; ?></td>
                                             <td rowspan="3"><img class="profile-user-img img-responsive img-circle" src="<?php
 if (!empty($student["father_pic"])) {
-            echo base_url() . $student["father_pic"];
+            echo "https://schoollift.s3.us-east-2.amazonaws.com/" . $student["father_pic"];
         } else {
-            echo base_url() . "uploads/student_images/no_image.png";
+            echo "https://schoollift.s3.us-east-2.amazonaws.com/" . "uploads/student_images/no_image.png";
         }
         ?>" ></td>
                                         </tr>
@@ -485,9 +482,9 @@ if (!empty($student["father_pic"])) {
                                             <td><?php echo $student['mother_name']; ?></td>
                                             <td rowspan="3"><img class="profile-user-img img-responsive img-circle" src="<?php
 if (!empty($student["mother_pic"])) {
-            echo base_url() . $student["mother_pic"];
+            echo "https://schoollift.s3.us-east-2.amazonaws.com/" . $student["mother_pic"];
         } else {
-            echo base_url() . "uploads/student_images/no_image.png";
+            echo "https://schoollift.s3.us-east-2.amazonaws.com/" . "uploads/student_images/no_image.png";
         }
         ?>" ></td>
                                         </tr>
@@ -513,9 +510,9 @@ if (!empty($student["mother_pic"])) {
                                               <?php if ($sch_setting->guardian_pic) {
         ?><img class="profile-user-img img-responsive img-circle" src="<?php
 if (!empty($student["guardian_pic"])) {
-            echo base_url() . $student["guardian_pic"];
+            echo "https://schoollift.s3.us-east-2.amazonaws.com/" . $student["guardian_pic"];
         } else {
-            echo base_url() . "uploads/student_images/no_image.png";
+            echo "https://schoollift.s3.us-east-2.amazonaws.com/" . "uploads/student_images/no_image.png";
         }
         ?>" > <?php }?></td>
 

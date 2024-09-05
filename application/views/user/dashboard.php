@@ -38,9 +38,9 @@ foreach ($unread_notifications as $notice_key => $notice_value) {
     ?>
                   <img class="profile-user-img img-responsive img-circle" src="<?php
 if (!empty($student['image'])) {
-        echo base_url() . $student['image'];
+        echo "https://schoollift.s3.us-east-2.amazonaws.com/" . $student['image'];
     } else {
-        echo base_url() . "uploads/student_images/no_image.png";
+        echo "https://schoollift.s3.us-east-2.amazonaws.com/" . "uploads/student_images/no_image.png";
     }
     ?>" alt="User profile picture">
 <?php }?>
@@ -223,9 +223,9 @@ if (is_string($field_value->field_value) && is_array(json_decode($field_value->f
             ?>
                                  <td rowspan="3"><img class="profile-user-img img-responsive img-circle" src="<?php
 if (!empty($student["father_pic"])) {
-                echo base_url() . $student["father_pic"];
+                echo "https://schoollift.s3.us-east-2.amazonaws.com/" . $student["father_pic"];
             } else {
-                echo base_url() . "uploads/student_images/no_image.png";
+                echo "https://schoollift.s3.us-east-2.amazonaws.com/" . "uploads/student_images/no_image.png";
             }
             ?>" ></td>
                  <?php }?>
@@ -249,9 +249,9 @@ if (!empty($student["father_pic"])) {
                                  <td rowspan="3"> <?php if ($sch_setting->mother_pic) {
         ?><img class="profile-user-img img-responsive img-circle" src="<?php
 if (!empty($student["mother_pic"])) {
-            echo base_url() . $student["mother_pic"];
+            echo "https://schoollift.s3.us-east-2.amazonaws.com/" . $student["mother_pic"];
         } else {
-            echo base_url() . "uploads/student_images/no_image.png";
+            echo "https://schoollift.s3.us-east-2.amazonaws.com/" . "uploads/student_images/no_image.png";
         }
         ?>" > <?php }?></td>
 
