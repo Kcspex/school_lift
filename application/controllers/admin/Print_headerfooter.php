@@ -38,46 +38,61 @@ class Print_headerfooter extends Admin_Controller {
         }
 
         if ($this->form_validation->run() == FALSE) {
-          
+
         } else {
-         
+            $id = $this->input->post('id');
+            // echo json_encode($array);
+
             if (isset($_FILES["header_image"]) && !empty($_FILES['header_image']['name'])) {
                 $fileInfo = pathinfo($_FILES["header_image"]["name"]);
+                $file_path = $_FILES["header_image"]["tmp_name"];
                 $img_name = 'header_image.' . $fileInfo['extension'];
 
                 if ($_POST['type'] == 'student_receipt') {
-
-                    $path = $this->setting_model->unlink_receiptheader();
-                    $path1 = "uploads/print_headerfooter/student_receipt/" . $path;
-                    $url = FCPATH . $path1;
-                    if (file_exists($url)) {
-                        unlink($url);
-                    }
-                    move_uploaded_file($_FILES["header_image"]["tmp_name"], "./uploads/print_headerfooter/student_receipt/" . $img_name);
-                } 
-                else if($_POST['type'] == 'online_admission_receipt') {                   
-                    $path = $this->setting_model->unlink_onlinereceiptheader();
-                    $path1 = "uploads/print_headerfooter/online_admission_receipt/" . $path;
-                    $url = FCPATH . $path1;
-                    if (file_exists($url)) {
-                        unlink($url);
-                    }
-                    move_uploaded_file($_FILES["header_image"]["tmp_name"], "./uploads/print_headerfooter/online_admission_receipt/" . $img_name);
+                    // $path = $this->setting_model->unlink_receiptheader();
+                    // $path1 = "uploads/print_headerfooter/student_receipt/" . $path;
+                    // $url = FCPATH . $path1;
+                    // if (file_exists($url)) {
+                    //     unlink($url);
+                    // }
+                    // move_uploaded_file($_FILES["header_image"]["tmp_name"], "./uploads/print_headerfooter/student_receipt/" . $img_name);
+                    $upload_result = upload_to_s3($file_path, $fileInfo, $img_name, 'uploads/print_headerfooter/student_receipt/');
+                }
+                else if($_POST['type'] == 'online_admission_receipt') {
+                    // $path = $this->setting_model->unlink_onlinereceiptheader();
+                    // $path1 = "uploads/print_headerfooter/online_admission_receipt/" . $path;
+                    // $url = FCPATH . $path1;
+                    // if (file_exists($url)) {
+                    //     unlink($url);
+                    // }
+                    // move_uploaded_file($_FILES["header_image"]["tmp_name"], "./uploads/print_headerfooter/online_admission_receipt/" . $img_name);
+                    $upload_result = upload_to_s3($file_path, $fileInfo, $img_name, 'uploads/print_headerfooter/online_admission_receipt/');
                 }
                 else {
-                   
-                    $path = $this->setting_model->unlink_payslipheader();
-                    $path1 = "uploads/print_headerfooter/staff_payslip/" . $path;
-                    $url = FCPATH . $path1;
-                    if (file_exists($url)) {
-                        unlink($url);
-                    }
-                    move_uploaded_file($_FILES["header_image"]["tmp_name"], "./uploads/print_headerfooter/staff_payslip/" . $img_name);
+
+                    // $path = $this->setting_model->unlink_payslipheader();
+                    // $path1 = "uploads/print_headerfooter/staff_payslip/" . $path;
+                    // $url = FCPATH . $path1;
+                    // if (file_exists($url)) {
+                    //     unlink($url);
+                    // }
+                    // move_uploaded_file($_FILES["header_image"]["tmp_name"], "./uploads/print_headerfooter/staff_payslip/" . $img_name);
+                    $upload_result = upload_to_s3($file_path, $fileInfo, $img_name, 'uploads/print_headerfooter/staff_payslip/');
                 }
 
-                $data = array('print_type' => $_POST['type'], 'header_image' => $img_name, 'footer_content' => $_POST[$message], 'created_by' => $this->customlib->getStaffID());
-              
-                $this->setting_model->add_printheader($data);
+                if ($upload_result['success']) {
+                    // Save the S3 key in the database
+                    // $data_record = array('id' => $id, 'image' => $upload_result['s3_key']);
+                    // $this->setting_model->add($data_record);
+
+                    $data = array('print_type' => $_POST['type'], 'header_image' => $upload_result['s3_key'], 'footer_content' => $_POST[$message], 'created_by' => $this->customlib->getStaffID());
+                    $this->setting_model->add_printheader($data);
+
+                    // $array = array('success' => true, 'error' => '', 'message' => 'File uploaded successfully.');
+                } else {
+                    $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $upload_result['error'] . '</div>');
+                    // $array = array('success' => false, 'error' => $upload_result['error'], 'message' => 'Upload failed.');
+                }
             }
 
             $data = array('print_type' => $_POST['type'], 'footer_content' => $_POST[$message], 'created_by' => $this->customlib->getStaffID());
@@ -89,7 +104,7 @@ class Print_headerfooter extends Admin_Controller {
     }
 
     public function handle_upload($str, $is_required) {
-        
+
         $image_validate = $this->config->item('image_validate');
         $result = $this->filetype_model->get();
         if (isset($_FILES["header_image"]) && !empty($_FILES['header_image']['name']) && $_FILES["header_image"]["size"] > 0) {
@@ -100,7 +115,7 @@ class Print_headerfooter extends Admin_Controller {
 
             $allowed_extension = array_map('trim', array_map('strtolower', explode(',', $result->image_extension)));
             $allowed_mime_type = array_map('trim', array_map('strtolower', explode(',', $result->image_mime)));
-            $ext               = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));          
+            $ext               = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mtype = finfo_file($finfo, $_FILES['header_image']['tmp_name']);
