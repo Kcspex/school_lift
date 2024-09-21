@@ -63,22 +63,34 @@ class Frontcms extends Admin_Controller {
 
             if (isset($_FILES["logo"]) && !empty($_FILES["logo"]['name'])) {
                 $newLogoName = $this->customlib->uniqueFileName('front_logo-', $_FILES["logo"]['name']);
-                $logo_dir = "./uploads/school_content/logo/" . $newLogoName;
-                if (move_uploaded_file($_FILES["logo"]["tmp_name"], $logo_dir)) {
-                    $data['logo'] = $logo_dir;
-                    unlink($frontcmslist->logo);
-                }
+                $file_info = $_FILES["logo"]['name'];
+                $file_path = $_FILES["logo"]["tmp_name"];
+                // $logo_dir = "./uploads/school_content/logo/" . $newLogoName;
+                $upload_result = upload_to_s3($file_path, $file_info, $newLogoName, 'uploads/school_content/logo/');
+                // if (move_uploaded_file($_FILES["logo"]["tmp_name"], $logo_dir)) {
+                //     $data['logo'] = $logo_dir;
+                //     unlink($frontcmslist->logo);
+                // }
             }
             if (isset($_FILES["logo"]) && !empty($_FILES["fav_icon"]['name'])) {
                 $newFavName = uniqid('front_fav_icon-', true) . '.' . strtolower(pathinfo($_FILES["fav_icon"]['name'], PATHINFO_EXTENSION));
-                $fav_dir = "./uploads/school_content/logo/" . $newFavName;
-                if (move_uploaded_file($_FILES["fav_icon"]["tmp_name"], $fav_dir)) {
-                    $data['fav_icon'] = $fav_dir;
-                    unlink($frontcmslist->fav_icon);
-                }
+                // $fav_dir = "./uploads/school_content/logo/" . $newFavName;
+                $file_info = $_FILES["logo"]['name'];
+                $file_path = $_FILES["logo"]["tmp_name"];
+                // if (move_uploaded_file($_FILES["fav_icon"]["tmp_name"], $fav_dir)) {
+                //     $data['fav_icon'] = $fav_dir;
+                //     unlink($frontcmslist->fav_icon);
+                // }
+                $upload_result = upload_to_s3($file_path, $file_info, $newFavName, '/uploads/school_content/logo/');
             }
-            $this->frontcms_setting_model->add($data);
-            $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');
+            if ($upload_result['success']) {
+
+              $this->frontcms_setting_model->add($data);
+              $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');
+            } else {
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $upload_result['error'] . '</div>');
+                // $array = array('success' => false, 'error' => $upload_result['error'], 'message' => 'Upload failed.');
+            }
             redirect('admin/frontcms');
         }
 

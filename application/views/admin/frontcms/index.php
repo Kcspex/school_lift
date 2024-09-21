@@ -84,14 +84,14 @@
                                             <div class="form-group">
                                                 <label class="col-sm-5 control-label"><?php echo $this->lang->line('logo'); ?> (369px X 76px)</label>
                                                 <div class="col-sm-7">
-                                                    <input type="file" class="filestyle form-control-file" name="logo" id="exampleInputFile" data-height="100" data-default-file="<?php echo base_url($frontcmslist->logo); ?>">
+                                                    <input type="file" class="filestyle form-control-file" name="logo" id="exampleInputFile" data-height="100" data-default-file="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo base_url($frontcmslist->logo); ?>">
                                                     <span class="text-danger"><?php echo form_error('logo'); ?></span>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-5 control-label"><?php echo $this->lang->line('favicon'); ?> (32px X 32px)</label>
                                                 <div class="col-sm-7">
-                                                    <input type="file" class="filestyle form-control-file" name="fav_icon" id="exampleInputFile" data-height="50" data-default-file="<?php echo base_url($frontcmslist->fav_icon); ?>">
+                                                    <input type="file" class="filestyle form-control-file" name="fav_icon" id="exampleInputFile" data-height="50" data-default-file="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo base_url($frontcmslist->fav_icon); ?>">
                                                 </div>
                                             </div>
 
@@ -118,8 +118,8 @@
                                                     <span class="text text-danger"></span>
                                                 </div>
                                             </div>
-											
-											
+
+
 
                                         </div><!--./col-md-7-->
                                         <div class="col-md-5 col-md-offset-1 col-sm-12">
@@ -171,7 +171,7 @@
                                                     <span class="text text-danger"></span>
                                                 </div>
 
-                                            </div>                                          
+                                            </div>
                                             <div class="form-group">
                                                 <label class="col-sm-5 control-label"><?php echo $this->lang->line('instagram_url'); ?> </label>
                                                 <div class="col-sm-7">

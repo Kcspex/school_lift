@@ -3,7 +3,6 @@
         <h1>
             <?php
             echo $this->lang->line('system_settings');
-
             ?> </h1>
     </section>
 
@@ -27,7 +26,6 @@
                         if ($this->session->flashdata('msg') != '') {
                             $msg = $this->session->flashdata('msg');
                             ?>
-
                             <?php echo $msg ?>
                         <?php } ?>
                         <?php echo $this->customlib->getCSRF(); ?>
