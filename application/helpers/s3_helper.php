@@ -20,10 +20,10 @@ if (!function_exists('upload_to_s3')) {
 
         // Extract file info
         $img_name = $domain . '.' . $img_name;
-        echo '<pre>';
-        print_r($fileInfo);
-        echo '<pre>';
-        die();
+        // echo '<pre>';
+        // print_r($fileInfo);
+        // echo '<pre>';
+        // die();
         $fileExtension = strtolower($fileInfo['extension']);
 
 

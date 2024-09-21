@@ -63,7 +63,7 @@ class Frontcms extends Admin_Controller {
 
             if (isset($_FILES["logo"]) && !empty($_FILES["logo"]['name'])) {
                 $newLogoName = $this->customlib->uniqueFileName('front_logo-', $_FILES["logo"]['name']);
-                $file_info = $_FILES["logo"]['name'];
+                $file_info = pathinfo($_FILES["logo"]['name']);
                 $file_path = $_FILES["logo"]["tmp_name"];
                 // $logo_dir = "./uploads/school_content/logo/" . $newLogoName;
                 $upload_result = upload_to_s3($file_path, $file_info, $newLogoName, 'uploads/school_content/logo/');
@@ -75,7 +75,7 @@ class Frontcms extends Admin_Controller {
             if (isset($_FILES["fav_icon"]) && !empty($_FILES["fav_icon"]['name'])) {
                 $newFavName = uniqid('front_fav_icon-', true) . '.' . strtolower(pathinfo($_FILES["fav_icon"]['name'], PATHINFO_EXTENSION));
                 // $fav_dir = "./uploads/school_content/logo/" . $newFavName;
-                $file_info = $_FILES["fav_icon"]['name'];
+                $file_info = pathinfo($_FILES["fav_icon"]['name']);
                 $file_path = $_FILES["fav_icon"]["tmp_name"];
                 // if (move_uploaded_file($_FILES["fav_icon"]["tmp_name"], $fav_dir)) {
                 //     $data['fav_icon'] = $fav_dir;
