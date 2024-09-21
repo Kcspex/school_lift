@@ -72,11 +72,11 @@ class Frontcms extends Admin_Controller {
                 //     unlink($frontcmslist->logo);
                 // }
             }
-            if (isset($_FILES["logo"]) && !empty($_FILES["fav_icon"]['name'])) {
+            if (isset($_FILES["fav_icon"]) && !empty($_FILES["fav_icon"]['name'])) {
                 $newFavName = uniqid('front_fav_icon-', true) . '.' . strtolower(pathinfo($_FILES["fav_icon"]['name'], PATHINFO_EXTENSION));
                 // $fav_dir = "./uploads/school_content/logo/" . $newFavName;
-                $file_info = $_FILES["logo"]['name'];
-                $file_path = $_FILES["logo"]["tmp_name"];
+                $file_info = $_FILES["fav_icon"]['name'];
+                $file_path = $_FILES["fav_icon"]["tmp_name"];
                 // if (move_uploaded_file($_FILES["fav_icon"]["tmp_name"], $fav_dir)) {
                 //     $data['fav_icon'] = $fav_dir;
                 //     unlink($frontcmslist->fav_icon);
