@@ -1,4 +1,6 @@
 <?php
+require  '/var/www/trixschool/vendor/autoload.php'; // Adjust the path as needed
+
 use Aws\S3\S3Client;
 use Aws\Exception\S3Exception;
 
