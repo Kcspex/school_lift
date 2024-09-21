@@ -15,7 +15,7 @@
                 <div class="nav-tabs-custom box box-primary theme-shadow">
 
                     <ul class="nav nav-tabs pull-right">
-                        
+
                         <li class="active"><a href="#tab_3" data-toggle="tab"><?php echo $this->lang->line('fees_receipt'); ?></a></li>
                         <li><a href="#tab_1" data-toggle="tab"><?php echo $this->lang->line('online_admission_receipt'); ?></a></li>
                         <li ><a href="#tab_4" data-toggle="tab"><?php echo $this->lang->line('payslip') ?></a></li>
@@ -29,7 +29,7 @@
                             ?>
 
                             <?php echo $msg ?>
-                        <?php } ?>    
+                        <?php } ?>
                         <?php echo $this->customlib->getCSRF(); ?>
                         <!-- /.tab-pane -->
                         <div class="tab-pane active" id="tab_3">
@@ -38,7 +38,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label><?php echo $this->lang->line('header') . " " . $this->lang->line('image') . " (2230px X 300px)"; ?></label>
-                                            <input id="documents" data-default-file="<?php echo base_url() ?>./uploads/print_headerfooter/student_receipt/<?php echo $result[1]['header_image'] ?>" placeholder="" type="file" class="filestyle form-control" data-height="180"  name="header_image">
+                                            <input id="documents" data-default-file="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $result[1]['header_image'] ?>" placeholder="" type="file" class="filestyle form-control" data-height="180"  name="header_image">
                                             <input  placeholder="" type="hidden" class="form-control" value="student_receipt" name="type">
                                             <span class="text-danger"><?php echo form_error('header_image'); ?></span>
                                         </div>
@@ -52,13 +52,13 @@
 
 
 
-                                    <div class="col-lg-12">         
+                                    <div class="col-lg-12">
                                         <div class="pull-right">
 
                                             <button type="submit" class="btn btn-primary " data-loading-text="<i class='fa fa-spinner fa-spin '></i> <?php echo $this->lang->line('save'); ?>"><?php echo $this->lang->line('save'); ?></button>
 
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -67,7 +67,7 @@
                         <div class="tab-pane" id="tab_4">
                             <form role="form" action="<?php echo site_url('admin/print_headerfooter/edit') ?>" class="" enctype="multipart/form-data" method="post">
                                 <div class="row">
-                                    <div class="col-md-12">     
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label><?php echo $this->lang->line('header') . " " . $this->lang->line('image') . " (2230px X 300px)"; ?></label>
                                             <input id="documents" data-default-file="<?php echo base_url() ?>./uploads/print_headerfooter/staff_payslip/<?php echo $result[0]['header_image'] ?>" placeholder="" type="file" class="filestyle form-control" data-height="180"  name="header_image">
@@ -86,8 +86,8 @@
                                         <div class="pull-right">
                                             <button type="submit" class="btn btn-primary" data-loading-text="<i class='fa fa-spinner fa-spin '></i> <?php echo $this->lang->line('save'); ?>"><?php echo $this->lang->line('save'); ?></button>
                                         </div>
-                                    </div>   
-                                </div>  
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <!-- /.tab-pane -->
@@ -96,7 +96,7 @@
                             <form role="form"  enctype="multipart/form-data" action="<?php echo site_url('admin/print_headerfooter/edit') ?>" class="" method="post">
                                 <div class="row">
                                     <div class="col-md-12">
-                                    
+
                                         <div class="form-group">
                                             <label><?php echo $this->lang->line('header') . " " . $this->lang->line('image') . " (2230px X 300px)"; ?></label>
                                             <input id="admission_documents" data-default-file="<?php echo base_url() ?>./uploads/print_headerfooter/online_admission_receipt/<?php echo $result[2]['header_image'] ?>" placeholder="" type="file" class="filestyle form-control" data-height="180"  name="header_image">
@@ -111,23 +111,23 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12">         
+                                    <div class="col-lg-12">
                                         <div class="pull-right">
                                             <button type="submit" class="btn btn-primary " data-loading-text="<i class='fa fa-spinner fa-spin '></i> <?php echo $this->lang->line('save'); ?>"><?php echo $this->lang->line('save'); ?></button>
 
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                             </form>
                         </div>
                         <!-- /.tab-pane -->
-                      
+
                     </div>
                     <!-- /.tab-content -->
                 </div>
             </div>
 
-        </div>  
+        </div>
     </section>
 </div>
 
@@ -141,5 +141,3 @@
 
     });
 </script>
-
-
