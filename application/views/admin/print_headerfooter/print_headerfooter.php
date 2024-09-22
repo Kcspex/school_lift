@@ -68,7 +68,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label><?php echo $this->lang->line('header') . " " . $this->lang->line('image') . " (2230px X 300px)"; ?></label>
-                                            <input id="documents" data-default-file="<?php echo base_url() ?>./uploads/print_headerfooter/staff_payslip/<?php echo $result[0]['header_image'] ?>" placeholder="" type="file" class="filestyle form-control" data-height="180"  name="header_image">
+                                            <input id="documents" data-default-file="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $result[0]['header_image'] ?>" placeholder="" type="file" class="filestyle form-control" data-height="180"  name="header_image">
                                             <input  placeholder="" type="hidden" class="form-control" value="staff_payslip" name="type">
                                             <span class="text-danger"><?php echo form_error('header_image'); ?></span>
                                         </div>
@@ -97,7 +97,7 @@
 
                                         <div class="form-group">
                                             <label><?php echo $this->lang->line('header') . " " . $this->lang->line('image') . " (2230px X 300px)"; ?></label>
-                                            <input id="admission_documents" data-default-file="<?php echo base_url() ?>./uploads/print_headerfooter/online_admission_receipt/<?php echo $result[2]['header_image'] ?>" placeholder="" type="file" class="filestyle form-control" data-height="180"  name="header_image">
+                                            <input id="admission_documents" data-default-file="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $result[2]['header_image'] ?>" placeholder="" type="file" class="filestyle form-control" data-height="180"  name="header_image">
                                             <input  placeholder="" type="hidden" class="form-control" value="online_admission_receipt" name="type">
                                             <span class="text-danger"><?php echo form_error('header_image'); ?></span>
                                         </div>

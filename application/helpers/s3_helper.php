@@ -20,6 +20,7 @@ if (!function_exists('upload_to_s3')) {
 
         // Extract file info
         $img_name = $domain . '.' . $img_name;
+
         // echo '<pre>';
         // print_r($fileInfo);
         // echo '<pre>';
@@ -67,6 +68,7 @@ if (!function_exists('upload_to_s3')) {
             return [
                 'success' => true,
                 's3_key' => $key,
+                'new_image_name' => $img_name,
                 'message' => 'File uploaded successfully.',
             ];
 
