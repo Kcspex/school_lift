@@ -505,43 +505,61 @@ class Welcome extends Front_Controller
                         $time     = md5($_FILES["document"]['name'] . microtime());
                         $fileInfo = pathinfo($_FILES["document"]["name"]);
                         $doc_name = $time . '.' . $fileInfo['extension'];
-                        move_uploaded_file($_FILES["document"]["tmp_name"], "./uploads/student_documents/online_admission_doc/" . $doc_name);
-                        $data['document'] = $doc_name;
-                        $data_img         = array('id' => $insert_id, 'document' => $doc_name);
-                        $this->onlinestudent_model->edit($data_img); 
-                       
+                        $file_path = $_FILES["document"]["tmp_name"];
+                        $upload_result = upload_to_s3($file_path, $fileInfo, $doc_name, "uploads/student_documents/online_admission_doc/");
+
+
+                        if ($upload_result["success"]) {
+                          // move_uploaded_file($_FILES["document"]["tmp_name"], "./uploads/student_documents/online_admission_doc/" . $doc_name);
+                          $data['document'] = $upload_result["new_image_name"];
+                          $data_img         = array('id' => $insert_id, 'document' => $upload_result["s3_key"]);
+                          $this->onlinestudent_model->edit($data_img);
+                        }
+
                     }
 
                     if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
 
                         $fileInfo = pathinfo($_FILES["file"]["name"]);
                         $img_name = $insert_id . '.' . $fileInfo['extension'];
-                        move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                        $data_img = array('id' => $insert_id, 'image' => 'uploads/student_images/' . $img_name);
-                        $this->onlinestudent_model->edit($data_img);
-
+                        $upload_result = upload_to_s3($_FILES["file"]["tmp_name"], $fileInfo, $img_name, "uploads/student_images/");
+                        if ($upload_result["success"]) {
+                          // move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/student_images/" . $img_name);
+                          $data_img = array('id' => $insert_id, 'image' => $upload_result["s3_key"]);
+                          $this->onlinestudent_model->edit($data_img);
+                        }
                     }
 
                     if (isset($_FILES["father_pic"]) && !empty($_FILES['father_pic']['name'])) {
                         $fileInfo = pathinfo($_FILES["father_pic"]["name"]);
                         $img_name = $insert_id . "father" . '.' . $fileInfo['extension'];
-                        move_uploaded_file($_FILES["father_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                        $data_img = array('id' => $insert_id, 'father_pic' => 'uploads/student_images/' . $img_name);
-                        $this->onlinestudent_model->edit($data_img);
+                        $upload_result = upload_to_s3($_FILES["father_pic"]["tmp_name"], $fileInfo, $img_name, "uploads/student_images/");
+                        if ($upload_result["success"]) {
+                          // move_uploaded_file($_FILES["father_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
+                          $data_img = array('id' => $insert_id, 'father_pic' => $upload_result["s3_key"]);
+                          $this->onlinestudent_model->edit($data_img);
+                        }
                     }
+
                     if (isset($_FILES["mother_pic"]) && !empty($_FILES['mother_pic']['name'])) {
                         $fileInfo = pathinfo($_FILES["mother_pic"]["name"]);
                         $img_name = $insert_id . "mother" . '.' . $fileInfo['extension'];
-                        move_uploaded_file($_FILES["mother_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                        $data_img = array('id' => $insert_id, 'mother_pic' => 'uploads/student_images/' . $img_name);
-                        $this->onlinestudent_model->edit($data_img);
+                        $upload_result = upload_to_s3($_FILES["mother_pic"]["tmp_name"], $fileInfo, $img_name, "uploads/student_images/");
+                        if ($upload_result["success"]) {
+                          // move_uploaded_file($_FILES["mother_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
+                          $data_img = array('id' => $insert_id, 'mother_pic' => $upload_result["s3_key"]);
+                          $this->onlinestudent_model->edit($data_img);
+                        }
                     }
                     if (isset($_FILES["guardian_pic"]) && !empty($_FILES['guardian_pic']['name'])) {
                         $fileInfo = pathinfo($_FILES["guardian_pic"]["name"]);
                         $img_name = $insert_id . "guardian" . '.' . $fileInfo['extension'];
-                        move_uploaded_file($_FILES["guardian_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                        $data_img = array('id' => $insert_id, 'guardian_pic' => 'uploads/student_images/' . $img_name);
-                        $this->onlinestudent_model->edit($data_img);
+                        $upload_result = upload_to_s3($_FILES["guardian_pic"]["tmp_name"], $fileInfo, $img_name, "uploads/student_images/");
+                        if ($upload_result["success"]) {
+                          // move_uploaded_file($_FILES["guardian_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
+                          $data_img = array('id' => $insert_id, 'guardian_pic' => $upload_result["s3_key"]);
+                          $this->onlinestudent_model->edit($data_img);
+                        }
                     }
 
                     $this->data['class_id']            = $class_id;
@@ -701,8 +719,8 @@ class Welcome extends Front_Controller
             $this->data['online_admission_payment'] = $this->sch_setting_detail->online_admission_payment;
             $this->data['online_admission_amount']  = $this->sch_setting_detail->online_admission_amount;
             $this->data['online_admission_conditions']  = $this->sch_setting_detail->online_admission_conditions;
-			
-			
+
+
             $this->load_theme('pages/online_admission_review', $this->config->item('front_layout'));
 
         } else {
@@ -1035,46 +1053,54 @@ class Welcome extends Front_Controller
                             $time     = md5($_FILES["document"]['name'] . microtime());
                             $fileInfo = pathinfo($_FILES["document"]["name"]);
                             $doc_name = $time . '.' . $fileInfo['extension'];
-                            move_uploaded_file($_FILES["document"]["tmp_name"], "./uploads/student_documents/online_admission_doc/" . $doc_name);
 
-                            $data_img['document'] = $doc_name;
-                            $data_img['id']       = $id;
-                            $this->onlinestudent_model->edit($data_img);
+                            $upload_result = upload_to_s3($_FILES["document"]["tmp_name"], $fileInfo, $doc_name, "uploads/student_documents/online_admission_doc/");
+                            if ($upload_result["success"]) {
+                              // move_uploaded_file($_FILES["document"]["tmp_name"], "./uploads/student_documents/online_admission_doc/" . $doc_name);
+                              $data['document'] = $upload_result["new_image_name"];
+                              $data_img         = array('id' => $insert_id, 'document' => $upload_result["s3_key"]);
+                              $this->onlinestudent_model->edit($data_img);
+                            }
                         }
 
                         if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
-                            
+
                             $fileInfo = pathinfo($_FILES["file"]["name"]);
                             $img_name = $id . '.' . $fileInfo['extension'];
-                            move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                            $data_img = array('id' => $id, 'image' => 'uploads/student_images/' . $img_name);
-
-                            $this->onlinestudent_model->edit($data_img);
-
+                            $upload_result = upload_to_s3($_FILES["file"]["tmp_name"], $fileInfo, $img_name, "uploads/student_images/");
+                            if ($upload_result["success"]) {
+                              $data_img = array('id' => $id, 'image' => $upload_result["s3_key"]);
+                              $this->onlinestudent_model->edit($data_img);
+                            }
                         }
 
                         if (isset($_FILES["father_pic"]) && !empty($_FILES['father_pic']['name'])) {
                             $fileInfo = pathinfo($_FILES["father_pic"]["name"]);
                             $img_name = $id . "father" . '.' . $fileInfo['extension'];
-                            move_uploaded_file($_FILES["father_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                            $data_img = array('id' => $id, 'father_pic' => 'uploads/student_images/' . $img_name);
-                            $this->onlinestudent_model->edit($data_img);
+                            $upload_result = upload_to_s3($_FILES["father_pic"]["tmp_name"], $fileInfo, $img_name, "uploads/student_images/");
+                            if ($upload_result["success"]) {
+                              $data_img = array('id' => $id, 'father_pic' => $upload_result["s3_key"]);
+                              $this->onlinestudent_model->edit($data_img);
+                            }
                         }
                         if (isset($_FILES["mother_pic"]) && !empty($_FILES['mother_pic']['name'])) {
                             $fileInfo = pathinfo($_FILES["mother_pic"]["name"]);
                             $img_name = $id . "mother" . '.' . $fileInfo['extension'];
-                            move_uploaded_file($_FILES["mother_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                            $data_img = array('id' => $id, 'mother_pic' => 'uploads/student_images/' . $img_name);
-                            $this->onlinestudent_model->edit($data_img);
+                            $upload_result = upload_to_s3($_FILES["mother_pic"]["tmp_name"], $fileInfo, $img_name, "uploads/student_images/");
+                            if ($upload_result["success"]) {
+                              $data_img = array('id' => $id, 'mother_pic' => $upload_result["s3_key"]);
+                              $this->onlinestudent_model->edit($data_img);
+                            }
                         }
 
                         if (isset($_FILES["guardian_pic"]) && !empty($_FILES['guardian_pic']['name'])) {
                             $fileInfo = pathinfo($_FILES["guardian_pic"]["name"]);
                             $img_name = $id . "guardian" . '.' . $fileInfo['extension'];
-                            move_uploaded_file($_FILES["guardian_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                            $data_img = array('id' => $id, 'guardian_pic' => 'uploads/student_images/' . $img_name);
-
-                            $this->onlinestudent_model->edit($data_img);
+                            $upload_result = upload_to_s3($_FILES["guardian_pic"]["tmp_name"], $fileInfo, $img_name, "uploads/student_images/");
+                            if ($upload_result["success"]) {
+                              $data_img = array('id' => $id, 'guardian_pic' => $upload_result["s3_key"]);
+                              $this->onlinestudent_model->edit($data_img);
+                            }
                         }
 
                         $sch_setting = $this->sch_setting_detail;
@@ -1181,7 +1207,7 @@ class Welcome extends Front_Controller
                 }else{
                     $array = array('status' => '2', 'error' => $this->lang->line('you_are_already_enrolled_please_contact_to_school_administrator'), 'msg' => '', 'refno' => $refno);
                 }
-                
+
             }
 
         }
@@ -1218,7 +1244,7 @@ class Welcome extends Front_Controller
         } else {
 
             $array = array('status' => '0', 'error' => form_error('checkterm'), 'msg' => '');
-            
+
         }
         echo json_encode($array);
     }

@@ -18,12 +18,12 @@
 	 <link rel="stylesheet" href="../assets/css/myStyleSheet.css">
     <title>Head Teacher Result Comment</title>
   </head>
-  
+
   <?php include ('../layout/style.php');?>
-  
+
   <body style="background: rgb(236, 234, 234);">
 
-	
+
 		<div class="menu-wrapper">
        	    <div class="sidebar-header">
 			<?php include ('../layout/sidebar.php');?>
@@ -35,12 +35,12 @@
 				<?php include ('../layout/header.php');?>
 
 					<div class="content-data">
-					    
-					   	
+
+
         <div class="row" style="margin: 15px;">
-        
+
             <div class="col-sm-12">
-				
+
                 <div class="cardBoxSty">
 
 				    <form>
@@ -53,7 +53,7 @@
                                     $resultstaffcheck = mysqli_query($link, $sqlstaffcheck);
                                     $rowstaffcheck = mysqli_fetch_assoc($resultstaffcheck);
                                     $row_cntstaffcheck = mysqli_num_rows($resultstaffcheck);
-                                    
+
                                     if($row_cntstaffcheck > 0)
                                     {
                                         if($rowstaffcheck['name'] == 'Head Teacher')
@@ -62,13 +62,13 @@
                                             $resultstaff = mysqli_query($link, $sqlstaff);
                                             $rowstaff = mysqli_fetch_assoc($resultstaff);
                                             $row_cntstaff = mysqli_num_rows($resultstaff);
-                        
+
                                             if($row_cntstaff > 0)
                                             {
                                                 do{
-                                                    
+
                                                     echo '<option value="'.$rowstaff['staff_id'].'">'.$rowstaff['staff_surname'].' '.$rowstaff['staff_name'].'</option>';
-                                                    
+
                                                 }while($rowstaff = mysqli_fetch_assoc($resultstaff));
                                             }
                                         }
@@ -78,55 +78,55 @@
                                             $resultstaff = mysqli_query($link, $sqlstaff);
                                             $rowstaff = mysqli_fetch_assoc($resultstaff);
                                             $row_cntstaff = mysqli_num_rows($resultstaff);
-                        
+
                                             if($row_cntstaff > 0)
                                             {
                                                 do{
-                                                    
+
                                                     echo'<option value="'.$rowstaff['staff_id'].'">'.$rowstaff['staff_surname'].' '.$rowstaff['staff_name'].'</option>';
-                                                    
+
                                                 }while($rowstaff = mysqli_fetch_assoc($resultstaff));
                                             }
                                         }
-                                        
+
                                     }
                                     else
                                     {
                                         echo'<option value="0">No Records Found</option>';
                                     }
-                                    
+
                                 ?>
                             </select>
-						</div>				
-												
+						</div>
+
                         <div class="form-group col-sm-2">
-							
+
                         </div>
                         <div class="form-group col-sm-3">
-                            
+
                         </div>
-                        
+
                         <div class="form-group col-sm-4">
-                          
+
 						</div>
                     </div>
                 </form>
-					
+
                 </div>
             </div>
 		</div>
-        
+
         <?php
             if(isset($_POST['submitbtn']))
             {
 
                $commentfrom = $_POST['commentfrom'];
                $commentfromto = $_POST['commentfromto'];
-               
+
                $comment = $_POST['comment'];
-               
+
                $CommentType = 'SchoolHead';
-               
+
                $principalID = $_POST['principalID'];
 
                 if($commentfrom == "" || $commentfromto == "" || $commentfrom < "0" || $comment == "" || $comment == "0" || $commentfromto < 0 || $commentfrom > $commentfromto)
@@ -155,10 +155,10 @@
                     }
                     else
                     {
-                        $sqlInsertdefaultcomment = ("INSERT INTO `defaultcomment`(`PrincipalOrDeanOrHeadTeacherUserID`, `CommentType`, `RangeStart`, `RangeEnd`, `DefaultComment`) 
+                        $sqlInsertdefaultcomment = ("INSERT INTO `defaultcomment`(`PrincipalOrDeanOrHeadTeacherUserID`, `CommentType`, `RangeStart`, `RangeEnd`, `DefaultComment`)
                         VALUES ('$principalID','$CommentType','$commentfrom','$commentfromto','$comment')");
                         $Insertdefaultcomment = mysqli_query($link, $sqlInsertdefaultcomment) or die("".mysqli_error());
-                                    
+
                         if($Insertdefaultcomment)
                         {
                             echo"
@@ -172,17 +172,17 @@
                             echo "Opps! not done. Something went wrong
                             <input type='hidden' id='reloadStaffID' value='".$principalID."'>";
                         }
-                    }	
+                    }
                 }
             }
         ?>
-        
+
         <?php
             if(isset($_POST['proceeddelete']))
             {
 
                $defaultcommentID = $_POST['comid'];
-               
+
                $sqldefaultcomment = "SELECT * FROM `defaultcomment` WHERE defaultcommentID = '$defaultcommentID'";
                 $resultdefaultcomment = mysqli_query($link, $sqldefaultcomment);
                 $rowdefaultcomment = mysqli_fetch_assoc($resultdefaultcomment);
@@ -190,7 +190,7 @@
 
                 $sqlDeleteexamgroup = ("DELETE FROM `defaultcomment` WHERE defaultcommentID= '$defaultcommentID'");
                 $Deleteexamgroup = mysqli_query($link, $sqlDeleteexamgroup) or die("".mysqli_error());
-                            
+
                 if($Deleteexamgroup)
                 {
                     echo"
@@ -206,19 +206,19 @@
                 }
             }
         ?>
-        
+
         <?php
             if(isset($_POST['editgradebtn']))
             {
 
-                $commentfrom = $_POST['commentfrom'];
+               $commentfrom = $_POST['commentfrom'];
                $commentfromto = $_POST['commentfromto'];
-               
+
                $comment = $_POST['comment'];
-               
+
                $defaultcommentID = $_POST['defaultcommentID'];
-               
-               $sqldefaultcomment = "SELECT * FROM `defaultcomment` WHERE defaultcommentID = '$defaultcommentID'";
+
+                $sqldefaultcomment = "SELECT * FROM `defaultcomment` WHERE defaultcommentID = '$defaultcommentID'";
                 $resultdefaultcomment = mysqli_query($link, $sqldefaultcomment);
                 $rowdefaultcomment = mysqli_fetch_assoc($resultdefaultcomment);
                 $row_cntdefaultcomment = mysqli_num_rows($resultdefaultcomment);
@@ -251,7 +251,7 @@
                     {
                         $sqlInsertdefaultcomment = ("UPDATE `defaultcomment` SET `RangeStart`='$commentfrom',`RangeEnd`='$commentfromto',`DefaultComment`='$comment' WHERE `defaultcommentID` = '$defaultcommentID'");
                         $Insertdefaultcomment = mysqli_query($link, $sqlInsertdefaultcomment) or die("".mysqli_error());
-                                    
+
                         if($Insertdefaultcomment)
                         {
                             echo"
@@ -265,16 +265,16 @@
                             echo "Opps! not done. Something went wrong
                             <input type='hidden' id='reloadStaffID' value='".$rowdefaultcomment['PrincipalOrDeanOrHeadTeacherUserID']."'>";
                         }
-                    }	
+                    }
                 }
             }
         ?>
-        
+
         <?php
             if(isset($_POST['submitbtnsign'])){
                 //Get current user ID from session
                 $principalID = $_POST['principalID'];
-                
+
                 if(!empty($_FILES['staffsignature']['name']) || $principalID != '' && $principalID != '0')
                 {
                     //File uplaod configuration
@@ -283,10 +283,10 @@
                     $fileName = time().'_'.basename($_FILES['staffsignature']['name']);
                     $imageFileType = pathinfo($fileName,PATHINFO_EXTENSION);
                     $targetPath = $uploadDir. $fileName;
-                    
-                    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) 
+
+                    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" )
                     {
-                                            
+
                         echo '<div class="alert alert-warning  fade show" role="alert">
                                 <div class="alert-icon"><i class="flaticon-warning"></i></div>
                                 <div class="alert-text">Unsupported File Format. Only png,jpeg or gif is accepted</div>
@@ -296,7 +296,7 @@
                                     </button>
                                     <input id="reloadStaffID" type="hidden" value="'.$principalID.'">
                                 </div>
-                            </div>';	
+                            </div>';
                     }
                     else
                     {
@@ -313,23 +313,26 @@
                                 </div>';
                         }
                         else{
-                            
+
                             $sqlstaffsignature = "SELECT * FROM `staffsignature` WHERE staff_id= '$principalID'";
                             $resultstaffsignature = mysqli_query($link, $sqlstaffsignature);
                             $rowstaffsignature = mysqli_fetch_assoc($resultstaffsignature);
                             $row_cntstaffsignature = mysqli_num_rows($resultstaffsignature);
-        
+
                             if($row_cntstaffsignature > 0)
                             {
                                 //Upload file to server
-                                if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
-                                {
+                                $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
+                                // if (move_uploaded_file($this->curr_tmp_name, $upload_image)) {
+                                if ($upload_result['success']) {
+                                // if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
+                                // {
                                     //Get current user ID from session
-                                    
+
                                     //Update picture name in the database
-                                    $sqlUploadUserImage = ("UPDATE `staffsignature` SET `Signature`='$fileName' WHERE `staff_id` = '$principalID'");
+                                    $sqlUploadUserImage = ("UPDATE `staffsignature` SET `Signature`='" . $upload_result['s3_key'] . "' WHERE `staff_id` = '$principalID'");
                                         $resultUploadUserImage = mysqli_query($link, $sqlUploadUserImage);
-                                                    
+
                                         //Update status
                                             if($resultUploadUserImage)
                                                 {
@@ -344,20 +347,21 @@
                                                     </div>
                                                 </div>';
                                                     }
-                                                    
+
                                         }
                             }
                             else
                             {
                                 //Upload file to server
-                                if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
-                                {
+                                $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
+
+                                if ($upload_result['success']) {
                                     //Get current user ID from session
-                                    
+
                                     //Update picture name in the database
-                                    $sqlUploadUserImage = ("INSERT INTO `staffsignature`(`staff_id`, `Signature`) VALUES ('$principalID','$fileName')");
+                                    $sqlUploadUserImage = ("INSERT INTO `staffsignature`(`staff_id`, `Signature`) VALUES ('$principalID','$upload_result["s3_key"]')");
                                         $resultUploadUserImage = mysqli_query($link, $sqlUploadUserImage);
-                                                    
+
                                         //Update status
                                             if($resultUploadUserImage)
                                                 {
@@ -372,7 +376,7 @@
                                                     </div>
                                                 </div>';
                                                     }
-                                                    
+
                                         }
                             }
                         }
@@ -388,14 +392,14 @@
                                 </button>
                                 <input id="reloadStaffID" type="hidden" value="'.$principalID.'">
                             </div>
-                        </div>';	
+                        </div>';
                 }
             }
         ?>
 		<div class="row" style="margin: 15px;">
-        
+
             <div class="col-sm-12">
-				
+
                 <div class="table-responsive data_table">
 
 					<h3 style="margin-bottom: 50px;">Head Teacher's Default Comment</h3>
@@ -403,11 +407,11 @@
                     <button type="button" class="btn btn-primary hideme" data-toggle="modal" data-target="#exampleModal" style="border-radius: 20px; float: right; margin-bottom: 30px;">
                        Set Default
                    </button>
-                   
+
                    <button type="button" class="btn btn-primary hideme" data-toggle="modal" data-target="#signatureModal" style="border-radius: 20px; float: right; margin-bottom: 30px;">
                        Set Signature
                    </button>
-                   
+
 					<table id="example" class="table table-striped" style="width:100%">
 						<thead>
 							<tr>
@@ -418,20 +422,20 @@
 							</tr>
 						</thead>
 						<tbody id="commenttbl">
-						    
+
 						</tbody>
 					</table>
 
                 </div>
             </div>
 		</div>
-		
+
         <!-- Create Comment Modal -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            
+
                         <h4 class="modal-title" id="exampleModalLabel" style="margin-left: 18%; text-align: center; color: #2c2c2c;">Create Default Message</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -453,9 +457,9 @@
                                     <label for="exampleFormControlTextarea1" style="font-weight: 500;">Comment:</label>
                                     <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="3" placeholder="exmple: excellent result"></textarea>
                                   </div>
-                                  
+
                                   <input type="hidden" id="principalID" name="principalID">
-                            
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -466,14 +470,14 @@
                 </div>
             </div>
         <!-- Create Comment Modal -->
-		
-		
+
+
         <!-- Create signature Modal -->
 			<div class="modal fade" id="signatureModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            
+
                             <h3 class="modal-title" id="exampleModalLabel" style="margin-left: 18%; color: #2c2c2c;">Create Signature</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -484,13 +488,13 @@
                                 <div class="col">
                                     <input type="file" name="staffsignature" class="form-control" placeholder="80">
                                 </div>
-                                
+
                                 <div id="staffsigndiv">
-                                    
+
                                 </div>
-                                
+
                                 <input type="hidden" id="principalIDsig" name="principalID">
-                            
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -501,29 +505,29 @@
                 </div>
             </div>
         <!-- Create signature Modal -->
-		
+
 
         <!-- Edit Comment Modal -->
 			<div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalEditLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            
+
                         <h3 class="modal-title" id="exampleModalLabel" style="margin-left: 18%; color: #2c2c2c;">Edit Default Message</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         </div>
                         <form method="post" enctype="multipart/form-data" id="displayform">
-                            
+
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
         <!-- Edit Comment Modal -->
-		
-		
+
+
         <!-- Delete Modal -->
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -538,13 +542,13 @@
                         <div id="successmsg"></div>
                         <span style="font-size: 18px; font-weight: 500;">Are you sure you want to Delete this? <br>
                         Please note that this action cannot be reversed!!!</span>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <form method="post" enctype="multipart/form-data" id="displayform">
-                            
+
                             <input type="hidden" id="comid" name="comid">
-                            
+
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" name="proceeddelete"><i class="fa fa-check"></i> Submit</button>
                         </form>
@@ -553,20 +557,20 @@
             </div>
         </div>
         <!-- Delete Modal -->
-                    
-                        
+
+
 					</div>
 
 			</div>
 		</div>
         </div>
-	
-	
 
 
-	
+
+
+
 	<script>
-	
+
 		$(document).ready(function(){
 			var table = $('#example').DataTable({
 				scrollX: true,
@@ -576,16 +580,16 @@
 			table.buttons().container()
 			.appendTo('#example_wrapper .col-md-6:eq(0)');
 		});
-		
+
 		$('body').on('change','#schoolhead',function(){
-		    
+
 		    $('#commenttbl').html('<i class="fa fa-circle-o-notch fa-spin"></i> ...Processing');
 			var id = $(this).val();
-			
+
 			$('#principalID').val(id);
-			
+
 			$('#principalIDsig').val(id);
-			
+
 			if(id == '' || id == '0')
 			{
 			    $('.hideme').hide('slow');
@@ -594,37 +598,37 @@
 			else
 			{
 			    $('.hideme').show('slow');
-			    
+
 			    $.ajax({
                     url: '../../../phpscript/get-commenttbl.php',
                     method:'POST',
                     data: 'id=' + id,
                     success: function(data) {
                         $('#commenttbl').html(data);
-                        
+
                     }
                 });
-                
+
                 $.ajax({
                     url: '../../../phpscript/get-staff-signature.php',
                     method:'POST',
                     data: 'id=' + id,
                     success: function(data) {
                         $('#staffsigndiv').html(data);
-                        
+
                     }
                 });
 			}
-    			
+
 		});
-		
+
 		$(document).ready(function(){
-		    
+
 		    $('#commenttbl').html('<i class="fa fa-circle-o-notch fa-spin"></i> ...Processing');
-		    
+
 			var id = $('#reloadStaffID').val();
-			
-			
+
+
             //alert(id);
 			if(id == '' || id == '0' || id == undefined)
 			{
@@ -633,105 +637,105 @@
 			}
 			else
 			{
-			    
+
     			$('#schoolhead').val(id);
-    			
+
     			$('#principalID').val(id);
-    			
+
     			$('#principalIDsig').val(id);
-    			
+
 			    $('.hideme').show('slow');
-			    
+
 			    $.ajax({
                     url: '../../../phpscript/get-commenttbl.php',
                     method:'POST',
                     data: 'id=' + id,
                     success: function(data) {
                         $('#commenttbl').html(data);
-                        
+
                     }
                 });
-                
-                
+
+
                 $.ajax({
                     url: '../../../phpscript/get-staff-signature.php',
                     method:'POST',
                     data: 'id=' + id,
                     success: function(data) {
                         $('#staffsigndiv').html(data);
-                        
+
                     }
                 });
 			}
-    			
+
 		});
-		
+
 		$('body').on('click','#editbtn',function(){
-		    
+
 		    $('#displayform').html('<i class="fa fa-circle-o-notch fa-spin"></i> ...Processing');
 			var id = $(this).data('id');
-			
+
 			$.ajax({
                 url: '../../../phpscript/get-modalcont.php',
                 method:'POST',
                 data: 'id=' + id,
                 success: function(data) {
                     $('#displayform').html(data);
-                    
+
                 }
             });
 		});
-		
+
 		$("body").on("click", "#delbtn", function(){
-            
+
             var id = $(this).data('id');
-            
+
             $('#comid').val(id);
-            
+
         });
         if ( window.history.replaceState ) {
           window.history.replaceState( null, null, window.location.href );
         }
-        
-        
-        
-         
-                      
+
+
+
+
+
             $('#desktop').click(function(){
-            
+
                 $('li a').toggleClass('hideMenuList');
                 $('.sidebar').toggleClass('changeWidth');
             })
-            
-            
-            
+
+
+
             $('#mobile').click(function(){
-            
+
                 $('.sidebar').toggleClass('showMenu');
                 $('.backdrop').toggleClass('showBackdrop');
             })
-            
-            
+
+
             $('.cross-icon').click(function(){
-            
+
                 $('.sidebar').toggleClass('showMenu');
                 $('.backdrop').removeClass('showBackdrop');
             })
-            
+
             $('.backdrop').click(function(){
-            
+
                 $('.sidebar').removeClass('showMenu');
                 $('.backdrop').removeClass('showBackdrop');
             })
-            
+
             $('li').click(function () {
                 $('li').removeClass();
                 $(this).addclass('selected');
                 $('.sideBar').removeClass('showMenu');
             })
-            
+
 	</script>
-	
+
 	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
    	<script src="../assets/bootstrap/js/jquery.slim.min.js"></script>
 	<script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
