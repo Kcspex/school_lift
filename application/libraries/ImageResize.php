@@ -93,7 +93,7 @@ class ImageResize {
                 $upload_image = $this->destination_dir . basename($fileName);
                 //upload image
                 // $upload_result = $this->upload_to_s3($upload_image, $this->new_file_name);
-                $upload_result = upload_to_s3($this->curr_tmp_name, pathinfo($this->file_data['name'][$x]), $fileName, $this->destination_dir, $this->thumbnail_destination_dir);
+                $upload_result = upload_to_s3($this->curr_tmp_name, pathinfo($this->file_data['name'][$x]), $fileName, $this->destination_dir);
                 // if (move_uploaded_file($this->curr_tmp_name, $upload_image)) {
                 if ($upload_result['success']) {
 
@@ -246,11 +246,6 @@ class ImageResize {
                 return false;
         }
     }
-
-    // private function upload_to_s3($file_path, $file_name)
-    // {
-    //     return upload_to_s3($file_path, pathinfo($file_name, PATHINFO_FILENAME), $file_name, 'uploads/gallery/media/');
-    // }
 
 
     //get image info

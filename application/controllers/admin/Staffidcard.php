@@ -102,16 +102,27 @@ class Staffidcard extends Admin_Controller
             );
             $insert_id = $this->Staffidcard_model->addstaffidcard($data);
             if (!empty($_FILES['background_image']['name'])) {
-                $config['upload_path']   = 'uploads/staff_id_card/background/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $file_name               = $_FILES['background_image']['name'];
-                $config['file_name']     = "background" . $insert_id;
+                // $config['upload_path']   = 'uploads/staff_id_card/background/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $file_name               = $_FILES['background_image']['name'];
+                // $config['file_name']     = "background" . $insert_id;
                 //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
-                if ($this->upload->do_upload('background_image')) {
-                    $uploadData = $this->upload->data();
-                    $background = $uploadData['file_name'];
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $file_path = $_FILES['background_image']['tmp_name'];
+                $file_info = pathinfo($_FILES['background_image']['name']);
+                $file_name = "background" . $insert_id;
+
+                // $config['file_name'] = "background" . $insert_id;
+                //Load upload library and initialize configuration
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/staff_id_card/background/");
+
+                if ($upload_result["success"]) {
+                    $background = $upload_result['s3_key'];
                 } else {
                     $background = '';
                 }
@@ -120,16 +131,27 @@ class Staffidcard extends Admin_Controller
             }
 
             if (!empty($_FILES['logo_img']['name'])) {
-                $config['upload_path']   = 'uploads/staff_id_card/logo/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $file_name               = $_FILES['logo_img']['name'];
-                $config['file_name']     = "logo" . $insert_id;
+                // $config['upload_path']   = 'uploads/staff_id_card/logo/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $file_name               = $_FILES['logo_img']['name'];
+                // $config['file_name']     = "logo" . $insert_id;
+                // //Load upload library and initialize configuration
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $file_path = $_FILES['logo_img']['tmp_name'];
+                $file_info = pathinfo($_FILES['logo_img']['name']);
+                $file_name = "logo" . $insert_id;
+
+                // $config['file_name'] = "background" . $insert_id;
                 //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
-                if ($this->upload->do_upload('logo_img')) {
-                    $uploadData = $this->upload->data();
-                    $logo_img   = $uploadData['file_name'];
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/staff_id_card/logo/");
+
+                if ($upload_result["success"]) {
+                    $logo_img   = $upload_result['s3_key'];
                 } else {
                     $logo_img = '';
                 }
@@ -138,16 +160,27 @@ class Staffidcard extends Admin_Controller
             }
 
             if (!empty($_FILES['sign_image']['name'])) {
-                $config['upload_path']   = 'uploads/staff_id_card/signature/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $file_name               = $_FILES['sign_image']['name'];
-                $config['file_name']     = "sign" . $insert_id;
+                // $config['upload_path']   = 'uploads/staff_id_card/signature/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $file_name               = $_FILES['sign_image']['name'];
+                // $config['file_name']     = "sign" . $insert_id;
+                // //Load upload library and initialize configuration
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $file_path = $_FILES['sign_image']['tmp_name'];
+                $file_info = pathinfo($_FILES['sign_image']['name']);
+                $file_name = "sign" . $insert_id;
+
+                // $config['file_name'] = "background" . $insert_id;
                 //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
-                if ($this->upload->do_upload('sign_image')) {
-                    $uploadData = $this->upload->data();
-                    $sign_image = $uploadData['file_name'];
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/staff_id_card/signature/");
+
+                if ($upload_result["success"]) {
+                    $sign_image = $upload_result['s3_key'];
                 } else {
                     $sign_image = '';
                 }
@@ -231,16 +264,27 @@ class Staffidcard extends Admin_Controller
                 $vertical_card = 1;
             }
             if (!empty($_FILES['background_image']['name'])) {
-                $config['upload_path']   = 'uploads/staff_id_card/background/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $file_name               = $_FILES['background_image']['name'];
-                $config['file_name']     = "background" . $id;
+                // $config['upload_path']   = 'uploads/staff_id_card/background/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $file_name               = $_FILES['background_image']['name'];
+                // $config['file_name']     = "background" . $id;
+                // //Load upload library and initialize configuration
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $file_path = $_FILES['background_image']['tmp_name'];
+                $file_info = pathinfo($_FILES['background_image']['name']);
+                $file_name = "background" . $id;
+
+                // $config['file_name'] = "background" . $insert_id;
                 //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
-                if ($this->upload->do_upload('background_image')) {
-                    $uploadData = $this->upload->data();
-                    $background = $uploadData['file_name'];
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/staff_id_card/background/");
+
+                if ($upload_result["success"]) {
+                    $background = $upload_result['s3_key'];
                 } else {
                     $background = $this->input->post('old_background');
                 }
@@ -256,9 +300,20 @@ class Staffidcard extends Admin_Controller
                 //Load upload library and initialize configuration
                 $this->load->library('upload', $config);
                 $this->upload->initialize($config);
-                if ($this->upload->do_upload('logo_img')) {
-                    $uploadData = $this->upload->data();
-                    $logo_img   = $uploadData['file_name'];
+
+                $file_path = $_FILES['logo_img']['tmp_name'];
+                $file_info = pathinfo($_FILES['logo_img']['name']);
+                $file_name = "logo" . $id;
+
+                // $config['file_name'] = "background" . $insert_id;
+                //Load upload library and initialize configuration
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/staff_id_card/logo/");
+
+                if ($upload_result["success"]) {
+                    $logo_img   = $upload_result['s3_key'];
                 } else {
                     $logo_img = $this->input->post('old_logo_img');
                 }
@@ -266,13 +321,27 @@ class Staffidcard extends Admin_Controller
                 $logo_img = $this->input->post('old_logo_img');
             }
             if (!empty($_FILES['sign_image']['name'])) {
-                $config['upload_path']   = 'uploads/staff_id_card/signature/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $file_name               = $_FILES['sign_img']['name'];
-                $config['file_name']     = "sign" . $id;
+                // $config['upload_path']   = 'uploads/staff_id_card/signature/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $file_name               = $_FILES['sign_img']['name'];
+                // $config['file_name']     = "sign" . $id;
+                // //Load upload library and initialize configuration
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $file_path = $_FILES['sign_image']['tmp_name'];
+                $file_info = pathinfo($_FILES['sign_image']['name']);
+                $file_name = "sign" . $id;
+
+                // $config['file_name'] = "background" . $insert_id;
                 //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
+
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/staff_id_card/signature/");
+
+                if ($upload_result["success"]) {
+                    $background    = $upload_result['s3_key'];
                 if ($this->upload->do_upload('sign_image')) {
                     $uploadData = $this->upload->data();
                     $sign_image = $uploadData['file_name'];
@@ -399,5 +468,4 @@ class Staffidcard extends Admin_Controller
             return true;
         }
     }
-
 }

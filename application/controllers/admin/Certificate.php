@@ -40,17 +40,24 @@ class Certificate extends Admin_Controller
         $data['title'] = 'Add Library';
 
         if (!empty($_FILES['background_image']['name'])) {
-            $config['upload_path']   = 'uploads/certificate/';
-            $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['file_name']     = $_FILES['background_image']['name'];
+            // $config['upload_path']   = 'uploads/certificate/';
+            // $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            // $config['file_name']     = $_FILES['background_image']['name'];
+            $file_path = $_FILES['background_image']['tmp_name'];
+            $file_info = pathinfo($_FILES['background_image']['name']);
+            $file_name = $_FILES['background_image']['name'];
+
+
+
 
             //Load upload library and initialize configuration
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
+            // $this->load->library('upload', $config);
+            // $this->upload->initialize($config);
 
-            if ($this->upload->do_upload('background_image')) {
-                $uploadData = $this->upload->data();
-                $picture    = $uploadData['file_name'];
+            $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/certificate/");
+
+            if ($upload_result["success"]) {
+                $picture    = $upload_result['s3_key'];
             } else {
                 $picture = '';
             }
@@ -131,17 +138,22 @@ class Certificate extends Admin_Controller
             }
             if (!empty($_FILES['background_image']['name'])) {
 
-                $config['upload_path']   = 'uploads/certificate/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $config['file_name']     = $_FILES['background_image']['name'];
+                // $config['upload_path']   = 'uploads/certificate/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $config['file_name']     = $_FILES['background_image']['name'];
+
+                $file_path = $_FILES['background_image']['tmp_name'];
+                $file_info = pathinfo($_FILES['background_image']['name']);
+                $file_name = $_FILES['background_image']['name'];
 
                 //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
 
-                if ($this->upload->do_upload('background_image')) {
-                    $uploadData = $this->upload->data();
-                    $picture    = $uploadData['file_name'];
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/certificate/");
+
+                if ($upload_result["success"]) {
+                    $picture    = $upload_result['s3_key'];
                     $data       = array(
                         'id'                   => $this->input->post('id'),
                         'certificate_name'     => $this->input->post('certificate_name'),
@@ -242,7 +254,7 @@ class Certificate extends Admin_Controller
             .tc-container tr td{vertical-align: bottom;}
         </style>
         <div class="tc-container">
-            <img src="<?php echo base_url('uploads/certificate/') ?><?php echo $certificate->background_image; ?>" width="100%" height="100%" />
+            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $certificate->background_image; ?>" width="100%" height="100%" />
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tr style="position:absolute; margin-left: auto;margin-right: auto;left: 0;right: 0;  width:<?php echo $certificate->content_width; ?>px; top:<?php echo $certificate->enable_image_height; ?>px">
                     <td  valign="top" style="position: absolute;right: 0;">

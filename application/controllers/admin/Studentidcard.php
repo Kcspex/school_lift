@@ -102,19 +102,24 @@ class studentidcard extends Admin_Controller {
             $insert_id = $this->Student_id_card_model->addidcard($data);
 
             if (!empty($_FILES['background_image']['name'])) {
-                $config['upload_path'] = 'uploads/student_id_card/background/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $config['upload_path'] = 'uploads/student_id_card/background/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
 
-                $file_name = $_FILES['background_image']['name'];
+                // $file_name = $_FILES['background_image']['name'];
 
-                $config['file_name'] = "background" . $insert_id;
+                $file_path = $_FILES['background_image']['tmp_name'];
+                $file_info = pathinfo($_FILES['background_image']['name']);
+                $file_name = "background" . $insert_id;
+
+                // $config['file_name'] = "background" . $insert_id;
                 //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
 
-                if ($this->upload->do_upload('background_image')) {
-                    $uploadData = $this->upload->data();
-                    $background = $uploadData['file_name'];
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/student_id_card/background/");
+
+                if ($upload_result["success"]) {
+                    $background    = $upload_result['s3_key'];
                 } else {
                     $background = '';
                 }
@@ -123,19 +128,22 @@ class studentidcard extends Admin_Controller {
             }
 
             if (!empty($_FILES['logo_img']['name'])) {
-                $config['upload_path'] = 'uploads/student_id_card/logo/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $config['upload_path'] = 'uploads/student_id_card/logo/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
 
-                $file_name = $_FILES['logo_img']['name'];
+                $file_info = pathinfo($_FILES['logo_img']['name']);
+                $file_path = $_FILES['logo_img']['tmp_name'];
+                $file_name = "logo" . $insert_id;
 
-                $config['file_name'] = "logo" . $insert_id;
                 //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
 
-                if ($this->upload->do_upload('logo_img')) {
-                    $uploadData = $this->upload->data();
-                    $logo_img = $uploadData['file_name'];
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/student_id_card/logo/");
+
+                if ($upload_result["success"]) {
+                    // $uploadData = $this->upload->data();
+                    $logo_img = $upload_result['s3_key'];
                 } else {
                     $logo_img = '';
                 }
@@ -144,19 +152,26 @@ class studentidcard extends Admin_Controller {
             }
 
             if (!empty($_FILES['sign_image']['name'])) {
-                $config['upload_path'] = 'uploads/student_id_card/signature/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $config['upload_path'] = 'uploads/student_id_card/signature/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
 
-                $file_name = $_FILES['sign_image']['name'];
+                // $file_name = $_FILES['sign_image']['name'];
+                //
+                // $config['file_name'] = "sign" . $insert_id;
 
-                $config['file_name'] = "sign" . $insert_id;
+                $file_info = pathinfo($_FILES['sign_image']['name']);
+                $file_path = $_FILES['sign_image']['tmp_name'];
+                $file_name = "logo" . $insert_id;
+
                 //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
 
-                if ($this->upload->do_upload('sign_image')) {
-                    $uploadData = $this->upload->data();
-                    $sign_image = $uploadData['file_name'];
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/student_id_card/signature/");
+
+                if ($upload_result["success"]) {
+                    $sign_image    = $upload_result['s3_key'];
+                    // $sign_image = $uploadData['file_name'];
                 } else {
                     $sign_image = '';
                 }
@@ -278,19 +293,27 @@ class studentidcard extends Admin_Controller {
             }
 
             if (!empty($_FILES['background_image']['name'])) {
-                $config['upload_path'] = 'uploads/student_id_card/background/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $config['upload_path'] = 'uploads/student_id_card/background/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                //
+                // $file_name = $_FILES['background_image']['name'];
+                //
+                // $config['file_name'] = "background" . $id;
 
-                $file_name = $_FILES['background_image']['name'];
+                $file_info = pathinfo($_FILES['background_image']['name']);
+                $file_path = $_FILES['background_image']['tmp_name'];
+                $file_name = "background" . $id;
 
-                $config['file_name'] = "background" . $id;
                 //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
 
-                if ($this->upload->do_upload('background_image')) {
-                    $uploadData = $this->upload->data();
-                    $background = $uploadData['file_name'];
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/student_id_card/background/");
+
+
+                if ($upload_result["success"]) {
+                    // $uploadData = $this->upload->data();
+                    $background = $upload_result["s3_key"];
                 } else {
                     $background = $this->input->post('old_background');
                 }
@@ -299,19 +322,22 @@ class studentidcard extends Admin_Controller {
             }
 
             if (!empty($_FILES['logo_img']['name'])) {
-                $config['upload_path'] = 'uploads/student_id_card/logo/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $config['upload_path'] = 'uploads/student_id_card/logo/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                //
+                // $file_name = $_FILES['logo_img']['name'];
+                //
+                // $config['file_name'] = "logo" . $id;
 
-                $file_name = $_FILES['logo_img']['name'];
+                $file_info = pathinfo($_FILES['logo_img']['name']);
+                $file_path = $_FILES['logo_img']['tmp_name'];
+                $file_name = "logo" . $id;
 
-                $config['file_name'] = "logo" . $id;
-                //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/student_id_card/logo/");
 
-                if ($this->upload->do_upload('logo_img')) {
-                    $uploadData = $this->upload->data();
-                    $logo_img = $uploadData['file_name'];
+                if ($upload_result["success"]) {
+                    // $uploadData = $this->upload->data();
+                    $logo_img = $upload_result["s3_key"];
                 } else {
                     $logo_img = $this->input->post('old_logo_img');
                 }
@@ -320,19 +346,25 @@ class studentidcard extends Admin_Controller {
             }
 
             if (!empty($_FILES['sign_image']['name'])) {
-                $config['upload_path'] = 'uploads/student_id_card/signature/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // $config['upload_path'] = 'uploads/student_id_card/signature/';
+                // $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                //
+                // $file_name = $_FILES['sign_img']['name'];
+                //
+                // $config['file_name'] = "sign" . $id;
+                // //Load upload library and initialize configuration
+                // $this->load->library('upload', $config);
+                // $this->upload->initialize($config);
 
-                $file_name = $_FILES['sign_img']['name'];
+                $file_info = pathinfo($_FILES['sign_img']['name']);
+                $file_path = $_FILES['sign_img']['tmp_name'];
+                $file_name = "sign" . $id;
 
-                $config['file_name'] = "sign" . $id;
-                //Load upload library and initialize configuration
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
+                $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/student_id_card/signature/");
 
-                if ($this->upload->do_upload('sign_image')) {
-                    $uploadData = $this->upload->data();
-                    $sign_image = $uploadData['file_name'];
+                if ($upload_result["success"]) {
+                    // $uploadData = $this->upload->data();
+                    $sign_image = $upload_result["s3_key"];
                 } else {
                     $sign_image = $this->input->post('old_sign_image');
                 }

@@ -52,8 +52,8 @@ if ($idcard->enable_vertical_card) {
                 <tr>
                    <td valign="top">
                         <div style="color: #fff;position: relative; z-index: 1;">
-                            <div class="sttext1"><img src="<?php echo base_url('uploads/staff_id_card/logo/'.$idcard->logo); ?>" width="30" height="30"> <?php echo $idcard->school_name; ?> 
-                          </div>   
+                            <div class="sttext1"><img src="<?php echo base_url('uploads/staff_id_card/logo/'.$idcard->logo); ?>" width="30" height="30"> <?php echo $idcard->school_name; ?>
+                          </div>
                         </div>
                     </td>
                 </tr>
@@ -79,8 +79,8 @@ if ($idcard->enable_vertical_card) {
                         <h4 style="margin:0; text-transform: uppercase;font-weight: bold; margin-top: 10px;">Mohan Patil</h4>
                         <p style="font-size: 15px;color: #9b1818;">Administator</p>
                     </td>
-                </tr>  
-           </table> 
+                </tr>
+           </table>
         </td>
     </tr>
     <tr>
@@ -92,7 +92,7 @@ if ($idcard->enable_vertical_card) {
                             <?php
                                 if ($idcard->enable_name == 1) {
                                     // echo "<li>"; echo $this->lang->line('staff').' '; echo $this->lang->line('name'); echo "<span>Mohan Patil</span></li>";
-                                 } 
+                                 }
                             ?>
                                             <?php
                                             if ($idcard->enable_staff_id == 1) {
@@ -141,7 +141,7 @@ if ($idcard->enable_vertical_card) {
                                             ?>
                         </ul>
 
-                        
+
                         <div class="signature"><img src="<?php echo base_url('uploads/staff_id_card/signature/'.$idcard->sign_image); ?>" width="200" height="24" /></div>
                     </td>
                 </tr>
@@ -153,12 +153,12 @@ if ($idcard->enable_vertical_card) {
 } else {
     ?>
        <table cellpadding="0" cellspacing="0" width="100%">
-            <tr> 
+            <tr>
                 <td valign="top" width="32%" style="padding: 3px;">
                     <table cellpadding="0" cellspacing="0" width="100%" class="tc-container" style="background: #efefef;">
                         <tr>
                             <td valign="top">
-                                <img src="<?php echo base_url('uploads/staff_id_card/background/') ?><?php echo $idcard->background; ?>" class="tcmybg" style="opacity: .1"/></td>
+                                <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $idcard->background; ?>" class="tcmybg" style="opacity: .1"/></td>
                         </tr>
                         <tr>
                             <td valign="top">
@@ -190,7 +190,7 @@ if ($idcard->enable_vertical_card) {
                                             <?php
                                             if ($idcard->enable_name == 1) {
                                                 echo "<li>"; echo $this->lang->line('staff').' '; echo $this->lang->line('name'); echo "<span>Mohan Patil</span></li>";
-                                            } 
+                                            }
                                             ?>
                                             <?php
                                             if ($idcard->enable_staff_id == 1) {
@@ -247,7 +247,7 @@ if ($idcard->enable_vertical_card) {
                         </tr>
                     </table>
                 </td>
-            </tr>  
+            </tr>
         </table>
     <?php
 }

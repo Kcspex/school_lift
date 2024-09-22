@@ -158,7 +158,7 @@
                     <div class="box-body">
                         <div class="mailbox-messages">
                             <div class="download_label"><?php echo $this->lang->line('staff'); ?> <?php echo $this->lang->line('icard'); ?> <?php echo $this->lang->line('list'); ?></div>
-                        <div class="table-responsive">    
+                        <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover example">
                                 <thead>
                                     <tr>
@@ -182,7 +182,7 @@
                                                 </td>
                                                 <td class="mailbox-name">
                                                     <?php if ($staffidcard_value->background != '' && !is_null($staffidcard_value->background)) { ?>
-                                                        <img src="<?php echo base_url('uploads/staff_id_card/background/') ?><?php echo $staffidcard_value->background ?>" width="40">
+                                                        <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $staffidcard_value->background ?>" width="40">
                                                     <?php } else { ?>
                                                         <i class="fa fa-picture-o fa-3x" aria-hidden="true"></i>
                                                     <?php } ?>
@@ -191,7 +191,7 @@
                                                     <?php echo ($staffidcard_value->enable_vertical_card) ? $this->lang->line('vertical') : $this->lang->line('horizontal') ?>
                                                 </td>
                                                 <td class="mailbox-date pull-right no-print white-space-nowrap">
-                                                    <a data-id="<?php echo $staffidcard_value->id ?>" class="btn btn-default btn-xs view_data"  data-toggle="tooltip" title="<?php echo $this->lang->line('view'); ?>">    
+                                                    <a data-id="<?php echo $staffidcard_value->id ?>" class="btn btn-default btn-xs view_data"  data-toggle="tooltip" title="<?php echo $this->lang->line('view'); ?>">
                                                         <i class="fa fa-reorder"></i>
                                                     </a>
                                                     <?php
@@ -217,7 +217,7 @@
                                     ?>
                                 </tbody>
                             </table><!-- /.table -->
-                          </div>  
+                          </div>
                         </div><!-- /.mail-box-messages -->
                     </div><!-- /.box-body -->
                 </div>
@@ -241,8 +241,8 @@
             <div class="modal-body" id="certificate_detail">
             <div class="modal-inner-loader"></div>
             <div class="modal-inner-content">
-          
-            </div>             
+
+            </div>
             </div>
         </div>
     </div>
@@ -251,7 +251,7 @@
     $(document).ready(function () {
           $("#header_color").colorpicker();
         $(document).on('click','.view_data',function(){
-    
+
            $('#certificateModal').modal("show");
           var certificateid = $(this).data('id');
            $.ajax({
@@ -259,7 +259,7 @@
                 method: "post",
                 data: {certificateid: certificateid},
                  beforeSend: function() {
-      
+
                   },
                 success: function (data) {
                  $('#certificateModal .modal-inner-content').html(data);
@@ -270,11 +270,11 @@
                  alert("Error occured.please try again");
                 },
                 complete: function() {
-                 
+
                 }
             });
         });
-       
+
     });
 
     $('#certificateModal').on('hidden.bs.modal', function (e) {
