@@ -64,7 +64,7 @@ use Aws\Exception\S3Exception;
          ]);
 
          // Return success with S3 key
-         log_message('info', 'File uploaded successfully to S3.');
+         // log_message('info', 'File uploaded successfully to S3.');
          return [
              'success' => true,
              's3_key' => $key,
