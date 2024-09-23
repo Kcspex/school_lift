@@ -6,11 +6,6 @@ error_reporting(E_ALL);
 
 // Display errors on the web page
 ini_set('display_errors', 1);
-
-ini_set('display_startup_errors', 1);
-ini_set('log_errors', 1);
-ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -297,6 +292,7 @@ ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
                     $uploadDir = "../img/signature/";
                     $fileName = time().'_'.basename($_FILES['staffsignature']['name']);
                     $imageFileType = pathinfo($fileName,PATHINFO_EXTENSION);
+                    $fileInfo = pathinfo($_FILES['staffsignature']['name']);
                     $targetPath = $uploadDir. $fileName;
 
                     if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" )
@@ -337,7 +333,7 @@ ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
                             if($row_cntstaffsignature > 0)
                             {
                                 //Upload file to server
-                                $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
+                                $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $fileInfo, $fileName, "uploads/img/signature/");
 
                                 if ($upload_result['success']) {
                                 // if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
@@ -369,7 +365,7 @@ ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
                             else
                             {
                                 //Upload file to server
-                                $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
+                                $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $fileInfo, $fileName, "uploads/img/signature/");
                                 //
                                 if ($upload_result['success']) {
                                     //Get current user ID from session
