@@ -6,6 +6,11 @@ error_reporting(E_ALL);
 
 // Display errors on the web page
 ini_set('display_errors', 1);
+
+ini_set('display_startup_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -125,7 +130,7 @@ ini_set('display_errors', 1);
 		</div>
 
         <?php
-            require '/var/www/trixschool/helper/s3_helper.php';
+            include ('../helper/s3_helper.php');
 
             if(isset($_POST['submitbtn']))
             {
