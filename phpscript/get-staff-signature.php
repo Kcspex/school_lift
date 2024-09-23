@@ -10,7 +10,8 @@
 
     if($row_cntexamsubjects > 0)
     {
-            if (isset($_POST['uri']) && !empty($_POST['uri']){
+            if (isset($_POST['uri']) && !empty($_POST['uri']))
+            {
                 $uri = $_POST['uri'];
                 if ($uri == "/admin/settingTeacherDefaultComments.php")
                 {
