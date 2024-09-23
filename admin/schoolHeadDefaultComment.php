@@ -130,7 +130,7 @@ ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
 		</div>
 
         <?php
-            include ('../helper/s3_helper.php');
+            // include ('../helper/s3_helper.php');
 
             if(isset($_POST['submitbtn']))
             {
@@ -337,15 +337,16 @@ ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
                             if($row_cntstaffsignature > 0)
                             {
                                 //Upload file to server
-                                $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
+                                // $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
                                 // if (move_uploaded_file($this->curr_tmp_name, $upload_image)) {
-                                if ($upload_result['success']) {
-                                // if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
-                                // {
+                                // if ($upload_result['success']) {
+                                if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
+                                {
                                     //Get current user ID from session
 
                                     //Update picture name in the database
-                                    $sqlUploadUserImage = ("UPDATE `staffsignature` SET `Signature`='" . $upload_result['s3_key'] . "' WHERE `staff_id` = '$principalID'");
+                                    // $upload_result['s3_key']
+                                    $sqlUploadUserImage = ("UPDATE `staffsignature` SET `Signature`='$fileName' WHERE `staff_id` = '$principalID'");
                                         $resultUploadUserImage = mysqli_query($link, $sqlUploadUserImage);
 
                                         //Update status
@@ -368,13 +369,15 @@ ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
                             else
                             {
                                 //Upload file to server
-                                $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
-
-                                if ($upload_result['success']) {
+                                // $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
+                                //
+                                // if ($upload_result['success']) {
                                     //Get current user ID from session
+                                if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
+                                {
 
                                     //Update picture name in the database
-                                    $sqlUploadUserImage = ("INSERT INTO `staffsignature`(`staff_id`, `Signature`) VALUES ('$principalID','$upload_result["s3_key"]')");
+                                    $sqlUploadUserImage = ("INSERT INTO `staffsignature`(`staff_id`, `Signature`) VALUES ('$principalID','$fileName')");
                                         $resultUploadUserImage = mysqli_query($link, $sqlUploadUserImage);
 
                                         //Update status
