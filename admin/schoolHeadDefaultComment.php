@@ -130,7 +130,7 @@ ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
 		</div>
 
         <?php
-            // include ('../helper/s3_helper.php');
+            include ('../helper/s3_helper.php');
 
             if(isset($_POST['submitbtn']))
             {
