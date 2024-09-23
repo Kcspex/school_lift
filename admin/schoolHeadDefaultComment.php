@@ -345,8 +345,8 @@ ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
                                     //Get current user ID from session
 
                                     //Update picture name in the database
-                                    // $upload_result['s3_key']
-                                    $sqlUploadUserImage = ("UPDATE `staffsignature` SET `Signature`='$fileName' WHERE `staff_id` = '$principalID'");
+                                    $newfileName = $upload_result['s3_key'];
+                                    $sqlUploadUserImage = ("UPDATE `staffsignature` SET `Signature`='$newfileName' WHERE `staff_id` = '$principalID'");
                                         $resultUploadUserImage = mysqli_query($link, $sqlUploadUserImage);
 
                                         //Update status
@@ -369,15 +369,16 @@ ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
                             else
                             {
                                 //Upload file to server
-                                // $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
+                                $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
                                 //
-                                // if ($upload_result['success']) {
+                                if ($upload_result['success']) {
                                     //Get current user ID from session
-                                if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
-                                {
+                                // if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
+                                // {
 
+                                    $newfileName = $upload_result['s3_key'];
                                     //Update picture name in the database
-                                    $sqlUploadUserImage = ("INSERT INTO `staffsignature`(`staff_id`, `Signature`) VALUES ('$principalID','$fileName')");
+                                    $sqlUploadUserImage = ("INSERT INTO `staffsignature`(`staff_id`, `Signature`) VALUES ('$principalID','$newfileName')");
                                         $resultUploadUserImage = mysqli_query($link, $sqlUploadUserImage);
 
                                         //Update status
