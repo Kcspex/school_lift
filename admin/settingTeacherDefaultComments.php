@@ -616,6 +616,9 @@ use Aws\S3\Exception\S3Exception;
 			{
 			    $('.hideme').show('slow');
 
+           var currentPath = window.location.pathname;  // Get the current page path
+           console.log(currentPath);
+
 			    $.ajax({
                     url: '../../../phpscript/get-commenttbl.php',
                     method:'POST',
@@ -629,7 +632,10 @@ use Aws\S3\Exception\S3Exception;
                 $.ajax({
                     url: '../../../phpscript/get-staff-signature.php',
                     method:'POST',
-                    data: 'id=' + id,
+                    data: {
+                       id: id,  // Assuming id is already defined elsewhere
+                       uri: currentPath  // Add the current page URI to the data
+                   },
                     success: function(data) {
                         $('#staffsigndiv').html(data);
 
@@ -663,6 +669,9 @@ use Aws\S3\Exception\S3Exception;
 
 			    $('.hideme').show('slow');
 
+          var currentPath = window.location.pathname;  // Get the current page path
+          console.log(currentPath);
+
 			    $.ajax({
                     url: '../../../phpscript/get-commenttbl.php',
                     method:'POST',
@@ -677,7 +686,10 @@ use Aws\S3\Exception\S3Exception;
                 $.ajax({
                     url: '../../../phpscript/get-staff-signature.php',
                     method:'POST',
-                    data: 'id=' + id,
+                    data: {
+                       id: id,  // Assuming id is already defined elsewhere
+                       uri: currentPath  // Add the current page URI to the data
+                   },
                     success: function(data) {
                         $('#staffsigndiv').html(data);
 
