@@ -24,6 +24,7 @@
                       <img src="../img/signature/'.$rowexamsubjects['Signature'].'" width="20%" height="auto"/>
                   </div>';
             } else {
+              echo $path;
               echo'<div align="center" style="padding:5%;">
                       <img src="'. 'https://schoollift.s3.us-east-2.amazonaws.com/'. $rowexamsubjects['Signature'].'" width="20%" height="auto"/>
                   </div>';
