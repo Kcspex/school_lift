@@ -617,7 +617,7 @@ use Aws\S3\Exception\S3Exception;
 			    $('.hideme').show('slow');
 
            var currentPath = window.location.pathname;  // Get the current page path
-           console.log(currentPath);
+           // console.log(currentPath);
 
 			    $.ajax({
                     url: '../../../phpscript/get-commenttbl.php',
@@ -670,7 +670,7 @@ use Aws\S3\Exception\S3Exception;
 			    $('.hideme').show('slow');
 
           var currentPath = window.location.pathname;  // Get the current page path
-          console.log(currentPath);
+          // console.log(currentPath);
 
 			    $.ajax({
                     url: '../../../phpscript/get-commenttbl.php',
