@@ -2,6 +2,7 @@
     include ('../database/config.php');
 
     $id = $_POST['id'];
+    $currentPath = $_POST['currentPath'];
 
     $sqlexamsubjects = "SELECT * FROM `staffsignature` WHERE staff_id= '$id'";
     $resultexamsubjects = mysqli_query($link, $sqlexamsubjects);
@@ -24,7 +25,7 @@
                       <img src="../img/signature/'.$rowexamsubjects['Signature'].'" width="20%" height="auto"/>
                   </div>';
             } else {
-              echo $path;
+              echo $currentPath;
               echo'<div align="center" style="padding:5%;">
                       <img src="'. 'https://schoollift.s3.us-east-2.amazonaws.com/'. $rowexamsubjects['Signature'].'" width="20%" height="auto"/>
                   </div>';
