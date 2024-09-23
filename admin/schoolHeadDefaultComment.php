@@ -338,10 +338,10 @@ ini_set('error_log', '../error/php-error.log'); // Adjust path for log file
                             {
                                 //Upload file to server
                                 $upload_result = upload_to_s3($_FILES['staffsignature']['tmp_name'], $imageFileType, $fileName, "uploads/img/signature/");
-                                // if (move_uploaded_file($this->curr_tmp_name, $upload_image)) {
-                                // if ($upload_result['success']) {
-                                if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
-                                {
+
+                                if ($upload_result['success']) {
+                                // if(@move_uploaded_file($_FILES['staffsignature']['tmp_name'], $targetPath))
+                                // {
                                     //Get current user ID from session
 
                                     //Update picture name in the database
