@@ -117,6 +117,8 @@
 		</div>
 
         <?php
+            require '/var/www/trixschool/helper/s3_helper.php';
+
             if(isset($_POST['submitbtn']))
             {
 
