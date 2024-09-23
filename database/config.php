@@ -1,11 +1,5 @@
 <?php
 
-    // Turn on error reporting
-    error_reporting(E_ALL);
-
-    // Display errors on the web page
-    ini_set('display_errors', 1);
-
     $domain = $_SERVER['HTTP_HOST'];
     $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
     $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
