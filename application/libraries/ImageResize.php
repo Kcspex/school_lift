@@ -117,7 +117,7 @@ class ImageResize {
                         if ($this->generate_thumbnails) {
                             if ($file_ext == 'image/jpeg' || $file_ext == 'image/png' || $file_ext == 'image/gif') {
                                 $thumbnail = $this->thumbnail_destination_dir . $fileName;
-                                list($width, $height) = getimagesize($upload_image);
+                                list($width, $height) = getimagesize("https://schoollift.s3.us-east-2.amazonaws.com/" . $upload_image);
                                 $img_array['height'] = $height;
                                 $img_array['width'] = $width;
                                 $thumb_width = $this->thumbnail_size;
