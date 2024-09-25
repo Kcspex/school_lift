@@ -69,7 +69,7 @@ class Frontcms extends Admin_Controller {
 
                 if ($upload_result_logo['success']) {
                     $logo_dir = $upload_result_logo["s3_key"];
-                    $data['logo'] = "https://schoollift.s3.us-east-2.amazonaws.com/" . $logo_dir;
+                    $data['logo'] = $logo_dir;
                     unlink($frontcmslist->logo);
                 }
             }
@@ -82,9 +82,7 @@ class Frontcms extends Admin_Controller {
 
                 if ($upload_result_favicon['success']) {
                     $fav_dir = $upload_result_favicon["s3_key"];
-                    $data['fav_icon'] = "https://schoollift.s3.us-east-2.amazonaws.com/" . $fav_dir;
-                    echo $data['fav_icon'];
-                    die();
+                    $data['fav_icon'] = $fav_dir;
                     unlink($frontcmslist->fav_icon);
                 }
             }
