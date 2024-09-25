@@ -182,14 +182,14 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                 </td>
                                                 <td class="mailbox-name">
                                                     <?php if ($idcard->background != '' && !is_null($idcard->background)) { ?>
-                                                        <img src="<?php echo base_url('uploads/student_id_card/background/') ?><?php echo $idcard->background ?>" width="40">
+                                                        <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $idcard->background; ?>" width="40">
                                                     <?php } else { ?>
                                                         <i class="fa fa-picture-o fa-3x" aria-hidden="true"></i>
                                                     <?php } ?>
 
                                                 </td>
                                                    <td class="mailbox-name text text-center">
-                                                    <?php echo ($idcard->enable_vertical_card) ? 
+                                                    <?php echo ($idcard->enable_vertical_card) ?
                                                     $this->lang->line('vertical') :$this->lang->line('horizontal')  ?>
 
                                                 </td>
@@ -243,8 +243,8 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
             <div class="modal-body" id="certificate_detail">
  <div class="modal-inner-loader"></div>
             <div class="modal-inner-content">
-          
-            </div> 
+
+            </div>
             </div>
         </div>
     </div>
@@ -256,7 +256,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
     $(document).ready(function () {
           $("#header_color").colorpicker();
         $(document).on('click','.view_data',function(){
-    
+
            $('#certificateModal').modal("show");
           var certificateid = $(this).data('id');
            $.ajax({
@@ -264,7 +264,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                 method: "post",
                 data: {certificateid: certificateid},
                  beforeSend: function() {
-      
+
                   },
                 success: function (data) {
                  $('#certificateModal .modal-inner-content').html(data);
@@ -275,11 +275,11 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                  alert("Error occured.please try again");
                 },
                 complete: function() {
-                 
+
                 }
             });
         });
-       
+
     });
 
     $('#certificateModal').on('hidden.bs.modal', function (e) {
@@ -294,8 +294,8 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
     function valueChanged()
     {
         if ($('#enable_student_img').is(":checked"))
-            $("#enableImageDiv").show();       
+            $("#enableImageDiv").show();
         else
-            $("#enableImageDiv").hide();       
+            $("#enableImageDiv").hide();
     }
 </script>

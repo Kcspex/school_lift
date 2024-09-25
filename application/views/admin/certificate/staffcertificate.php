@@ -120,7 +120,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                 </td>
                                                 <td class="mailbox-name">
                                                     <?php if ($certificate->background_image != '' && !is_null($certificate->background_image)) { ?>
-                                                        <img src="<?php echo base_url('uploads/certificate/') ?><?php echo $certificate->background_image ?>" width="40">
+                                                        <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $certificate->background_image ?>" width="40">
                                                     <?php } else { ?>
                                                         <i class="fa fa-picture-o fa-3x" aria-hidden="true"></i>
                                                     <?php } ?>

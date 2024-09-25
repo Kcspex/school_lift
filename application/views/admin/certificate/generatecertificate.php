@@ -1,7 +1,7 @@
 <?php
 $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
 ?>
-<div class="content-wrapper">  
+<div class="content-wrapper">
     <section class="content-header">
         <h1><i class="fa fa-newspaper-o"></i> <?php echo $this->lang->line('certificate'); ?></h1>
     </section>
@@ -9,7 +9,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
     <section class="content">
         <?php if ($this->session->flashdata('msg')) { ?>
             <?php echo $this->session->flashdata('msg') ?>
-        <?php } ?>  
+        <?php } ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-primary">
@@ -21,7 +21,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                             <form role="form" action="<?php echo site_url('admin/generatecertificate/search') ?>" method="post" class="">
                                 <?php echo $this->customlib->getCSRF(); ?>
                                 <div class="col-sm-4">
-                                    <div class="form-group"> 
+                                    <div class="form-group">
                                         <label><?php echo $this->lang->line('class'); ?></label><small class="req"> *</small>
                                         <select autofocus="" id="class_id" name="class_id" class="form-control" >
                                             <option value=""><?php echo $this->lang->line('select'); ?></option>
@@ -34,7 +34,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                             ?>
                                         </select>
                                         <span class="text-danger"><?php echo form_error('class_id'); ?></span>
-                                    </div>  
+                                    </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
@@ -43,7 +43,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                             <option value=""><?php echo $this->lang->line('select'); ?></option>
                                         </select>
                                         <span class="text-danger"><?php echo form_error('section_id'); ?></span>
-                                    </div>   
+                                    </div>
                                 </div>
 
                                 <div class="col-sm-4">
@@ -62,7 +62,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                             ?>
                                         </select>
                                         <span class="text-danger"><?php echo form_error('certificate_id'); ?></span>
-                                    </div>   
+                                    </div>
                                 </div>
 
                                 <div class="col-sm-12">
@@ -71,7 +71,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                     </div>
                                 </div>
                             </form>
-                        </div>  
+                        </div>
                     </div>
 
                     <?php
@@ -79,7 +79,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                         ?>
                         <form method="post" action="<?php echo base_url('admin/generatecertificate/generatemultiple') ?>">
                             <div  class="" id="duefee">
-                                <div class="box-header ptbnull"></div>  
+                                <div class="box-header ptbnull"></div>
                                 <div class="box-header ptbnull">
                                     <h3 class="box-title titlefix"><i class="fa fa-users"></i> <?php echo $this->lang->line('student'); ?> <?php echo $this->lang->line('list'); ?></h3>
                                     <button  class="btn btn-info btn-sm printSelected pull-right" type="button" name="generate" title="generate multiple certificate"><?php echo $this->lang->line('generate'); ?></button>
@@ -123,7 +123,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                             <td>
                                                                 <a href="<?php echo base_url(); ?>student/view/<?php echo $student['id']; ?>"><?php echo $this->customlib->getFullName($student['firstname'],$student['middlename'],$student['lastname'],$sch_setting->middlename,$sch_setting->lastname);  ?>
                                                                 </a>
-                                                            </td> 
+                                                            </td>
                                                             <td><?php echo $student['class'] . "(" . $student['section'] . ")" ?></td>
                                                             <td><?php echo $student['father_name']; ?></td>
                                                             <td><?php if($student['dob']!='' && $student['dob']!='0000-00-00'){ echo date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($student['dob'])); } ?></td>
@@ -141,16 +141,16 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                             </tbody>
                                         </table>
 
-                                    </div>                                                                           
-                                </div>                                                         
+                                    </div>
+                                </div>
                             </div>
                         </form>
                         <?php
                     }
                     ?>
-                </div>  
-            </div>  
-        </div> 
+                </div>
+            </div>
+        </div>
     </section>
 </div>
 <script type="text/javascript">
@@ -246,7 +246,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                     type: 'post',
                     dataType: "html",
                     data: {'data': JSON.stringify(array_to_print), 'class_id': classId, 'certificate_id': certificateId, },
-                    success: function (response) {                       
+                    success: function (response) {
                         Popup(response);
 
                     }

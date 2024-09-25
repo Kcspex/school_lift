@@ -64,14 +64,14 @@ foreach ($students as $student) {
 
     <div class="" style="position: relative; text-align: center; font-family: 'arial';">
         <?php if (!empty($certificate[0]->background_image)) { ?>
-            <img src="<?php echo base_url('uploads/certificate/' . $certificate[0]->background_image); ?>" style="width: 100%; height: 100vh" />
+            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $certificate[0]->background_image; ?>" style="width: 100%; height: 100vh" />
         <?php } ?>
 
         <table width="100%" cellspacing="0" cellpadding="0" style="position: absolute;top: 0; margin-left: auto;margin-right: auto;left: 0;right: 0;<?php echo "width:" . $certificate[0]->content_width . "px" ?>">
             <tr>
                 <td style="position: absolute;right:0;">
                     <?php if ($certificate[0]->enable_student_image == 1) { ?>
-                        <img style="position: relative; <?php echo "top:" . $certificate[0]->enable_image_height . "px" ?>;" src="<?php echo base_url($student->image); ?>" width="100" height="auto">
+                        <img style="position: relative; <?php echo "top:" . $certificate[0]->enable_image_height . "px" ?>;" src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $student->image; ?>" width="100" height="auto">
                     <?php } ?>
                 </td></tr>
             <tr>
@@ -96,5 +96,3 @@ foreach ($students as $student) {
     <?php
 }
 ?>
-
-

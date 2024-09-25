@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="" />
         <title>Smart School : School Management System by QDOCS</title>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-        <meta name="theme-color" content="#424242" />       
+        <meta name="theme-color" content="#424242" />
     </head>
     <body>
         <table cellpadding="0" cellspacing="0" width="100%">
@@ -14,21 +14,21 @@
             if (!empty($resultlist)) {
                 $i = 0;
                 ?>
-                <tr> 
-                    <?php                    
+                <tr>
+                    <?php
                     foreach ($resultlist as $list) {
-                        $i++;                         
+                        $i++;
                         ?>
                         <td valign="top" width="32%" style="padding: 3px;">
                             <table cellpadding="0" cellspacing="0" width="100%" class="tc-container" style="background: #efefef;">
                                 <tr>
                                     <td valign="top">
-                                        <img src="<?php echo base_url('uploads/student_id_card/background/') ?><?php echo $idcardlist[0]->background; ?>" class="tcmybg" /></td>
+                                        <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $idcardlist[0]->background; ?>" class="tcmybg" /></td>
                                 </tr>
                                 <tr>
                                     <td valign="top">
                                         <div class="studenttop" style="background: <?php echo $idcardlist[0]->header_color; ?>">
-                                            <div class="sttext1"><img src="<?php echo base_url('uploads/student_id_card/logo/') ?><?php echo $idcardlist[0]->logo; ?>" width="30" height="30" />
+                                            <div class="sttext1"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $idcardlist[0]->logo; ?>" width="30" height="30" />
                                                 <?php echo $idcardlist[0]->school_name; ?></div>
                                         </div>
                                     </td>
@@ -48,9 +48,9 @@
                                         <div class="staround">
                                             <div class="cardleft">
                                                 <div class="stimg">
-                                                    <img src="<?php echo base_url() ?>/<?php echo $list[0]['image']; ?>" class="img-responsive" />
+                                                    <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $list[0]['image']; ?>" class="img-responsive" />
                                                 </div>
-                                            </div><!--./cardleft--> 
+                                            </div><!--./cardleft-->
                                             <div class="cardright">
                                                 <ul class="stlist">
                                                     <?php
@@ -104,20 +104,20 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td valign="top" align="right" class="principal"><img src="<?php echo base_url('uploads/student_id_card/signature.png') ?>" width="66" height="40" /></td>
+                                    <td valign="top" align="right" class="principal"><img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/student_id_card/signature.png" width="66" height="40" /></td>
                                 </tr>
                             </table>
                         </td>
                         <?php if ($i == 3) { ?>
                         </tr>
-                        <tr> 
+                        <tr>
                             <?php
                             $i = 0;
                         }
-                        ?> 
+                        ?>
                     <?php } ?>
                 </tr>
             <?php } ?>
         </table>
-    </body>  
+    </body>
 </html>

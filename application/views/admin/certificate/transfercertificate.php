@@ -120,13 +120,13 @@ if (isset($certificateResult) && isset($resultlist)) {
     ?>
         <body>
             <div class="tc-container">
-                <img src="<?php echo base_url('uploads/certificate/'); ?><?php echo $certificateResult[0]->background_image ?>" width="100%" height="100%" />
+                <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $certificateResult[0]->background_image ?>" width="100%" height="100%" />
                 <table width="100%" cellspacing="0" cellpadding="0" border="">
 
                     <tr style="position:absolute; margin-left: auto;margin-right: auto;left: 0;right: 0;  width:<?php echo $certificateResult[0]->content_width; ?>px; top:<?php echo $certificateResult[0]->enable_image_height; ?>px">
                         <td  valign="top" style="position: absolute;right: 0;">
                             <?php if ($certificateResult[0]->enable_student_image == 1) {?>
-                                <img src="<?php echo base_url() ?>/<?php echo $image; ?>" width="100" height="auto">
+                                <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $image; ?>" width="100" height="auto">
                             <?php }?>
                         </td>
                     </tr>

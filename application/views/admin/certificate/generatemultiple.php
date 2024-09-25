@@ -54,7 +54,7 @@ $school = $sch_setting[0];
 $i = 0;
 
 ?>
-<?php 
+<?php
 if($id_card[0]->enable_vertical_card)
 {
 ?>
@@ -73,7 +73,7 @@ if($id_card[0]->enable_vertical_card)
                 <tr>
                    <td valign="top">
                         <div style="color: #fff;position: relative; z-index: 1; text-align: center;vertical-align: top">
-                            <div class="sttext1" style="font-size: 16px;line-height: 8px;"><img style="vertical-align: middle; width: 30px;" src="<?php echo base_url('uploads/student_id_card/logo/'.$id_card[0]->logo); ?>" width="30" height="24">  <?php echo $id_card[0]->school_name; ?> 
+                            <div class="sttext1" style="font-size: 16px;line-height: 8px;"><img style="vertical-align: middle; width: 30px;" src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $id_card[0]->logo; ?>" width="30" height="24">  <?php echo $id_card[0]->school_name; ?>
                            </div>
                         </div>
                     </td>
@@ -100,8 +100,8 @@ if($id_card[0]->enable_vertical_card)
                         <h4 style="margin:0; text-transform: uppercase;font-weight: bold; margin-top: 3px;"> <?php echo $this->customlib->getFullName($student->firstname,$student->middlename,$student->lastname,$sch_settingdata->middlename,$sch_settingdata->lastname); ?></h4>
                         <p style="font-size: 15px;color: #9b1818;">Student</p>
                     </td>
-                </tr>  
-           </table> 
+                </tr>
+           </table>
         </td>
     </tr>
     <tr>
@@ -110,7 +110,7 @@ if($id_card[0]->enable_vertical_card)
                 <tr>
                     <td valign="top">
                         <ul class="vertlist">
-                         
+
                                         <?php if ($id_card[0]->enable_student_name == 1) { ?><!-- <li><?php //echo $this->lang->line('student_name'); ?><span> <?php //echo $this->customlib->//getFullName($student->firstname,$student->middlename,$student->lastname,$sch_settingdata->middlename,$sch_settingdata->lastname); ?></span></li> --><?php } ?>
                                         <?php if ($id_card[0]->enable_admission_no == 1) { ?><li><?php echo $this->lang->line('admission_no'); ?><span> <?php echo $student->admission_no; ?></span></li><?php } ?>
                                         <?php if ($id_card[0]->enable_class == 1) { ?><li><?php echo $this->lang->line('class'); ?><span><?php echo $student->class . ' - ' . $student->section . " (" . $school['current_session']['session'] . ")"; ?></span></li><?php } ?>
@@ -137,7 +137,7 @@ if($id_card[0]->enable_vertical_card)
 
                                         <?php if ($id_card[0]->enable_blood_group == 1) { ?><li class="stred"><?php echo $this->lang->line('blood_group'); ?><span><?php echo $student->blood_group; ?></span></li><?php } ?>
                         </ul>
-                        <div class="signature"><img src="<?php echo base_url('uploads/student_id_card/signature/'.$id_card[0]->sign_image); ?>" width="150" height="24" style="width: 150px;" /></div>
+                        <div class="signature"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $id_card[0]->sign_image; ?>" width="150" height="24" style="width: 150px;" /></div>
                     </td>
                 </tr>
             </table>
@@ -172,13 +172,13 @@ if($id_card[0]->enable_vertical_card)
                 <table cellpadding="0" cellspacing="0" width="100%" class="tc-container" style="background: #efefef;">
                     <tr>
                         <td valign="top">
-                            <img src="<?php echo base_url('uploads/student_id_card/background/' . $id_card[0]->background); ?>" class="tcmybg" /></td>
+                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $id_card[0]->background; ?>" class="tcmybg" /></td>
                     </tr>
                     <tr>
                         <td valign="top">
                             <div class="studenttop" style="background: <?php echo $id_card[0]->header_color ?>">
 
-                                <div class="sttext1"><img src="<?php echo base_url('uploads/student_id_card/logo/' . $id_card[0]->logo); ?>" width="30" height="30" />
+                                <div class="sttext1"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $id_card[0]->logo; ?>" width="30" height="30" />
                                     <?php echo $id_card[0]->school_name ?></div>
                             </div>
                         </td>
@@ -200,13 +200,13 @@ if($id_card[0]->enable_vertical_card)
                                 <div class="cardleft">
 
                                     <div class="stimg">
-                                        <img src="<?php echo base_url($student->image); ?>" class="img-responsive" />
+                                        <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $student->image; ?>" class="img-responsive" />
                                     </div>
                                 </div><!--./cardleft-->
                                 <div class="cardright">
                                     <ul class="stlist">
 
-                                       
+
                                         <?php if ($id_card[0]->enable_student_name == 1) { ?><li><?php echo $this->lang->line('student_name'); ?><span> <?php echo $this->customlib->getFullName($student->firstname,$student->middlename,$student->lastname,$sch_settingdata->middlename,$sch_settingdata->lastname); ?></span></li><?php } ?>
                                         <?php if ($id_card[0]->enable_admission_no == 1) { ?><li><?php echo $this->lang->line('admission_no'); ?><span> <?php echo $student->admission_no; ?></span></li><?php } ?>
                                         <?php if ($id_card[0]->enable_class == 1) { ?><li><?php echo $this->lang->line('class'); ?><span><?php echo $student->class . ' - ' . $student->section . " (" . $school['current_session']['session'] . ")"; ?></span></li><?php } ?>
@@ -238,7 +238,7 @@ if($id_card[0]->enable_vertical_card)
                         </td>
                     </tr>
                     <tr>
-                        <td valign="top" align="right" class="principal"><img src="<?php echo base_url('uploads/student_id_card/signature/' . $id_card[0]->sign_image); ?>" width="66" height="40" /></td>
+                        <td valign="top" align="right" class="principal"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $id_card[0]->sign_image; ?>" width="66" height="40" /></td>
                     </tr>
                 </table>
             </td>

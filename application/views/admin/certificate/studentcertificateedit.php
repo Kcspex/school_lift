@@ -82,15 +82,15 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                 </div>
 
 
-                                <div class="mediarow">    
+                                <div class="mediarow">
                                     <div class="row">
                                         <div class="img_div_modal"><label><?php echo $this->lang->line('certificate'); ?> <?php echo $this->lang->line('design'); ?></label></div>
                                         <div class="col-md-6 col-sm-6 img_div_modal">
                                             <div class="form-group">
                                                 <input id="header_height" name="header_height" placeholder="<?php echo $this->lang->line('header'); ?> <?php echo $this->lang->line('height'); ?>" type="number" class="form-control" min="0" value="<?php echo set_value('header_height', $editcertificate[0]->header_height); ?>" />
                                             </div>
-                                        </div><!--./col-md-6-->   
-                                        <div class="col-md-6 col-sm-6 img_div_modal"> 
+                                        </div><!--./col-md-6-->
+                                        <div class="col-md-6 col-sm-6 img_div_modal">
                                             <div class="form-group">
                                                 <input id="footer_height" name="footer_height" placeholder="<?php echo $this->lang->line('footer'); ?> <?php echo $this->lang->line('height'); ?>" type="number" class="form-control" min="0" value="<?php echo set_value('footer_height', $editcertificate[0]->footer_height); ?>" />
                                             </div>
@@ -103,7 +103,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
 
 
 
-                                        <div class="col-md-6 col-sm-6 img_div_modal"> 
+                                        <div class="col-md-6 col-sm-6 img_div_modal">
                                             <div class="form-group">
                                                 <input id="content_width" name="content_width" placeholder="<?php echo $this->lang->line('body'); ?> <?php echo $this->lang->line('width'); ?>" type="number" class="form-control" min="0" value="<?php echo set_value('content_width', $editcertificate[0]->content_width); ?>" />
                                             </div>
@@ -123,7 +123,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                             </div>
                                         </div>
 
-                                    </div><!--./row-->  
+                                    </div><!--./row-->
                                 </div><!--./mediarow-->
 
 
@@ -170,7 +170,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                         </div>
                         <div class="mailbox-messages">
                             <div class="download_label"><?php echo $this->lang->line('student'); ?> <?php echo $this->lang->line('certificate'); ?> <?php echo $this->lang->line('list'); ?></div>
-                            <div class="table-responsive">  
+                            <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover example">
                                     <thead>
                                         <tr>
@@ -195,7 +195,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                     </td>
                                                     <td class="mailbox-name">
                                                         <?php if ($certificate->background_image != '' && !is_null($certificate->background_image)) { ?>
-                                                            <img src="<?php echo base_url('uploads/certificate/') ?><?php echo $certificate->background_image ?>" width="40">
+                                                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $certificate->background_image ?>" width="40">
                                                         <?php } else { ?>
                                                             <i class="fa fa-picture-o fa-3x" aria-hidden="true"></i>
                                                         <?php } ?>
@@ -225,7 +225,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                         ?>
                                     </tbody>
                                 </table>
-                            </div>  
+                            </div>
                         </div><!-- /.mail-box-messages -->
                     </div><!-- /.box-body -->
                 </div>

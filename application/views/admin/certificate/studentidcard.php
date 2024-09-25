@@ -69,17 +69,17 @@
     <body style="margin-top: 50px">
     <center>
         <table cellpadding="0" cellspacing="0" width="32%">
-            <tr> 
+            <tr>
                 <td valign="top" width="32%" >
                     <table cellpadding="0" cellspacing="0" width="100%" class="tc-container" style="background: #efefef;">
                         <tr>
                             <td valign="top">
-                                <img src="<?php echo base_url('uploads/student_id_card/background/') ?><?php echo $idcardlist[0]->background; ?>" class="tcmybg" /></td>
+                                <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $idcardlist[0]->background; ?>" class="tcmybg" /></td>
                         </tr>
                         <tr>
                             <td valign="top">
                                 <div class="studenttop">
-                                    <div class="sttext1"><img src="<?php echo base_url('uploads/student_id_card/logo/') ?><?php echo $idcardlist[0]->logo; ?>" width="30" height="30" />
+                                    <div class="sttext1"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $idcardlist[0]->logo; ?>" width="30" height="30" />
                                         <?php echo $idcardlist[0]->school_name; ?></div>
                                 </div>
                             </td>
@@ -99,7 +99,7 @@
                                 <div class="staround">
                                     <div class="cardleft">
                                         <div class="stimg">
-                                            <img src="<?php echo base_url() ?>/<?php echo $resultlist[0]['image']; ?>" class="img-responsive" />
+                                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $resultlist[0]['image']; ?>" class="img-responsive" />
                                         </div>
                                     </div><!--./cardleft-->
                                     <div class="cardright">
@@ -155,12 +155,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td valign="top" align="right" class="principal"><img src="<?php echo base_url('uploads/student_id_card/signature.png') ?>" width="66" height="40" /></td>
+                            <td valign="top" align="right" class="principal"><img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/student_id_card/signature.png" width="66" height="40" /></td>
                         </tr>
                     </table>
                 </td>
-            </tr>  
+            </tr>
         </table>
     </center>
-</body>  
+</body>
 </html>
