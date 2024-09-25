@@ -184,7 +184,7 @@ if($idcard->enable_vertical_card){
                                 <div class="staround">
                                     <div class="cardleft">
                                         <div class="stimg">
-                                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/student_images/no_image.png" class="img-responsive" />
+                                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?= $list[0]['image'] ? $list[0]['image'] : "uploads/student_images/no_image.png"; ?>" class="img-responsive" />
                                         </div>
                                     </div><!--./cardleft-->
                                     <div class="cardright">
