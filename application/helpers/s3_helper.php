@@ -55,7 +55,7 @@ if (!function_exists('upload_to_s3')) {
             ]);
 
             // Upload the file to S3
-            log_message('info', 'Uploading file to S3: ' . $key);
+            // log_message('info', 'Uploading file to S3: ' . $key);
             $result = $s3->putObject([
                 'Bucket' => $bucket,
                 'Key'    => $key,
@@ -64,7 +64,7 @@ if (!function_exists('upload_to_s3')) {
             ]);
 
             // Return success with S3 key
-            log_message('info', 'File uploaded successfully to S3.');
+            // log_message('info', 'File uploaded successfully to S3.');
             return [
                 'success' => true,
                 's3_key' => $key,
