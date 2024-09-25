@@ -1,5 +1,5 @@
 <style type="text/css">
-    .files { 
+    .files {
         /* outline: 2px dashed #424242;
          outline-offset: -10px;*/
         -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
@@ -15,7 +15,7 @@
         -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
         transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3;
     }
-    .files{ position:relative;background-color: rgb(245, 245, 245);    
+    .files{ position:relative;background-color: rgb(245, 245, 245);
             border: 1px solid rgba(0, 0, 0, 0.06);}
     .files:after {
         pointer-events: none;
@@ -61,7 +61,7 @@
     .modal-lg{width: 1100px;}
     @media (max-width:767px){
         .modal-lg{width:100%;}
-    } 
+    }
 </style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -83,20 +83,20 @@
                             <h3 class="box-title"><?php echo $this->lang->line('media_manager'); ?></h3>
                         </div>
                         <div class="box-body">
-                            <div class="row"> 
+                            <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <div class="mailbox-controls">
                                         <form method="post" action="#" id="fileupload">
                                             <div class="form-group">
                                                 <label><?php echo $this->lang->line('upload_your_file'); ?></label>
-                                                <div class="files" >  
+                                                <div class="files" >
                                                     <input type="file" name="files[]" class="form-control" id="file" multiple="">
-                                                </div>  
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div><!--./col-md-6-->
-                                <div class="col-md-6 col-sm-6">  
+                                <div class="col-md-6 col-sm-6">
                                     <form action="<?php echo site_url('admin/front/media/addVideo'); ?>" id="video_form" method="POST" >
                                         <div class="form-group">
                                             <label for="video_url"><?php echo $this->lang->line('upload_youtube_video'); ?></label><small class="req"> *</small>
@@ -105,11 +105,11 @@
                                         </div>
                                         <button type="submit" class="btn btn-info pull-right video_submit" data-loading-text="<i class='fa fa-spinner fa-spin '></i> <?php echo $this->lang->line('loading');?>"><?php echo $this->lang->line('submit'); ?></button>
                                     </form>
-                                </div>  
-                            </div>    
+                                </div>
+                            </div>
                         </div><!--./box-body-->
                     </div>
-                </div><!--./col-md-12-->             
+                </div><!--./col-md-12-->
                 <!-- left column -->
             <?php } ?>
             <div class="col-md-12">
@@ -139,16 +139,16 @@
                                             </select>
                                         </div>
 
-                                    </form> 
+                                    </form>
                                 </div>
-                                <div class="mediarow">   
+                                <div class="mediarow">
                                     <div class="row" id="media_div"></div></div>
                                 <div align="right" id="pagination_link"></div>
                             </div>
 
                         </div>
 
-                    </div><!-- /.box-body -->  
+                    </div><!-- /.box-body -->
                 </div><!--/.col (left) -->
             </div>
             <div class="row">
@@ -172,7 +172,7 @@
             load(1);
         });
 
-      
+
 
         $("#confirm-delete").modal({
             backdrop: false,
@@ -191,11 +191,11 @@
         if(data.media_type === 'image/png'||data.media_type === 'image/jpeg'|| data.media_type === 'image/jpeg'|| data.media_type === 'image/jpeg'|| data.media_type ==='image/gif'){
          var media_content_path = "<a href='" + data.image + "' target='_blank'>" + data.image + "</a>";
         }else{
-            var media_content_path = "<a href='" + data.source + "' target='_blank'>" + data.source + "</a>"; 
+            var media_content_path = "<a href='" + data.source + "' target='_blank'>" + data.source + "</a>";
         }
-       
-           
-           
+
+
+
             $('#modal_media_name').text("").text(data.media_name);
             $('#modal_media_path').html("").html(media_content_path);
             $('#modal_media_type').text("").text(data.media_type);
@@ -213,8 +213,6 @@
                 content_popup = '<img src="' + thumb_path + '" class="img-responsive">';
             }
             $('.popup_image').html("").html(content_popup);
-
-
         }
 
 
@@ -348,8 +346,8 @@
 
 // Sending AJAX request and upload file
     function uploadData(formdata) {
-        var urls = baseurl + "admin/front/media/addImage";		
-		
+        var urls = baseurl + "admin/front/media/addImage";
+
         $.ajax({
             url: urls,
             type: 'post',
@@ -357,7 +355,7 @@
             contentType: false,
             processData: false,
 			 dataType: 'JSON',
-            // dataType: "html",			
+            // dataType: "html",
 			success: function (response) {
 			console.log(response);
                 if (response.status == 0) {
@@ -367,6 +365,11 @@
                     errorMsg(response.msg);
                 }
 
+            },
+            error: function (xhr, status, error) {
+                console.log("Error Details:", xhr.responseText);  // This will log the full error message
+                console.log("Status:", status);
+                console.log("Error:", error);
             },
             beforeSend: function () {
 
