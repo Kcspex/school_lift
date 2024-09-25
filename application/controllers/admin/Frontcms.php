@@ -68,68 +68,26 @@ class Frontcms extends Admin_Controller {
                 $upload_result_logo = upload_to_s3($file_path, $file_info, $newLogoName, 'uploads/school_content/logo/');
 
                 if ($upload_result_logo['success']) {
-                    $logoUploaded = true;  // Mark logo as successfully uploaded
-                } else {
-                    // Add logo error to the errors array
-                    $uploadErrors[] = 'Logo upload failed: ' . $upload_result_logo['error'];
+                    $logo_dir = $upload_result_logo["s3_key"];
+                    $data['logo'] = $logo_dir;
+                    unlink($frontcmslist->logo);
                 }
-                // if ($upload_result_logo['success']) {
-                //     $logoUploaded = true;  // Mark logo as successfully uploaded
-                // } else {
-                //     // Handle logo upload failure
-                //     $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">Logo upload failed: ' . $upload_result_logo['error'] . '</div>');
-                // }
             }
 
             if (isset($_FILES["fav_icon"]) && !empty($_FILES["fav_icon"]['name'])) {
-                // $newFavName = $this->customlib->uniqueFileName('front_fav_icon-', $_FILES["fav_icon"]['name']);
                 $newFavName = uniqid('front_fav_icon-', true) . '.' . strtolower(pathinfo($_FILES["fav_icon"]['name'], PATHINFO_EXTENSION));
                 $file_info = pathinfo($_FILES["fav_icon"]['name']);
                 $file_path = $_FILES["fav_icon"]["tmp_name"];
                 $upload_result_favicon = upload_to_s3($file_path, $file_info, $newFavName, 'uploads/school_content/logo/');
 
                 if ($upload_result_favicon['success']) {
-                    $favIconUploaded = true;  // Mark favicon as successfully uploaded
-                } else {
-                    // Add favicon error to the errors array
-                    $uploadErrors[] = 'Favicon upload failed: ' . $upload_result_favicon['error'];
-                }
-                // if ($upload_result_favicon['success']) {
-                //     $favIconUploaded = true;  // Mark favicon as successfully uploaded
-                // } else {
-                //     // Handle favicon upload failure
-                //     $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">Favicon upload failed: ' . $upload_result_favicon['error'] . '</div>');
-                // }
-            }
-
-            // If both uploads failed
-            if (!$logoUploaded && !$favIconUploaded) {
-                // Show error message for both uploads
-                $errorMsg = implode('<br>', $uploadErrors);
-                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
-            }
-            // If at least one upload was successful
-            else if ($logoUploaded || $favIconUploaded) {
-                // If there are errors, show the error message but do not update the database
-                if (!empty($uploadErrors)) {
-                    $errorMsg = implode('<br>', $uploadErrors);
-                    $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
-                }
-                // If no errors, save data and show success message
-                else {
-                    $this->frontcms_setting_model->add($data);
-                    $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');
+                    $fav_dir = $upload_result_favicon["s3_key"];
+                    $data['fav_icon'] = $fav_dir;
+                    unlink($frontcmslist->fav_icon);
                 }
             }
-
-            // if ($upload_result['success']) {
-            //
-            //   $this->frontcms_setting_model->add($data);
-            //   $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');
-            // } else {
-            //     $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $upload_result['error'] . '</div>');
-            //     // $array = array('success' => false, 'error' => $upload_result['error'], 'message' => 'Upload failed.');
-            // }
+            $this->frontcms_setting_model->add($data);
+            $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');
             redirect('admin/frontcms');
         }
 
