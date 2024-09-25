@@ -83,6 +83,7 @@ class Frontcms extends Admin_Controller {
                 if ($upload_result_favicon['success']) {
                     $fav_dir = $upload_result_favicon["s3_key"];
                     $data['fav_icon'] = "https://schoollift.s3.us-east-2.amazonaws.com/" . $fav_dir;
+                    echo $data['fav_icon'];
                     unlink($frontcmslist->fav_icon);
                 }
             }
