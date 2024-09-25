@@ -82,8 +82,8 @@ class Frontcms extends Admin_Controller {
             }
 
             if (isset($_FILES["fav_icon"]) && !empty($_FILES["fav_icon"]['name'])) {
-                $newFavName = $this->customlib->uniqueFileName('front_fav_icon-', $_FILES["fav_icon"]['name']);
-                // $newFavName = uniqid('front_fav_icon-', true) . '.' . strtolower(pathinfo($_FILES["fav_icon"]['name'], PATHINFO_EXTENSION));
+                // $newFavName = $this->customlib->uniqueFileName('front_fav_icon-', $_FILES["fav_icon"]['name']);
+                $newFavName = uniqid('front_fav_icon-', true) . '.' . strtolower(pathinfo($_FILES["fav_icon"]['name'], PATHINFO_EXTENSION));
                 $file_info = pathinfo($_FILES["fav_icon"]['name']);
                 $file_path = $_FILES["fav_icon"]["tmp_name"];
                 $upload_result_favicon = upload_to_s3($file_path, $file_info, $newFavName, '/uploads/school_content/logo/');
