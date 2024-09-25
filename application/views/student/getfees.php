@@ -42,15 +42,15 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                             ?>
                                             <img class="profile-user-img img-responsive img-circle" src="<?php
 if (!empty($student['image'])) {
-        echo base_url() . $student['image'];
+        echo "https://schoollift.s3.us-east-2.amazonaws.com/" . $student['image'];
     } else {
         echo base_url() . "uploads/student_images/no_image.png";
     }
     ?>" alt="User profile picture">
                                             <?php
                                         }?>
-                                        
-                                    </div> 
+
+                                    </div>
 
                                     <div class="col-md-10">
                                         <div class="row">
@@ -124,7 +124,7 @@ if (!empty($student['image'])) {
 								<?php  if ($payment_method) { ?>
                                 <button type="button" class="btn btn-sm btn-warning collectSelected" id="load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> <?php echo $this->lang->line('please_wait')?>"><i class="fa fa-money"></i> <?php echo $this->lang->line('pay') . " " . $this->lang->line('selected') ?></button>
 								<?php } ?>
-								
+
                                 <span class="pull-right"><?php echo $this->lang->line('date'); ?>: <?php echo date($this->customlib->getSchoolDateFormat()); ?></span>
                             </div>
                         </div>
@@ -190,7 +190,7 @@ if (!empty($student['image'])) {
                                                     }
                                                 }
 												if (($fee_value->due_date != "0000-00-00" && $fee_value->due_date != NULL) && (strtotime($fee_value->due_date) < strtotime(date('Y-m-d')))) {
-                                           
+
                                                 $total_fees_fine_amount=$total_fees_fine_amount+$fee_value->fine_amount;
                                            }
                                                 $total_amount = $total_amount + $fee_value->amount;
@@ -220,7 +220,7 @@ if (!empty($student['image'])) {
 
                                                         <?php
                                                         if ($fee_value->due_date == "0000-00-00") {
-                                                            
+
                                                         } else {
 
                                                             echo date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($fee_value->due_date));
@@ -244,7 +244,7 @@ if (!empty($student['image'])) {
     ?>
 <span class="text text-danger"><?php echo " + ".($fee_value->fine_amount); ?></span>
     <?php
-          
+
             }
 
                                                      ?></td>
@@ -274,7 +274,7 @@ if (!empty($student['image'])) {
                                                     </td>
 
                                                     <td>
-                                                        <div class="btn-group pull-right"> 
+                                                        <div class="btn-group pull-right">
                                                             <?php
                                                             if ($payment_method) {
 
@@ -289,7 +289,7 @@ if (!empty($student['image'])) {
 
 
 
-                                                        </div>        
+                                                        </div>
                                                     </td>
 
 
@@ -417,7 +417,7 @@ if (!empty($student['image'])) {
                                             <td align="left"></td>
                                             <td align="left"></td>
                                             <td align="left"></td>
-                                            <td align="left"></td>   
+                                            <td align="left"></td>
                                             <td align="left" class="text text-left" ><?php echo $this->lang->line('grand_total'); ?></td>
                                             <td class="text text-right"><?php
                                             echo $currency_symbol . number_format($total_amount, 2, '.', '')."<span class='text text-danger'>+".  number_format($total_fees_fine_amount, 2, '.', '')."</span>";
@@ -437,7 +437,7 @@ if (!empty($student['image'])) {
                                                 ?></td>
                                             <td class="text text-right"><?php
                                                 echo ($currency_symbol . number_format($total_balance_amount - $alot_fee_discount, 2, '.', ''));
-                                                ?></td>  
+                                                ?></td>
                                             <td class="text text-right"></td>
                                         </tr>
                                     </tbody>
@@ -476,7 +476,7 @@ if (!empty($student['image'])) {
                 <div class="modal-body">
 
                 </div>
-            
+
             </div>
         </form>
     </div>
@@ -499,9 +499,9 @@ if (!empty($student['image'])) {
             });
         });
 
-       $("#select_all").change(function () {  //"select all" change 
+       $("#select_all").change(function () {  //"select all" change
         $('input:checkbox').not(this).prop('checked', this.checked);
-        
+
     });
 
          $(document).ready(function () {
@@ -565,20 +565,20 @@ if (!empty($student['image'])) {
                 array_to_collect_fees.push(item);
                 select_count++;
             });
-           
+
             if(select_count > 0){
                 $.ajax({
                 type: 'POST',
                 url: base_url + "user/user/getcollectfee",
                 data: {'data': JSON.stringify(array_to_collect_fees)},
                 dataType: "JSON",
-                beforeSend: function () { 
+                beforeSend: function () {
                     $this.button('loading');
                 },
                 success: function (data) {
 
                     $("#listCollectionModal .modal-body").html(data.view);
-                 
+
                     $("#listCollectionModal").modal('show');
                     $this.button('reset');
                 },
@@ -589,12 +589,12 @@ if (!empty($student['image'])) {
                 complete: function () {
                     $this.button('reset');
                 }
-            }); 
+            });
             }else{
                 errorMsg('<?php echo $this->lang->line('please_select_record')?>');
-               
+
             }
-            
+
 
         });
 

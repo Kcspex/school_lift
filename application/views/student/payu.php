@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#424242" />
         <title><?php echo $this->customlib->getAppName(); ?></title>
-        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css"> 
-        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/font-awesome.min.css"> 
+        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/font-awesome.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/style-main.css"> <style type="text/css">
             .table2 tr.border_bottom td {
                 box-shadow: none;
@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="paddtop20">
                     <div class="col-md-8 col-md-offset-2 text-center">
-                        <img src="<?php echo base_url('uploads/school_content/logo/' . $setting[0]['image']); ?>">
+                        <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_content/logo/<?php echo $setting[0]['image']; ?>">
                     </div>
                     <div class="col-md-6 col-md-offset-3 mt20">
                         <div class="paymentbg">
@@ -66,7 +66,7 @@
                                         </tr>
 
                                         <tr class="border_bottom">
-                                            <td> 
+                                            <td>
                                                 <span class="text-fine"><?php echo $this->lang->line('fine'); ?></span></td>
                                             <td class="text-right"><?php echo $setting[0]['currency_symbol'] . number_format((float) $fees_value['fine_balance'], 2, '.', ''); ?></td>
                                         </tr>
@@ -101,17 +101,17 @@
 
                                     <input class="form-control" type="hidden" name="address1" value="<?php echo $address ?>" readonly/>
                                     <input name="surl" value="<?php echo $sucess ?>" size="64" type="hidden" />
-                                    <input name="furl" value="<?php echo $failure ?>" size="64" type="hidden" />                             
+                                    <input name="furl" value="<?php echo $failure ?>" size="64" type="hidden" />
                                     <input type="hidden" name="service_provider" value="payu_paisa" size="64" />
                                     <input name="curl" value="<?php echo $cancel ?> " type="hidden" />
 
                                     <button type="button" onclick="window.history.go(-1);
-                                            return false;" name="search"  value="" class="btn btn-info"><i class="fa fa fa-chevron-left"></i> <?php echo $this->lang->line('back') ?></button>    
+                                            return false;" name="search"  value="" class="btn btn-info"><i class="fa fa fa-chevron-left"></i> <?php echo $this->lang->line('back') ?></button>
 
                                     <button type="button" class="btn cfees pull-right submit_button" ><i class="fa fa fa-money"></i> <?php echo $this->lang->line('pay_with_payu') ?></button></td>
 
-                                </form>        
-                            </div></div></div>                      
+                                </form>
+                            </div></div></div>
                 </div>
             </div>
         </div>
@@ -146,4 +146,4 @@
             });
         </script>
     </body>
-</html>          
+</html>

@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#424242" />
         <title>School Management System</title>
-        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css"> 
-        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/font-awesome.min.css"> 
+        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/font-awesome.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/style-main.css">
          <style type="text/css">
             .table2 tr.border_bottom td {
@@ -36,7 +36,7 @@
             .text-fine{
                 color: #bf4f4d;
             }
-        </style> 
+        </style>
     </head>
     <body style="background: #ededed;">
         <div class="container">
@@ -44,7 +44,7 @@
                 <div class="paddtop20">
                     <div class="col-md-8 col-md-offset-2 text-center">
 
-                        <img src="<?php echo base_url('uploads/school_content/logo/' . $setting[0]['image']); ?>">
+                        <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_content/logo/<?php echo $setting[0]['image']; ?>">
 
                     </div>
                     <div class="col-md-6 col-md-offset-3 mt20">
@@ -69,7 +69,7 @@
                                         </tr>
 
                                         <tr class="border_bottom">
-                                            <td> 
+                                            <td>
                                                 <span class="text-fine"><?php echo $this->lang->line('fine'); ?></span></td>
                                             <td class="text-right"><?php echo $setting[0]['currency_symbol'] . number_format((float) $fees_value['fine_balance'], 2, '.', ''); ?></td>
                                         </tr>
@@ -83,7 +83,7 @@
                                 <div class="divider"></div>
 
                                 <form class="paddtlrb" action="<?php echo site_url('students/stripe/complete'); ?>" method="POST">
-                                    <button type="button" onclick="window.history.go(-1); return false;" name="search"  value="" class="btn btn-info"><i class="fa fa fa-chevron-left"></i> <?php echo $this->lang->line('back')?></button>  
+                                    <button type="button" onclick="window.history.go(-1); return false;" name="search"  value="" class="btn btn-info"><i class="fa fa fa-chevron-left"></i> <?php echo $this->lang->line('back')?></button>
                                     <script
                                         src="https://checkout.stripe.com/checkout.js" class="stripe-button pull-right"
                                         data-key="<?php echo $params['api_publishable_key']; ?>"
@@ -96,7 +96,7 @@
                                         data-currency="<?php echo $params['invoice']->currency_name; ?>"
                                         >
                                     </script>
-                                    
+
                                     <input type="hidden" name="student_id" value="<?php echo $params['student_id']; ?>">
                                     <input type="hidden" name="total" value="<?php echo (number_format((float)($params['fine_amount_balance']+$params['total']), 2, '.', '')); ?>">
                                 </form>
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </body>

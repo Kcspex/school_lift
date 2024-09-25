@@ -17,7 +17,7 @@
                         <?php }
                         ?>
                     </div>
-                    <form id="form1" action="<?php echo site_url('student/create') ?>"  id="employeeform" name="employeeform" method="post" accept-charset="utf-8" enctype="multipart/form-data">                       
+                    <form id="form1" action="<?php echo site_url('student/create') ?>"  id="employeeform" name="employeeform" method="post" accept-charset="utf-8" enctype="multipart/form-data">
                         <div class="">
                             <div class="bozero">
                                 <h4 class="pagetitleh-whitebg"><?php echo $this->lang->line('student'); ?> <?php echo $this->lang->line('admission'); ?> </h4>
@@ -384,7 +384,7 @@
                                             </div>
 <?php } ?>
                                     </div>
-                                    <?php 
+                                    <?php
                                     if($sch_setting->guardian_name){
                                         ?>
                                         <div class="row">
@@ -411,11 +411,11 @@
                                         <?php
                                     }
                                     ?>
-                                    
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="row">
-                                                 <?php 
+                                                 <?php
                                     if($sch_setting->guardian_name){
                                         ?>
                                                 <div class="col-md-6">
@@ -436,7 +436,7 @@
                                     <?php } ?>
                                             </div>
                                             <div class="row">
-                                                <?php 
+                                                <?php
                                     if($sch_setting->guardian_phone){
                                         ?>
                                                 <div class="col-md-6">
@@ -446,7 +446,7 @@
                                                         <span class="text-danger"><?php echo form_error('guardian_phone'); ?></span>
                                                     </div>
                                                 </div>
-                                            <?php } 
+                                            <?php }
                                     if($sch_setting->guardian_occupation){
                                         ?>
                                                 <div class="col-md-6">
@@ -472,7 +472,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputFile"><?php echo $this->lang->line('guardian'); ?> <?php echo $this->lang->line('photo'); ?></label>
                                                     <div><input class="filestyle form-control" type='file' name='guardian_pic' id="file" size='20' />
-                                                    </div> 
+                                                    </div>
                                                     <span class="text-danger"><?php echo form_error('file'); ?></span></div>
                                             </div>
 <?php } if ($sch_setting->guardian_address) { ?>
@@ -654,7 +654,7 @@
                                                     </div>
                                                 <?php } ?>
                                                 </div>
-                                          
+
                                             <div class="row around10">
 <?php if ($sch_setting->national_identification_no) { ?>
                                                     <div class="col-md-4">
@@ -797,7 +797,7 @@
             <div class="modal-body">
                 <div class="form-horizontal">
                     <div class="box-body">
-                        
+
                         <input  type="hidden" class="form-control" id="transport_student_session_id"  value="0" readonly="readonly"/>
                         <div class="form-group">
                             <div class="sibling_msg">
@@ -1069,7 +1069,7 @@
                     if (section_id == obj.section_id) {
                         sel = "selected=selected";
                     }
- 
+
 
                     if (obj.roll_no == null) {
 
@@ -1111,7 +1111,7 @@
                     $('#guardian_phone').val(data.guardian_phone);
                     $('#state').val(data.state);
                     $('#city').val(data.city);
-                    $('#pincode').val(data.pincode); 
+                    $('#pincode').val(data.pincode);
                     $('#current_address').val(data.current_address);
                     $('#permanent_address').val(data.permanent_address);
                     $('#guardian_occupation').val(data.guardian_occupation);

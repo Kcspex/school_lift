@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#424242" />
         <title>School Management System</title>
-        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css"> 
-        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/font-awesome.min.css"> 
-        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/style-main.css"> 
+        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/font-awesome.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/style-main.css">
         <style type="text/css">
             .table2 tr.border_bottom td {
                 box-shadow: none;
@@ -44,7 +44,7 @@
                 <div class="paddtop20">
                     <div class="col-md-8 col-md-offset-2 text-center">
 
-                        <img src="<?php echo base_url('uploads/school_content/logo/' . $setting[0]['image']); ?>">
+                        <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_content/logo/<?php echo $setting[0]['image']; ?>">
 
                     </div>
                     <?php echo validation_errors(); ?>
@@ -53,12 +53,12 @@
                             <div class="invtext"><?php echo $this->lang->line('fees_payment_details'); ?> </div>
                             <br>
                             <?php if ($api_error) {
-                                ?> 
+                                ?>
                                 <div class="alert alert-danger"><?php
                                     echo "<pre>"; print_r($api_error);
                                     ?> </div>
                             <?php }
-                            ?> 
+                            ?>
 
 
                             <div class="padd2 paddtzero">
@@ -81,7 +81,7 @@
                                         </tr>
 
                                         <tr class="border_bottom">
-                                            <td> 
+                                            <td>
                                                 <span class="text-fine"><?php echo $this->lang->line('fine'); ?></span></td>
                                             <td class="text-right"><?php echo $setting[0]['currency_symbol'] . number_format((float) $fees_value['fine_balance'], 2, '.', ''); ?></td>
                                         </tr>
@@ -112,7 +112,7 @@
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </body>

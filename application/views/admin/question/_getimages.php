@@ -2,8 +2,8 @@
 if (!empty($result)) {
    $is_image = 1;
     foreach ($result as $result_key => $result_value) {
-        $file     = base_url() . $result_value->thumb_path . $result_value->img_name;
-        $file_src = base_url() . $result_value->thumb_path . $result_value->img_name;
+        $file     = "https://schoollift.s3.us-east-2.amazonaws.com/" . $result_value->thumb_path . $result_value->img_name;
+        $file_src = "https://schoollift.s3.us-east-2.amazonaws.com/" . $result_value->thumb_path . $result_value->img_name;
         ?>
   <div class='col-sm-3 col-md-2 col-xs-6 img_div_modal image_div div_record_<?php echo $result_value->id; ?>'>
   <div class='fadeoverlay'>
@@ -22,6 +22,3 @@ if (!empty($result)) {
 }
 
 ?>
-
-
-

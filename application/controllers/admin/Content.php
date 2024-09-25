@@ -91,12 +91,19 @@ class Content extends Admin_Controller
             if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
                 $fileInfo = pathinfo($_FILES["file"]["name"]);
                 $img_name = $insert_id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/school_content/material/" . $img_name);
-                $data_img = array('id' => $insert_id, 'file' => 'uploads/school_content/material/' . $img_name);
-                $this->content_model->add($data_img);
+                $upload_result = upload_to_s3($_FILES["file"]["tmp_name"], $fileInfo, $img_name, "uploads/school_content/material/");
+                if ($upload_result['success'])
+                {
+                  $img_name = $upload_result['s3_key'];
+                  $data_img = array('id' => $insert_id, 'file' => $img_name);
+                  $this->content_model->add($data_img);
+                  $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');
+                  redirect('admin/content');
+                } else {
+                  $errorMsg = $upload_result['error'];
+                  $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                }
             }
-            $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');
-            redirect('admin/content');
         }
     }
 
@@ -165,12 +172,20 @@ class Content extends Admin_Controller
             if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
                 $fileInfo = pathinfo($_FILES["file"]["name"]);
                 $img_name = $insert_id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/school_content/material/" . $img_name);
-                $data_img = array('id' => $insert_id, 'file' => 'uploads/school_content/material/' . $img_name);
-                $this->content_model->add($data_img);
+                $upload_result = upload_to_s3($_FILES["file"]["tmp_name"], $fileInfo, $img_name, "uploads/school_content/material/");
+                if ($upload_result['success'])
+                {
+                  $img_name = $upload_result['s3_key'];
+                  $data_img = array('id' => $insert_id, 'file' => $img_name);
+                  $this->content_model->add($data_img);
+                  $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">Content added successfully</div>');
+                  redirect('admin/content');
+                } else {
+                  $errorMsg = $upload_result['error'];
+                  $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                }
+
             }
-            $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">Content added successfully</div>');
-            redirect('admin/content');
         }
     }
 
@@ -256,12 +271,19 @@ class Content extends Admin_Controller
             if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
                 $fileInfo = pathinfo($_FILES["file"]["name"]);
                 $img_name = $id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                $data_img = array('id' => $id, 'file_uploaded' => 'uploads/student_images/' . $img_name);
-                $this->content_model->addcontentpost($data_img);
+                $upload_result = upload_to_s3($_FILES["file"]["tmp_name"], $fileInfo, $img_name, "uploads/student_images/");
+                if ($upload_result['success'])
+                {
+                  $img_name = $upload_result['s3_key'];
+                  $data_img = array('id' => $id, 'file_uploaded' => $img_name);
+                  $this->content_model->addcontentpost($data_img);
+                  $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">' . $this->lang->line('success_message') . '</div>');
+                  redirect('admin/content/createcontent/index');
+                } else {
+                  $errorMsg = $upload_result['error'];
+                  $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                }
             }
-            $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">' . $this->lang->line('success_message') . '</div>');
-            redirect('admin/content/createcontent/index');
         }
     }
 
@@ -282,8 +304,8 @@ class Content extends Admin_Controller
         if (!$this->rbac->hasPrivilege('upload_content', 'can_delete')) {
             access_denied();
         }
-        $this->content_model->remove($id);        
-        redirect('admin/content/' . $page);       
+        $this->content_model->remove($id);
+        redirect('admin/content/' . $page);
     }
 
     public function assignment()

@@ -47,9 +47,17 @@ class Itemstock extends Admin_Controller
             if (isset($_FILES["item_photo"]) && !empty($_FILES['item_photo']['name'])) {
                 $fileInfo = pathinfo($_FILES["item_photo"]["name"]);
                 $img_name = $insert_id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["item_photo"]["tmp_name"], "./uploads/inventory_items/" . $img_name);
-                $data_img = array('id' => $insert_id, 'attachment' => 'uploads/inventory_items/' . $img_name);
-                $this->itemstock_model->add($data_img);
+                $upload_result = upload_to_s3($_FILES["item_photo"]["tmp_name"], $fileInfo, $img_name, "uploads/inventory_items/");
+                if ($upload_result['success'])
+                {
+                  $img_name = $upload_result['s3_key'];
+                  // move_uploaded_file($_FILES["item_photo"]["tmp_name"], "./uploads/inventory_items/" . $img_name);
+                  $data_img = array('id' => $insert_id, 'attachment' => $img_name);
+                  $this->itemstock_model->add($data_img);
+                } else {
+                  $errorMsg = $upload_result['error'];
+                  $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                }
             }
 
             $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');
@@ -191,10 +199,17 @@ class Itemstock extends Admin_Controller
             if (isset($_FILES["item_photo"]) && !empty($_FILES['item_photo']['name'])) {
                 $fileInfo = pathinfo($_FILES["item_photo"]["name"]);
                 $img_name = $id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["item_photo"]["tmp_name"], "./uploads/inventory_items/" . $img_name);
-                $data_img = array('id' => $id, 'attachment' => 'uploads/inventory_items/' . $img_name);
-
-                $this->itemstock_model->add($data_img);
+                $upload_result = upload_to_s3($_FILES["item_photo"]["tmp_name"], $fileInfo, $img_name, "uploads/inventory_items/");
+                if ($upload_result['success'])
+                {
+                  $img_name = $upload_result['s3_key'];
+                  // move_uploaded_file($_FILES["item_photo"]["tmp_name"], "./uploads/inventory_items/" . $img_name);
+                  $data_img = array('id' => $id, 'attachment' => $img_name);
+                  $this->itemstock_model->add($data_img);
+                } else {
+                  $errorMsg = $upload_result['error'];
+                  $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                }
             }
 
             $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('update_message') . '</div>');

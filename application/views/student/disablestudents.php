@@ -5,7 +5,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
 
 </style>
 
-<div class="content-wrapper" style="min-height: 946px;">  
+<div class="content-wrapper" style="min-height: 946px;">
     <section class="content-header">
         <h1>
             <i class="fa fa-user-plus"></i> <?php echo $this->lang->line('student_information'); ?> <small><?php echo $this->lang->line('student1'); ?></small></h1>
@@ -26,7 +26,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                     <form role="form" action="<?php echo site_url('student/disablestudentslist') ?>" method="post" class="">
                                         <?php echo $this->customlib->getCSRF(); ?>
                                         <div class="col-sm-6">
-                                            <div class="form-group"> 
+                                            <div class="form-group">
                                                 <label><?php echo $this->lang->line('class'); ?></label><small class="req"> *</small>
                                                 <select autofocus="" id="class_id" name="class_id" class="form-control" >
                                                     <option value=""><?php echo $this->lang->line('select'); ?></option>
@@ -40,7 +40,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                     ?>
                                                 </select>
                                                 <span class="text-danger"><?php echo form_error('class_id'); ?></span>
-                                            </div>  
+                                            </div>
                                         </div><!--./col-md-6-->
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -49,7 +49,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                     <option value=""><?php echo $this->lang->line('select'); ?></option>
                                                 </select>
                                                 <span class="text-danger"><?php echo form_error('section_id'); ?></span>
-                                            </div>   
+                                            </div>
                                         </div><!--./col-md-6-->
 
                                         <div class="col-sm-12">
@@ -57,7 +57,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                 <button type="submit" name="search" value="search_filter" class="btn btn-primary btn-sm pull-right checkbox-toggle"><i class="fa fa-search"></i> <?php echo $this->lang->line('search'); ?></button>
                                             </div>
                                         </div>
-                                    </form>   
+                                    </form>
                                 </div><!--./row-->
                             </div><!--./col-md-6-->
                             <div class="col-md-6">
@@ -81,7 +81,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                         </div>
                     </div>
 
-                    <div class="box-header ptbnull"></div> 
+                    <div class="box-header ptbnull"></div>
                     <?php
                     if (isset($resultlist)) {
                         ?>
@@ -168,7 +168,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                             ?>
                                         </tbody>
                                     </table>
-                                </div>                           
+                                </div>
                                 <div class="tab-pane" id="tab_2">
                                     <?php if (empty($resultlist)) {
                                         ?>
@@ -189,7 +189,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                     <div id="carousel-2" class="carousel slide slide-carousel" data-ride="carousel">
                                                         <div class="carousel-inner">
                                                             <div class="item active">
-                                                                <a href="<?php echo base_url(); ?>student/view/<?php echo $student['id'] ?>"> <img class="img-responsive img-thumbnail width150" alt="<?php echo $student["firstname"] . " " . $student["lastname"] ?>" src="<?php echo base_url() . $image; ?>" alt="Image"></a>
+                                                                <a href="<?php echo base_url(); ?>student/view/<?php echo $student['id'] ?>"> <img class="img-responsive img-thumbnail width150" alt="<?php echo $student["firstname"] . " " . $student["lastname"] ?>" src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $image; ?>" alt="Image"></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -230,7 +230,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                                                 <!--a href="<?php echo base_url(); ?>student/edit/<?php echo $student['id'] ?>" class="btn btn-default btn-xs"  data-toggle="tooltip" title="<?php echo $this->lang->line('edit'); ?>">
                                                                                     <i class="fa fa-pencil"></i>
                                                                                 </a-->
-                                                                                <!--a href="<?php echo base_url(); ?>studentfee/addfee/<?php echo $student['id'] ?>" class="btn btn-default btn-xs" data-toggle="tooltip" title="" data-original-title="<?php echo $this->lang->line('add_fees'); ?>">    
+                                                                                <!--a href="<?php echo base_url(); ?>studentfee/addfee/<?php echo $student['id'] ?>" class="btn btn-default btn-xs" data-toggle="tooltip" title="" data-original-title="<?php echo $this->lang->line('add_fees'); ?>">
             <?php echo $currency_symbol; ?>
                                                                                 </a-->
                                                                             </span>
@@ -242,16 +242,16 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                                     $count++;
                                                                 }
                                                                 ?>
-                                                                </div>                                                          
-                                                                </div>                                                         
+                                                                </div>
+                                                                </div>
                                                                 </div>
 
-                                                                </div><!--./box box-primary-->    
+                                                                </div><!--./box box-primary-->
     <?php
 }
 ?>
-                                                            </div>  
-                                                            </div> 
+                                                            </div>
+                                                            </div>
                                                             </section>
                                                             </div>
                                                             <script type="text/javascript">

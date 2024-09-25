@@ -55,15 +55,15 @@ if ($page_form) {
                     if (!empty($page['category_content'][$page_content_key])) {
 
                         foreach ($page['category_content'][$page_content_key] as $key => $value) {
-                            ?>  
+                            ?>
                             <div class="col-md-<?php echo $bootstrapColWidth; ?> col-sm-<?php echo $bootstrapColWidth; ?>">
                                 <div class="cuadro_intro_hover" style="background-color:#cccccc;">
                                     <a href="<?php echo site_url($value['url']); ?>">
                                         <?php
                                         if ($value['feature_image'] == "") {
-                                            $feature_image = base_url('uploads/gallery/gallery_default.png');
+                                            $feature_image = "https://schoollift.s3.us-east-2.amazonaws.com/uploads/gallery/gallery_default.png";
                                         } else {
-                                            $feature_image = $value['feature_image'];
+                                            $feature_image = "https://schoollift.s3.us-east-2.amazonaws.com/" . $value['feature_image'];
                                         }
                                         ?>
                                         <div align="center"><img src="<?php echo $feature_image; ?>" alt="" title=""></div>
@@ -73,8 +73,8 @@ if ($page_form) {
                                                 <h3 style="margin-top: 10px;"><?php echo $value['title']; ?></h3>
                                                 <p><?php echo substr($value['description'], 0, 85) . ".."; ?></p>
                                             </div><!--./around20-->
-                                        </div>    
-                                    </a> 
+                                        </div>
+                                    </a>
                                 </div><!--./eventbox-->
                             </div>
                             <?php
@@ -96,7 +96,7 @@ if ($page_form) {
                             <h4><a href="<?php echo site_url($value['url']); ?>"><?php echo $value['title']; ?></a></h4>
                             <p><?php echo substr($value['description'], 0, 85) . ".."; ?></p>
                         </div>
-                    </div>   
+                    </div>
                     <?php
                 }
             } elseif ($page_content_key == "gallery") {
@@ -107,15 +107,15 @@ if ($page_form) {
                 <div class="row">
                     <?php
                     foreach ($page['category_content'][$page_content_key] as $key => $value) {
-                        ?>  
+                        ?>
                         <div class="col-md-<?php echo $bootstrapColWidth; ?> col-sm-<?php echo $bootstrapColWidth; ?>">
                             <div class="eventbox">
                                 <a href="<?php echo site_url($value['url']); ?>">
                                     <?php
                                     if ($value['feature_image'] == "") {
-                                        $feature_image = base_url('uploads/gallery/gallery_default.png');
+                                        $feature_image = "https://schoollift.s3.us-east-2.amazonaws.com/uploads/gallery/gallery_default.png";
                                     } else {
-                                        $feature_image = $value['feature_image'];
+                                        $feature_image = "https://schoollift.s3.us-east-2.amazonaws.com/" . $value['feature_image'];
                                     }
                                     ?>
                                     <img src="<?php echo $feature_image; ?>" alt="" title="">
@@ -125,7 +125,7 @@ if ($page_form) {
                                         echo substr(strip_tags(html_entity_decode($value['description'])), 0, 50);
                                         ?>
                                     </div><!--./around20-->
-                                </a> 
+                                </a>
                             </div><!--./eventbox-->
                         </div>
                         <?php
@@ -138,7 +138,7 @@ if ($page_form) {
 
                 <?php
             } else {
-                
+
             }
         }
         echo $this->ajax_pagination->create_links(); //pagination link
@@ -174,5 +174,5 @@ if ($page_form) {
                 $("#captcha_image").html(captcha);
             }
         });
-    } 
+    }
 </script>

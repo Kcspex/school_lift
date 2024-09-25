@@ -5,7 +5,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
 
 </style>
 
-<div class="content-wrapper" style="min-height: 946px;">  
+<div class="content-wrapper" style="min-height: 946px;">
     <section class="content-header">
         <h1><i class="fa fa-sitemap"></i> <?php echo $this->lang->line('human_resource'); ?></h1>
     </section>
@@ -25,7 +25,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                     <form role="form" action="<?php echo site_url('admin/staff/disablestafflist') ?>" method="post" class="">
                                         <?php echo $this->customlib->getCSRF(); ?>
                                         <div class="col-sm-12">
-                                            <div class="form-group"> 
+                                            <div class="form-group">
                                                 <label><?php echo $this->lang->line("role") ?></label><small class="req"> *</small>
                                                 <select name="role" class="form-control">
                                                     <option value=""><?php echo $this->lang->line('select') ?></option>
@@ -40,7 +40,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
 ?>
                                                 </select>
                                                 <span class="text-danger"><?php echo form_error('role'); ?></span>
-                                            </div>  
+                                            </div>
                                         </div>
 
 
@@ -49,7 +49,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                 <button type="submit" name="search" value="search_filter" class="btn btn-primary btn-sm pull-right checkbox-toggle"><i class="fa fa-search"></i> <?php echo $this->lang->line('search'); ?></button>
                                             </div>
                                         </div>
-                                </div>  
+                                </div>
                                 </form>
                             </div>
                             <div class="col-md-6">
@@ -104,7 +104,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                             ?>
                                             <tr>
                                                 <td colspan="4" class="text-danger text text-center"><?php echo $this->lang->line('no_record_found'); ?></td>
-                                            </tr> 
+                                            </tr>
                                             <?php
                                         } else {
                                             $count = 1;
@@ -123,7 +123,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                     <td><?php echo $staff['contact_no']; ?></td>
 
                                                     <td class="pull-right">
-                                                        <?php  
+                                                        <?php
              $userdata = $this->customlib->getUserData();
              if (($this->rbac->hasPrivilege('can_see_other_users_profile', 'can_view')) || ($userdata["id"] == $staff["id"])) { ?>
                                                         <a data-placement="left" href="<?php echo base_url(); ?>admin/staff/profile/<?php echo $staff['id'] ?>" class="btn btn-default btn-xs"  data-toggle="tooltip" title="<?php echo $this->lang->line('show'); ?>" >
@@ -139,10 +139,10 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                         ?>
                                     </tbody>
                                 </table>
-                            </div>                           
+                            </div>
                             <div class="tab-pane active" id="tab_1">
-                                <div class="mediarow">   
-                                    <div class="row">   
+                                <div class="mediarow">
+                                    <div class="row">
                                         <?php if (empty($resultlist)) {
                                             ?>
                                             <div class="alert alert-info"><?php echo $this->lang->line('no_record_found'); ?></div>
@@ -161,7 +161,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                                 $image = "no_image.png";
                                                             }
                                                             ?>
-                                                            <img src="<?php echo base_url() . "uploads/staff_images/" . $image ?>" />
+                                                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/staff_images/" . <?php echo $image ?>" />
                                                         </div>
                                                         <div class="staffleft-content">
                                                             <h5><span   data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing"><?php echo $staff["name"] . " " . $staff["surname"]; ?></span></h5>
@@ -176,17 +176,17 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                                 }
                                                                 ?></font><font  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing"> <?php echo $staff["department"]; ?></font></p>
 
-                                                            <p class="staffsub" ><span  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing"><?php echo $staff["user_type"] ?></span> 
+                                                            <p class="staffsub" ><span  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing"><?php echo $staff["user_type"] ?></span>
 
                                                                 <span  data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing"><?php echo $staff["designation"] ?></span></p>
                                                         </div>
                                                         <div class="overlay3">
                                                             <div class="stafficons">
-                                                                <?php  
+                                                                <?php
              $userdata = $this->customlib->getUserData();
              if (($this->rbac->hasPrivilege('can_see_other_users_profile', 'can_view')) || ($userdata["id"] == $staff["id"])) { ?>
                                                                 <a title="<?php echo $this->lang->line('show'); ?>" href="<?php echo base_url() . "admin/staff/profile/" . $staff["id"] ?>"><i class="fa fa-navicon"></i></a>
-                                                                   <?php }?> 
+                                                                   <?php }?>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -198,17 +198,17 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
 
 
                                     </div><!--./col-md-3-->
-                                </div><!--./row-->  
-                            </div><!--./mediarow-->  
+                                </div><!--./row-->
+                            </div><!--./mediarow-->
 
 
-                        </div>                                                          
-                    </div>                                                         
+                        </div>
+                    </div>
                 </div>
                 <?php
             }
             ?>
-        </div>  
-</div> 
+        </div>
+</div>
 </section>
 </div>

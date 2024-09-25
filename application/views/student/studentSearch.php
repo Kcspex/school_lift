@@ -153,7 +153,7 @@ if (!empty($fields)) {
                                                     <div class="carousel-inner">
                                                         <div class="item active">
                                                             <a href="<?php echo base_url(); ?>student/view/<?php echo $student['id'] ?>">
-                                                                <?php if ($sch_setting->student_photo) {?><img class="img-responsive img-thumbnail width150" alt="<?php echo $student["firstname"] . " " . $student["lastname"] ?>" src="<?php echo base_url() . $image; ?>" alt="Image"><?php }?></a>
+                                                                <?php if ($sch_setting->student_photo) {?><img class="img-responsive img-thumbnail width150" alt="<?php echo $student["firstname"] . " " . $student["lastname"] ?>" src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $image; ?>" alt="Image"><?php }?></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -367,7 +367,7 @@ $(document).on('submit','.class_search_form',function(e){
                 customize: function ( win ) {
 
                     $(win.document.body).find('th').addClass('display').css('text-align', 'center');
-                    $(win.document.body).find('table').addClass('display').css('font-size', '14px');     
+                    $(win.document.body).find('table').addClass('display').css('font-size', '14px');
                     $(win.document.body).find('h1').css('text-align', 'center');
                 },
                 exportOptions: {

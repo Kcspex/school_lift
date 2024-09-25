@@ -135,9 +135,9 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                                     $dob=date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($student['dob']));
                                                     }
                                                  ?>
-                                                
+
                                                 <input id="dob" name="dob" placeholder="" type="text" class="form-control date"  value="<?php echo set_value('dob', $dob) ?>" />
-                                           
+
                                                 <span class="text-danger"><?php echo form_error('dob'); ?></span>
                                             </div>
                                         </div>
@@ -201,12 +201,12 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                                         <?php } ?>
                                     </div>
                                     <div class="row">
-                                        <?php if ($sch_setting->admission_date) { 
+                                        <?php if ($sch_setting->admission_date) {
                                             $admission_date="";
                                             if($student['admission_date']!='0000-00-00' && $student['admission_date']!=''){
                                                 $admission_date=date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($student['admission_date']));
                                             }
-                                            
+
                                             ?>
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -340,14 +340,14 @@ if (!empty($siblings)) {
                                             <input type="hidden" name="siblings_counts" class="siblings_counts" value="<?php echo $siblings_counts; ?>">
                                             <?php
                                             if (empty($siblings)) {
-                                                
+
                                             } else {
 
                                                 foreach ($siblings as $sibling_key => $sibling_value) {
                                                     ?>
                                                     <div class="col-xs-12 col-sm-6 col-md-4 sib_div" id="sib_div_<?php echo $sibling_value->id ?>" data-sibling_id="<?php echo $sibling_value->id ?>">
                                                         <div class="withsiblings">
-                                                            <img src="<?php echo base_url() . $sibling_value->image ?>" alt="" class="" />
+                                                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $sibling_value->image ?>" alt="" class="" />
                                                             <div class="withsiblings-content">
                                                                 <h5><a href="#"><?php echo $this->customlib->getFullname($sibling_value->firstname,$sibling_value->middlename,$sibling_value->lastname,$sch_setting->middlename,$sch_setting->lastname) ?></a></h5>
 
@@ -990,7 +990,7 @@ if (!empty($siblings)) {
                 <h4 class="modal-title modal_sibling_title"></h4>
             </div>
             <div class="modal-body modal_sibling_body">
-                <div class="form-horizontal">                   
+                <div class="form-horizontal">
                     <input type="hidden" name="current_student_id" class="current_student_id" value="0">
                     <div class="sibling_content">
                         <div class="col-lg-12">

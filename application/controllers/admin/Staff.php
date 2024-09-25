@@ -230,7 +230,7 @@ class Staff extends Admin_Controller
                     $attendence_count[$staff_attendence['att_type']][] = 1;
 					}
 				}else{
-					
+
 				}
                 $res[$att_dates] = $staff_attendence;
             }
@@ -317,7 +317,7 @@ class Staff extends Admin_Controller
     public function download($staff_id, $doc)
     {
         $this->load->helper('download');
-        $filepath = "./uploads/staff_documents/$staff_id/" . urldecode($this->uri->segment(5));
+        $filepath = "https://schoollift.s3.us-east-2.amazonaws.com/uploads/staff_documents/" . $staff_id . "/" . urldecode($this->uri->segment(5));
         $data     = file_get_contents($filepath);
         $name     = $this->uri->segment(5);
         force_download($name, $data);
@@ -690,9 +690,24 @@ class Staff extends Admin_Controller
                 if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
                     $fileInfo = pathinfo($_FILES["file"]["name"]);
                     $img_name = $insert_id . '.' . $fileInfo['extension'];
-                    move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/staff_images/" . $img_name);
-                    $data_img = array('id' => $staff_id, 'image' => $img_name);
-                    $this->staff_model->add($data_img);
+                    $upload_result_file = upload_to_s3($_FILES["file"]["tmp_name"], $fileInfo, $img_name, 'uploads/staff_images/');
+
+                    // if ($upload_result_file['success']) {
+                    //     $logoUploaded = true;  // Mark logo as successfully uploaded
+                    // } else {
+                    //     // Add logo error to the errors array
+                    //     $uploadErrors[] = 'Image upload failed: ' . $upload_result_file['error'];
+                    // }
+                    $upload_result = upload_to_s3($_FILES["file"]["tmp_name"], $fileInfo, $img_name, "uploads/staff_images/");
+                    if ($upload_result['success'])
+                    {
+                      $new_image_name = $upload_result['new_image_name'];
+                      $data_img = array('id' => $staff_id, 'image' => $new_image_name);
+                      $this->staff_model->add($data_img);
+                    }
+                    // move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/staff_images/" . $img_name);
+                    // $data_img = array('id' => $staff_id, 'image' => $img_name);
+                    // $this->staff_model->add($data_img);
                 }
 
                 if (isset($_FILES["first_doc"]) && !empty($_FILES['first_doc']['name'])) {
@@ -705,9 +720,17 @@ class Staff extends Admin_Controller
                     $filename    = "resume" . $staff_id . '.' . $fileInfo['extension'];
                     $img_name    = $uploaddir . $filename;
                     $resume      = $filename;
-                    move_uploaded_file($_FILES["first_doc"]["tmp_name"], $img_name);
-                } else {
+                    $upload_result_first_doc = upload_to_s3($_FILES["first_doc"]["tmp_name"], $fileInfo, $resume, 'uploads/staff_documents/' . $staff_id . '/');
 
+                    if ($upload_result_first_doc['success']) {
+                        $first_docUploaded = true;  // Mark logo as successfully uploaded
+                        $resume = $upload_result_first_doc['new_image_name'];
+                    } else {
+                        // Add logo error to the errors array
+                        $uploadErrors[] = 'Image upload failed: ' . $upload_result_first_doc['error'];
+                    }
+                    // move_uploaded_file($_FILES["first_doc"]["tmp_name"], $img_name);
+                } else {
                     $resume = "";
                 }
 
@@ -721,7 +744,16 @@ class Staff extends Admin_Controller
                     $filename       = "joining_letter" . $staff_id . '.' . $fileInfo['extension'];
                     $img_name       = $uploaddir . $filename;
                     $joining_letter = $filename;
-                    move_uploaded_file($_FILES["second_doc"]["tmp_name"], $img_name);
+                    $upload_result_second_doc = upload_to_s3($_FILES["second_doc"]["tmp_name"], $fileInfo, $filename, 'uploads/staff_documents/' . $insert_id . '/');
+
+                    if ($upload_result_second_doc['success']) {
+                        $second_docUploaded = true;  // Mark logo as successfully uploaded
+                        $joining_letter = $upload_result_second_doc['new_image_name'];
+                    } else {
+                        // Add logo error to the errors array
+                        $uploadErrors[] = 'Image upload failed: ' . $upload_result_second_doc['error'];
+                    }
+                    // move_uploaded_file($_FILES["second_doc"]["tmp_name"], $img_name);
                 } else {
 
                     $joining_letter = "";
@@ -737,11 +769,20 @@ class Staff extends Admin_Controller
                     $filename           = "resignation_letter" . $staff_id . '.' . $fileInfo['extension'];
                     $img_name           = $uploaddir . $filename;
                     $resignation_letter = $filename;
-                    move_uploaded_file($_FILES["third_doc"]["tmp_name"], $img_name);
-                } else {
+                    $upload_result_third_doc = upload_to_s3($_FILES["third_doc"]["tmp_name"], $fileInfo, $filename, 'uploads/staff_documents/' . $insert_id . '/');
 
+                    if ($upload_result_third_doc['success']) {
+                        $third_docUploaded = true;  // Mark logo as successfully uploaded
+                        $resignation_letter = $upload_result_third_doc['new_image_name'];
+                    } else {
+                        // Add logo error to the errors array
+                        $uploadErrors[] = 'Image upload failed: ' . $upload_result_third_doc['error'];
+                    }
+                    // move_uploaded_file($_FILES["third_doc"]["tmp_name"], $img_name);
+                } else {
                     $resignation_letter = "";
                 }
+
                 if (isset($_FILES["fourth_doc"]) && !empty($_FILES['fourth_doc']['name'])) {
                     $uploaddir = './uploads/staff_documents/' . $insert_id . '/';
                     if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
@@ -751,28 +792,55 @@ class Staff extends Admin_Controller
                     $fourth_title = 'uploads/staff_images/' . 'Other Doucment';
                     $fourth_doc   = "otherdocument" . $staff_id . '.' . $fileInfo['extension'];
                     $img_name     = $uploaddir . $fourth_doc;
-                    move_uploaded_file($_FILES["fourth_doc"]["tmp_name"], $img_name);
+                    $upload_result_fourth_doc = upload_to_s3($_FILES["fourth_doc"]["tmp_name"], $fileInfo, $fourth_doc, 'uploads/staff_documents/' . $insert_id . '/');
+
+                    if ($upload_result_fourth_doc['success']) {
+                        $fourth_docUploaded = true;  // Mark logo as successfully uploaded
+                        $fourth_doc = $upload_result_fourth_doc['new_image_name'];
+                    } else {
+                        // Add logo error to the errors array
+                        $uploadErrors[] = 'Image upload failed: ' . $upload_result_fourth_doc['error'];
+                    }
+                    // move_uploaded_file($_FILES["fourth_doc"]["tmp_name"], $img_name);
                 } else {
                     $fourth_title = "";
                     $fourth_doc   = "";
                 }
 
-                $data_doc = array('id' => $staff_id, 'resume' => $resume, 'joining_letter' => $joining_letter, 'resignation_letter' => $resignation_letter, 'other_document_name' => $fourth_title, 'other_document_file' => $fourth_doc);
-                $this->staff_model->add($data_doc);
-
-                //===================
-                if ($staff_id) {
-
-                    $teacher_login_detail = array('id' => $staff_id, 'credential_for' => 'staff', 'username' => $email, 'password' => $password, 'contact_no' => $contact_no, 'email' => $email);
-
-                    $this->mailsmsconf->mailsms('login_credential', $teacher_login_detail);
+                if (!$fourth_docUploaded && !$third_docUploaded && !$second_docUploaded && !$first_docUploaded)
+                {
+                    // Show error message for both uploads
+                    $errorMsg = implode('<br>', $uploadErrors);
+                    $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                 }
 
-                //==========================
+                // If at least one upload was successful
+                else if ($fourth_docUploaded || $third_docUploaded || $second_docUploaded || $first_docUploaded) {
+                    // If there are errors, show the error message but do not update the database
+                    if (!empty($uploadErrors)) {
+                        $errorMsg = implode('<br>', $uploadErrors);
+                        $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                    }
+                    // If no errors, save data and show success message
+                    else {
+                        $data_doc = array('id' => $staff_id, 'resume' => $resume, 'joining_letter' => $joining_letter, 'resignation_letter' => $resignation_letter, 'other_document_name' => $fourth_title, 'other_document_file' => $fourth_doc);
+                        $this->staff_model->add($data_doc);
 
-                $this->session->set_flashdata('msg', '<div class="alert alert-success">' . $this->lang->line('success_message') . '</div>');
+                        //===================
+                        if ($staff_id) {
 
-                redirect('admin/staff');
+                            $teacher_login_detail = array('id' => $staff_id, 'credential_for' => 'staff', 'username' => $email, 'password' => $password, 'contact_no' => $contact_no, 'email' => $email);
+
+                            $this->mailsmsconf->mailsms('login_credential', $teacher_login_detail);
+                        }
+
+                        //==========================
+
+                        $this->session->set_flashdata('msg', '<div class="alert alert-success">' . $this->lang->line('success_message') . '</div>');
+
+                        redirect('admin/staff');
+                    }
+                }
             } else {
                 $data['error_message'] = 'Admission No ' . $admission_no . ' already exists';
                 $this->load->view('layout/header', $data);
@@ -1220,9 +1288,16 @@ class Staff extends Admin_Controller
             if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
                 $fileInfo = pathinfo($_FILES["file"]["name"]);
                 $img_name = $id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/staff_images/" . $img_name);
-                $data_img = array('id' => $id, 'image' => $img_name);
-                $this->staff_model->add($data_img);
+                $upload_result = upload_to_s3($_FILES["file"]["tmp_name"], $fileInfo, $img_name, "uploads/staff_images/");
+                if ($upload_result['success'])
+                {
+                  $new_image_name = $upload_result['new_image_name'];
+                  $data_img = array('id' => $id, 'image' => $new_image_name);
+                  $this->staff_model->add($data_img);
+                }
+                // move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/staff_images/" . $img_name);
+                // $data_img = array('id' => $id, 'image' => $img_name);
+                // $this->staff_model->add($data_img);
             }
 
             if (isset($_FILES["first_doc"]) && !empty($_FILES['first_doc']['name'])) {
@@ -1234,7 +1309,16 @@ class Staff extends Admin_Controller
                 $first_title = 'resume';
                 $resume_doc  = "resume" . $id . '.' . $fileInfo['extension'];
                 $img_name    = $uploaddir . $resume_doc;
-                move_uploaded_file($_FILES["first_doc"]["tmp_name"], $img_name);
+                $upload_result_first_doc = upload_to_s3($_FILES["first_doc"]["tmp_name"], $fileInfo, $resume_doc, 'uploads/staff_documents/' . $id . '/');
+
+                if ($upload_result_first_doc['success']) {
+                    $first_docUploaded = true;  // Mark logo as successfully uploaded
+                    $resume_doc  = $upload_result_first_doc['new_image_name'];
+                } else {
+                    // Add logo error to the errors array
+                    $uploadErrors[] = 'Image upload failed: ' . $upload_result_first_doc['error'];
+                }
+                // move_uploaded_file($_FILES["first_doc"]["tmp_name"], $img_name);
             } else {
 
                 $resume_doc = $resume;
@@ -1249,7 +1333,16 @@ class Staff extends Admin_Controller
                 $first_title        = 'joining_letter';
                 $joining_letter_doc = "joining_letter" . $id . '.' . $fileInfo['extension'];
                 $img_name           = $uploaddir . $joining_letter_doc;
-                move_uploaded_file($_FILES["second_doc"]["tmp_name"], $img_name);
+                $upload_result_second_doc = upload_to_s3($_FILES["second_doc"]["tmp_name"], $fileInfo, $joining_letter_doc, 'uploads/staff_documents/' . $id . '/');
+
+                if ($upload_result_second_doc['success']) {
+                    $second_docUploaded = true;  // Mark logo as successfully uploaded
+                    $joining_letter_doc = $upload_result_second_doc['new_image_name'];
+                } else {
+                    // Add logo error to the errors array
+                    $uploadErrors[] = 'Image upload failed: ' . $upload_result_second_doc['error'];
+                }
+                // move_uploaded_file($_FILES["second_doc"]["tmp_name"], $img_name);
             } else {
 
                 $joining_letter_doc = $joining_letter;
@@ -1264,7 +1357,16 @@ class Staff extends Admin_Controller
                 $first_title            = 'resignation_letter';
                 $resignation_letter_doc = "resignation_letter" . $id . '.' . $fileInfo['extension'];
                 $img_name               = $uploaddir . $resignation_letter_doc;
-                move_uploaded_file($_FILES["third_doc"]["tmp_name"], $img_name);
+                $upload_result_third_doc = upload_to_s3($_FILES["third_doc"]["tmp_name"], $fileInfo, $resignation_letter_doc, 'uploads/staff_documents/' . $id . '/');
+
+                if ($upload_result_third_doc['success']) {
+                    $third_docUploaded = true;  // Mark logo as successfully uploaded
+                    $resignation_letter_doc = $upload_result_third_doc['new_image_name'];
+                } else {
+                    // Add logo error to the errors array
+                    $uploadErrors[] = 'Image upload failed: ' . $upload_result_third_doc['error'];
+                }
+                // move_uploaded_file($_FILES["third_doc"]["tmp_name"], $img_name);
             } else {
 
                 $resignation_letter_doc = $resignation_letter;
@@ -1279,17 +1381,44 @@ class Staff extends Admin_Controller
                 $fourth_title = 'Other Doucment';
                 $fourth_doc   = "otherdocument" . $id . '.' . $fileInfo['extension'];
                 $img_name     = $uploaddir . $fourth_doc;
-                move_uploaded_file($_FILES["fourth_doc"]["tmp_name"], $img_name);
+                $upload_result_fourth_doc = upload_to_s3($_FILES["fourth_doc"]["tmp_name"], $fileInfo, $fourth_doc, 'uploads/staff_documents/' . $id . '/');
+
+                if ($upload_result_fourth_doc['success']) {
+                    $fourth_docUploaded = true;  // Mark logo as successfully uploaded
+                    $fourth_doc = $upload_result_fourth_doc['new_image_name'];
+                } else {
+                    // Add logo error to the errors array
+                    $uploadErrors[] = 'Image upload failed: ' . $upload_result_fourth_doc['error'];
+                }
+                // move_uploaded_file($_FILES["fourth_doc"]["tmp_name"], $img_name);
             } else {
                 $fourth_title = 'Other Document';
                 $fourth_doc   = $other_document_file;
             }
 
-            $data_doc = array('id' => $id, 'resume' => $resume_doc, 'joining_letter' => $joining_letter_doc, 'resignation_letter' => $resignation_letter_doc, 'other_document_name' => $fourth_title, 'other_document_file' => $fourth_doc);
+            if (!$fourth_docUploaded && !$third_docUploaded && !$second_docUploaded && !$first_docUploaded)
+            {
+                // Show error message for both uploads
+                $errorMsg = implode('<br>', $uploadErrors);
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+            }
 
-            $this->staff_model->add($data_doc);
-            $this->session->set_flashdata('msg', '<div class="alert alert-success">' . $this->lang->line('success_message') . '</div>');
-            redirect('admin/staff');
+            // If at least one upload was successful
+            else if ($fourth_docUploaded || $third_docUploaded || $second_docUploaded || $first_docUploaded) {
+                // If there are errors, show the error message but do not update the database
+                if (!empty($uploadErrors)) {
+                    $errorMsg = implode('<br>', $uploadErrors);
+                    $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                }
+                // If no errors, save data and show success message
+                else {
+                  $data_doc = array('id' => $id, 'resume' => $resume_doc, 'joining_letter' => $joining_letter_doc, 'resignation_letter' => $resignation_letter_doc, 'other_document_name' => $fourth_title, 'other_document_file' => $fourth_doc);
+
+                  $this->staff_model->add($data_doc);
+                  $this->session->set_flashdata('msg', '<div class="alert alert-success">' . $this->lang->line('success_message') . '</div>');
+                  redirect('admin/staff');
+                }
+            }
         }
     }
 

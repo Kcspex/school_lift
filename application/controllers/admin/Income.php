@@ -47,9 +47,13 @@ class Income extends Admin_Controller
             if (isset($_FILES["documents"]) && !empty($_FILES['documents']['name'])) {
                 $fileInfo = pathinfo($_FILES["documents"]["name"]);
                 $img_name = $insert_id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["documents"]["tmp_name"], "./uploads/school_income/" . $img_name);
-                $data_img = array('id' => $insert_id, 'documents' => 'uploads/school_income/' . $img_name);
-                $this->income_model->add($data_img);
+                $upload_result = upload_to_s3($_FILES["documents"]["tmp_name"], $fileInfo, $img_name, "uploads/school_income/");
+                if ($upload_result['success'])
+                {
+                  $newpath = $upload_result['s3_key'];
+                  $data_img = array('id' => $insert_id, 'documents' => $newpath);
+                  $this->income_model->add($data_img);
+                }
             }
             $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');
             redirect('admin/income/index');
@@ -67,7 +71,7 @@ class Income extends Admin_Controller
     public function download($documents)
     {
         $this->load->helper('download');
-        $filepath = "./uploads/school_income/" . $this->uri->segment(6);
+        $filepath = "https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_income/" . $this->uri->segment(6);
         $data     = file_get_contents($filepath);
         $name     = $this->uri->segment(6);
         force_download($name, $data);
@@ -210,9 +214,13 @@ class Income extends Admin_Controller
             if (isset($_FILES["documents"]) && !empty($_FILES['documents']['name'])) {
                 $fileInfo = pathinfo($_FILES["documents"]["name"]);
                 $img_name = $id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["documents"]["tmp_name"], "./uploads/school_income/" . $img_name);
-                $data_img = array('id' => $id, 'documents' => 'uploads/school_income/' . $img_name);
-                $this->income_model->add($data_img);
+                $upload_result = upload_to_s3($_FILES["documents"]["tmp_name"], $fileInfo, $img_name, "uploads/school_income/");
+                if ($upload_result['success'])
+                {
+                  $newpath = $upload_result['s3_key'];
+                  $data_img = array('id' => $id, 'documents' => $newpath);
+                  $this->income_model->add($data_img);
+                }
             }
 
             $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');

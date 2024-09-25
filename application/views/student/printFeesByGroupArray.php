@@ -200,11 +200,11 @@
 <html lang="en">
     <head>
         <title><?php echo $this->lang->line('fees_receipt'); ?></title>
-        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="<?php echo base_url(); ?>backend/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/AdminLTE.min.css">
     </head>
-    <body>       
-        <div class="container"> 
+    <body>
+        <div class="container">
             <div class="row">
                 <div id="content" class="col-lg-12 col-sm-12 ">
                     <div class="invoice">
@@ -213,12 +213,12 @@
                                 <?php
                                 ?>
 
-                                <img  src="<?php echo base_url(); ?>/uploads/print_headerfooter/student_receipt/<?php $this->setting_model->get_receiptheader(); ?>" style="height: 100px;width: 100%;">
+                                <img  src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/print_headerfooter/student_receipt/<?php $this->setting_model->get_receiptheader(); ?>" style="height: 100px;width: 100%;">
                                 <?php
                                 ?>
                             </div>
 
-                        </div> 
+                        </div>
                         <?php
                         if ($sch_setting->is_duplicate_fees_invoice) {
                             ?>
@@ -230,11 +230,11 @@
                             <?php
                         }
                         ?>
-                        <div class="row">                           
+                        <div class="row">
                             <div class="col-xs-6 text-left">
                                 <br/>
                                    <address>
-                                        <strong><?php  
+                                        <strong><?php
 
 echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middlename,$feearray[0]->lastname,$sch_setting->middlename,$sch_setting->lastname);
 
@@ -253,7 +253,7 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                                         echo date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($date));
                                         ?></strong><br/>
 
-                                </address>                               
+                                </address>
                             </div>
                         </div>
                         <hr style="margin-top: 0px;margin-bottom: 0px;" />
@@ -261,14 +261,14 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                          <?php
                                 if (!empty($feearray)) {
                                     ?>
-									<?php 
+									<?php
 										$total_amount = 0;
 										$total_deposite_amount = 0;
 										$total_fine_amount = 0;
 										$total_discount_amount = 0;
 										$total_balance_amount = 0;
 										$alot_fee_discount = 0;
-										
+
 										foreach ($feearray as $fee_key => $feeList) {
                                                     if ($feeList->is_system) {
                                                         $feeList->amount = $feeList->student_fees_master_amount;
@@ -293,9 +293,9 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                                                     $total_deposite_amount = $total_deposite_amount + $fee_paid;
                                                     $total_balance_amount = $total_balance_amount + $feetype_balance;
 										}
-									
-									
-									
+
+
+
 									?>
                                     <table class="table table-striped table-responsive" style="font-size: 8pt;">
                                         <thead>
@@ -361,26 +361,26 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                                                     <tr  class="dark-gray">
 
                                                         <td><?php echo $feeList->type; ?></td>
-														
+
                                                         <td><?php echo $feeList->term; ?></td>
-                                                  
+
                                                         <td class="text text-right"><?php echo $currency_symbol . $feeList->amount; ?></td>
 
                                                         <td class="text text-right"><?php
                                                             echo ($currency_symbol . number_format($fee_paid, 2, '.', ''));
                                                             ?></td>
-														
+
 														<?php if($total_fine_amount > 0){ ?>
                                                         <td class="text text-right"><?php
                                                             echo ($currency_symbol . number_format($fee_fine, 2, '.', ''));
                                                             ?></td>
 														<?php } ?>
-														
+
 														<?php if($total_discount_amount > 0){ ?>
                                                         <td class="text text-right"><?php
                                                             echo ($currency_symbol . number_format($fee_discount, 2, '.', ''));
                                                             ?></td>
-															
+
 														<?php } ?>
                                                         <td class="text text-right"><?php
                                                             $display_none = "ss-none";
@@ -403,7 +403,7 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                                                     if (is_object($fee_deposits)) {
                                                         foreach ($fee_deposits as $fee_deposits_key => $fee_deposits_value) {
                                                             ?>
-                                                            
+
                                                             <?php
                                                         }
                                                     }
@@ -411,31 +411,31 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                                             }
                                             ?>
                                             <tr class="success">
-                                                
+
 
                                                 <td align="left" class="text text-left" >
                                                     <b>    <?php echo $this->lang->line('grand_total'); ?></b>
                                                 </td>
 												<td align="left" class="text text-left" >
-                                                    
+
                                                 </td>
                                                 <td class="text text-right">
                                                     <b>    <?php
                                                         echo ($currency_symbol . number_format($total_amount, 2, '.', ''));
                                                         ?></b>
                                                 </td>
-                                                
+
 
                                                 <td class="text text-right"> <b>  <?php
                                                         echo ($currency_symbol . number_format($total_deposite_amount, 2, '.', ''));
                                                         ?></b></td>
-														
+
 												<?php if($total_fine_amount > 0){ ?>
                                                 <td class="text text-right"> <b>  <?php
                                                         echo ($currency_symbol . number_format($total_fine_amount, 2, '.', ''));
                                                         ?></b></td>
 												<?php } ?>
-												
+
 												<?php if($total_discount_amount > 0){ ?>
                                                 <td class="text text-right"> <b>  <?php
                                                         echo ($currency_symbol . number_format($total_discount_amount, 2, '.', ''));
@@ -458,10 +458,10 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                     </div>
                 </div>
                 <div class="row header ">
-                    <div class="col-sm-12">   
-                        <?php $this->setting_model->get_receiptfooter(); ?>                       
+                    <div class="col-sm-12">
+                        <?php $this->setting_model->get_receiptfooter(); ?>
                     </div>
-                </div>  
+                </div>
             </div>
             <?php
             if ($sch_setting->is_duplicate_fees_invoice) {
@@ -474,7 +474,7 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                                 <div class="col-sm-12">
                                     <?php ?>
 
-                                    <img  src="<?php echo base_url(); ?>/uploads/print_headerfooter/student_receipt/<?php $this->setting_model->get_receiptheader(); ?>" style="height: 100px;width: 100%;">
+                                    <img  src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/print_headerfooter/student_receipt/<?php $this->setting_model->get_receiptheader(); ?>" style="height: 100px;width: 100%;">
                                     <?php
                                     ?>
                                 </div>
@@ -491,7 +491,7 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                                 <?php
                             }
                             ?>
-                            <div class="row">                           
+                            <div class="row">
                                 <div class="col-xs-6">
                                     <br/>
                                        <address>
@@ -510,7 +510,7 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                                                 echo date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($date));
                                                 ?></strong><br/>
 
-                                        </address>                              
+                                        </address>
                                 </div>
                             </div>
                             <hr style="margin-top: 0px;margin-bottom: 0px;" />
@@ -589,7 +589,7 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
 
                                                                 <?php
                                                                 if ($feeList->due_date == "0000-00-00") {
-                                                                    
+
                                                                 } else {
 
                                                                     echo date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($feeList->due_date));
@@ -707,7 +707,7 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
                         <div class="col-sm-12">
                             <?php $this->setting_model->get_receiptfooter(); ?>
                         </div>
-                    </div>  
+                    </div>
                 </div>
                 <?php
             }
@@ -715,7 +715,7 @@ echo $this->customlib->getFullName($feearray[0]->firstname, $feearray[0]->middle
         </div>
         <div class="clearfix"></div>
 
-        <footer>           
+        <footer>
         </footer>
     </body>
 </html>

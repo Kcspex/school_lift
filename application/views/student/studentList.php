@@ -1,4 +1,4 @@
-<div class="content-wrapper" style="min-height: 946px;">   
+<div class="content-wrapper" style="min-height: 946px;">
     <section class="content-header">
         <h1>
             <i class="fa fa-user-plus"></i> <?php echo $this->lang->line('student_information'); ?> <small><?php echo $this->lang->line('student'); ?></small></h1>
@@ -6,7 +6,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-12">             
+            <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title"><?php echo $title; ?></h3>
@@ -19,10 +19,10 @@
                             ?>
                             <div class="row carousel-row">
                                 <div class="col-xs-8 col-xs-offset-2 slide-row">
-                                    <div id="carousel-2" class="carousel slide slide-carousel" data-ride="carousel">                                        
+                                    <div id="carousel-2" class="carousel slide slide-carousel" data-ride="carousel">
                                         <div class="carousel-inner">
                                             <div class="item active">
-                                                <img src="<?php echo base_url() . $student['image'] ?>" alt="Image">
+                                                <img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $student['image'] ?>" alt="Image">
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +58,7 @@
                         ?>
                     </div>
                     <div class="box-footer">
-                        <div class="mailbox-controls">   
+                        <div class="mailbox-controls">
                             <div class="pull-right">
                                 1-50/200
                                 <div class="btn-group">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
     </section>
 </div>
 <script type="text/javascript">

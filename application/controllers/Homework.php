@@ -53,16 +53,16 @@ class Homework extends Admin_Controller
         $subject_id  = $this->input->post('subject_id');
 
         $this->form_validation->set_rules('class_id', $this->lang->line('class'), 'trim|required|xss_clean');
-        if ($this->form_validation->run() == false) { 
+        if ($this->form_validation->run() == false) {
             $error = array();
-            
+
             $error['class_id'] = form_error('class_id');
             $array = array('status' => 0, 'error' => $error);
             echo json_encode($array);
         } else {
             $class_id = $this->input->post('class_id');
             $section_id = $this->input->post('section_id');
-            
+
             $params      = array('class_id' => $class_id, 'section_id' => $section_id, 'subject_group_id' => $subject_group_id, 'subject_id' => $subject_id);
             $array       = array('status' => 1, 'error' => '', 'params' => $params);
             echo json_encode($array);
@@ -80,9 +80,9 @@ class Homework extends Admin_Controller
         $userdata                = $this->customlib->getUserData();
         $carray                  = array();
         $homeworklist            = $this->homework_model->search_dthomework($class_id, $section_id, $subject_group_id, $subject_id);
-        
+
         $homework      = json_decode($homeworklist);
-        
+
         $dt_data=array();
         if (!empty($homework->data)) {
             foreach ($homework->data as $homework_key => $homeworklist) {
@@ -96,25 +96,25 @@ class Homework extends Admin_Controller
 
                     if ($homeworklist->assignments > 0) {
 
-                        $viewbtn.= "<a data-placement='left' class='btn btn-default btn-xs' onclick='homework_docs(" . '"' .$homeworklist->id . '"' . "  )' data-toggle='tooltip'  data-original-title=".$this->lang->line('assignments')."> <i class='fa fa-download'></i></a>" ; 
+                        $viewbtn.= "<a data-placement='left' class='btn btn-default btn-xs' onclick='homework_docs(" . '"' .$homeworklist->id . '"' . "  )' data-toggle='tooltip'  data-original-title=".$this->lang->line('assignments')."> <i class='fa fa-download'></i></a>" ;
                        }
                 }
                 if ($this->rbac->hasPrivilege('homework', 'can_edit')) {
-                    
+
                     $editbtn = "<a  class='btn btn-default btn-xs modal_form'  data-toggle='tooltip' data-placement='left'  data-method_call='edit' data-original-title='" . $this->lang->line('edit') . "' data-record_id=".$homeworklist->id." ><i class='fa fa-pencil'></i></a>";
                 }
                 if ($this->rbac->hasPrivilege('homework', 'can_delete')) {
-                    
+
                     $collectbtn = "<a onclick='return confirm(" . '"' . $this->lang->line('delete_confirm') . '"' . "  )' href='".base_url()."homework/delete/".$homeworklist->id."'   class='btn btn-default btn-xs'  data-toggle='tooltip' data-placement='left' title='" . $this->lang->line('delete') . "' data-original-title='" . $this->lang->line('delete') . "'><i class='fa fa-remove'></i></a>";
                 }
-             
+
                 $row   = array();
                 $row[] = $homeworklist->class;
                 $row[] = $homeworklist->section ;
                 $row[] = $homeworklist->name;
                 $row[] = $homeworklist->subject_name ;
 
-                
+
                 if ($homeworklist->homework_date != null && $homeworklist->homework_date!='0000-00-00') {
                    $row[]= date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($homeworklist->homework_date));
                 }else{
@@ -123,7 +123,7 @@ class Homework extends Admin_Controller
                 $row[]= date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($homeworklist->submit_date));
 
                  $evl_date = "";
-                 if ($homeworklist->evaluation_date != "0000-00-00") { 
+                 if ($homeworklist->evaluation_date != "0000-00-00") {
 
                  $row[]= date($this->customlib->getSchoolDateFormat(), $this->customlib->dateYYYYMMDDtoStrtotime($homeworklist->evaluation_date));
                 }else{
@@ -131,7 +131,7 @@ class Homework extends Admin_Controller
                 }
                 $row[] = $homeworklist->staff_name.' '.$homeworklist->staff_surname;
                 $row[] = $viewbtn.''.$editbtn.''.$collectbtn;
-                $dt_data[] = $row;  
+                $dt_data[] = $row;
             }
 
         }
@@ -141,11 +141,11 @@ class Homework extends Admin_Controller
             "recordsFiltered" => intval($homework->recordsFiltered),
             "data"            => $dt_data,
         );
-        echo json_encode($json_data); 
+        echo json_encode($json_data);
     }
 
     public function homework_docs($id)
-    { 
+    {
         $docs = $this->homework_model->get_homeworkDocByid($id);;
         $docs = json_decode($docs);
 
@@ -162,7 +162,7 @@ class Homework extends Admin_Controller
                 $row[] = $this->customlib->getFullName($value->firstname,$value->middlename,$value->lastname,$this->sch_setting_detail->middlename,$this->sch_setting_detail->lastname) . " (" . $value->admission_no . ")";;
                 $row[] = $value->message;
                 $row[] = $doc;
-               
+
 
 
                 $dt_data[] = $row;
@@ -176,7 +176,7 @@ class Homework extends Admin_Controller
             "data" => $dt_data,
         );
         echo json_encode($json_data);
-        
+
     }
 
     public function create()
@@ -252,12 +252,20 @@ class Homework extends Admin_Controller
                 $document = basename($_FILES['userfile']['name']);
 
                 $img_name = $id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["userfile"]["tmp_name"], $uploaddir . $img_name);
 
-                $upload_data = array('id' => $id, 'document' => $img_name);
-                $this->homework_model->add($upload_data);
+                $upload_result = upload_to_s3($_FILES["userfile"]["tmp_name"], $fileInfo, $img_name, "uploads/homework/");
+                if ($upload_result['success'])
+                {
+                  $img_name = $upload_result['new_image_name'];
+                  $upload_data = array('id' => $id, 'document' => $img_name);
+                  $this->homework_model->add($upload_data);
+                } else {
+                  $errorMsg = $upload_result['error'];
+                  $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                }
+                // move_uploaded_file($_FILES["userfile"]["tmp_name"], $uploaddir . $img_name);
             } else {
- 
+
                 $document = "";
             }
 
@@ -274,7 +282,7 @@ class Homework extends Admin_Controller
 
                 $this->mailsmsconf->mailsms('homework', $sender_details);
             }
- 
+
             $msg   = $this->lang->line('success_message');
             $array = array('status' => 'success', 'error' => '', 'message' => $msg);
         }
@@ -375,7 +383,16 @@ class Homework extends Admin_Controller
                 $fileInfo = pathinfo($_FILES["userfile"]["name"]);
                 $document = basename($_FILES['userfile']['name']);
                 $img_name = $id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["userfile"]["tmp_name"], $uploaddir . $img_name);
+
+                $upload_result = upload_to_s3($_FILES["userfile"]["tmp_name"], $fileInfo, $img_name, "uploads/homework/");
+                if ($upload_result['success'])
+                {
+                  $document = $upload_result['new_image_name'];
+                } else {
+                  $errorMsg = $upload_result['error'];
+                  $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                }
+                // move_uploaded_file($_FILES["userfile"]["tmp_name"], $uploaddir . $img_name);
             } else {
 
                 $document = $this->input->post("document");

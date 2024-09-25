@@ -12,15 +12,15 @@ if (!empty($page_content_type)) {
         <div class="row">
             <?php
             foreach ($category_content as $key => $value) {
-                ?>  
+                ?>
                 <div class="col-md-<?php echo $bootstrapColWidth; ?> col-sm-<?php echo $bootstrapColWidth; ?>">
                     <div class="eventbox">
                         <a href="<?php echo site_url($value['url']); ?>">
                             <?php
                             if ($value['feature_image'] == "") {
-                                $feature_image = base_url('uploads/gallery/gallery_default.png');
+                                $feature_image = "https://schoollift.s3.us-east-2.amazonaws.com/uploads/gallery/gallery_default.png";
                             } else {
-                                $feature_image = $value['feature_image'];
+                                $feature_image = "https://schoollift.s3.us-east-2.amazonaws.com/" . $value['feature_image'];
                             }
                             ?>
                             <img src="<?php echo $feature_image; ?>" alt="" title="">
@@ -28,7 +28,7 @@ if (!empty($page_content_type)) {
                                 <h3><?php echo $value['title']; ?></h3>
                                 <p><?php echo substr($value['description'], 0, 85) . ".."; ?></p>
                             </div><!--./around20-->
-                        </a> 
+                        </a>
                     </div><!--./eventbox-->
                 </div>
                 <?php
@@ -48,15 +48,15 @@ if (!empty($page_content_type)) {
         <div class="row">
             <?php
             foreach ($category_content as $key => $value) {
-                ?>  
+                ?>
                 <div class="col-md-<?php echo $bootstrapColWidth; ?> col-sm-<?php echo $bootstrapColWidth; ?>">
                     <div class="eventbox">
                         <a href="<?php echo site_url($value['url']); ?>">
                             <?php
                             if ($value['feature_image'] == "") {
-                                $feature_image = base_url('uploads/gallery/gallery_default.png');
+                                $feature_image = "https://schoollift.s3.us-east-2.amazonaws.com/uploads/gallery/gallery_default.png";
                             } else {
-                                $feature_image = $value['feature_image'];
+                                $feature_image = "https://schoollift.s3.us-east-2.amazonaws.com/" . $value['feature_image'];
                             }
                             ?>
                             <img src="<?php echo $feature_image; ?>" alt="" title="">
@@ -65,7 +65,7 @@ if (!empty($page_content_type)) {
 
                                 <p><?php echo substr(htmlspecialchars($value['description']), 0, 85) . ".."; ?></p>
                             </div><!--./around20-->
-                        </a> 
+                        </a>
                     </div><!--./eventbox-->
                 </div>
                 <?php

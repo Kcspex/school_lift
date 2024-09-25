@@ -47,8 +47,11 @@ class Visitors extends Admin_Controller {
             if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
                 $fileInfo = pathinfo($_FILES["file"]["name"]);
                 $img_name = 'id' . $visitor_id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/front_office/visitors/" . $img_name);
-                $this->Visitors_model->image_add($visitor_id, $img_name);
+                $upload_result = upload_to_s3($_FILES["file"]["tmp_name"], $fileInfo, $img_name, "uploads/front_office/visitors/");
+                if ($upload_result["success"]) {
+                  $newimage = $upload_result['s3_key'];
+                  $this->Visitors_model->image_add($visitor_id, $newimage);
+                }
             }
 
             $this->session->set_flashdata('msg', '<div class="alert alert-success">' . $this->lang->line('success_message') . '</div>');
@@ -97,10 +100,13 @@ class Visitors extends Admin_Controller {
             );
             if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
                 $fileInfo = pathinfo($_FILES["file"]["name"]);
-
                 $img_name = 'id' . $id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["file"]["tmp_name"], "./uploads/front_office/visitors/" . $img_name);
-                $this->Visitors_model->image_update($id, $img_name);
+                $upload_result = upload_to_s3($_FILES["file"]["tmp_name"], $fileInfo, $img_name, "uploads/front_office/visitors/");
+                if ($upload_result['success'])
+                {
+                  $newimage = $upload_result['s3_key'];
+                  $this->Visitors_model->image_update($id, $newimage);
+                }
             }
             $this->Visitors_model->update($id, $visitors);
             redirect('admin/visitors');
@@ -118,9 +124,9 @@ class Visitors extends Admin_Controller {
 
     public function download($documents) {
         $this->load->helper('download');
-        $filepath = "./uploads/front_office/visitors/" . $documents;
+        $filepath = "https://schoollift.s3.us-east-2.amazonaws.com/uploads/front_office/visitors/" . $this->uri->segment(7);
         $data = file_get_contents($filepath);
-        $name = $documents;
+        $name = $this->uri->segment(7);
         force_download($name, $data);
     }
 
@@ -149,7 +155,7 @@ class Visitors extends Admin_Controller {
             $allowed_extension = array_map('trim', array_map('strtolower', explode(',', $result->file_extension)));
             $allowed_mime_type = array_map('trim', array_map('strtolower', explode(',', $result->file_mime)));
             $ext               = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-            
+
             if ($files = filesize($_FILES[$var]['tmp_name'])) {
 
                 if (!in_array($file_type, $allowed_mime_type)) {

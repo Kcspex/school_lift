@@ -36,7 +36,7 @@ class Leaverequest extends Admin_Controller {
         $this->load->view("admin/staff/staffleaverequest", $data);
         $this->load->view("layout/footer", $data);
     }
- 
+
     function countLeave($id) {
         $lid = $this->input->post("lid");
         $alloted_leavetype = $this->leaverequest_model->allotedLeaveType($id);
@@ -157,7 +157,7 @@ class Leaverequest extends Admin_Controller {
 
             $array = array('status' => 'fail', 'error' => $msg, 'message' => '');
         } else {
-          
+
 
             $leavefrom = date("Y-m-d", $this->customlib->datetostrtotime($this->input->post('leave_from_date')));
             $leaveto = date("Y-m-d", $this->customlib->datetostrtotime($this->input->post('leave_to_date')));
@@ -173,8 +173,15 @@ class Leaverequest extends Admin_Controller {
                     }
                     $fileInfo = pathinfo($_FILES["userfile"]["name"]);
                     $document = time() . '.' . $fileInfo['extension'];
-
-                    move_uploaded_file($_FILES["userfile"]["tmp_name"], './uploads/staff_documents/' . $staff_id . '/' . $document);
+                    $upload_result = upload_to_s3($_FILES["userfile"]["tmp_name"], $fileInfo, $document, 'uploads/staff_documents/' . $staff_id . '/');
+                    if ($upload_result['success'])
+                    {
+                      $document = $upload_result['new_image_name'];
+                    } else {
+                      $errorMsg = $upload_result['error'];
+                      $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                    }
+                    // move_uploaded_file($_FILES["userfile"]["tmp_name"], './uploads/staff_documents/' . $staff_id . '/' . $document);
                 } else {
 
                     $document = $this->input->post("filename");
@@ -208,7 +215,7 @@ class Leaverequest extends Admin_Controller {
 
                 $array = array('status' => 'fail', 'error' => $msg, 'message' => '');
             }
-          
+
         }
           echo json_encode($array);
     }
@@ -245,7 +252,7 @@ class Leaverequest extends Admin_Controller {
 
             $array = array('status' => 'fail', 'error' => $msg, 'message' => '');
         } else {
-            
+
 
             $leavefrom = date("Y-m-d", $this->customlib->datetostrtotime($this->input->post('leave_from_date')));
             $leaveto = date("Y-m-d", $this->customlib->datetostrtotime($this->input->post('leave_to_date')));
@@ -265,7 +272,15 @@ class Leaverequest extends Admin_Controller {
                     $fileInfo = pathinfo($_FILES["userfile"]["name"]);
                     $document = basename($_FILES['userfile']['name']);
                     $img_name = $uploaddir . basename($_FILES['userfile']['name']);
-                    move_uploaded_file($_FILES["userfile"]["tmp_name"], $img_name);
+                    $upload_result = upload_to_s3($_FILES["userfile"]["tmp_name"], $fileInfo, $document, 'uploads/staff_documents/' . $staff_id . '/');
+                    if ($upload_result['success'])
+                    {
+                      $document = $upload_result['new_image_name'];
+                    } else {
+                      $errorMsg = $upload_result['error'];
+                      $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
+                    }
+                    // move_uploaded_file($_FILES["userfile"]["tmp_name"], $img_name);
                 } else {
 
                     $document = $this->input->post("filename");
@@ -303,7 +318,7 @@ class Leaverequest extends Admin_Controller {
         echo json_encode($array);
     }
 
-  
+
 
     public function handle_upload($str,$var)
     {

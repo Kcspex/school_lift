@@ -1,8 +1,8 @@
-<div class="content-wrapper" style="min-height: 348px;">  
+<div class="content-wrapper" style="min-height: 348px;">
     <section class="content-header">
         <h1>
             <i class="fa fa-ioxhost"></i> <?php echo $this->lang->line('front_office'); ?> </section>
-    <section class="content">       
+    <section class="content">
         <div class="row">
             <?php if ($this->rbac->hasPrivilege('visitor_book', 'can_add') || $this->rbac->hasPrivilege('visitor_book', 'can_edit')) { ?>
                 <div class="col-md-4">
@@ -17,8 +17,8 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1"><?php echo $this->lang->line('purpose'); ?></label><small class="req"> *</small>
 
-                                    <select name="purpose" class="form-control"> 
-                                        <option value=""><?php echo $this->lang->line('select'); ?></option>    
+                                    <select name="purpose" class="form-control">
+                                        <option value=""><?php echo $this->lang->line('select'); ?></option>
                                         <?php foreach ($Purpose as $key => $value) { ?>
                                             <option value="<?php print_r($value['visitors_purpose']); ?>"<?php if (set_value('purpose', $visitor_data['purpose']) == $value['visitors_purpose']) { ?>selected=""<?php } ?>><?php print_r($value['visitors_purpose']); ?></option>
                                         <?php } ?>
@@ -27,7 +27,7 @@
                                     <span class="text-danger"><?php echo form_error('purpose'); ?></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pwd"><?php echo $this->lang->line('name'); ?></label> <small class="req"> *</small> 
+                                    <label for="pwd"><?php echo $this->lang->line('name'); ?></label> <small class="req"> *</small>
                                     <input type="text" class="form-control" value="<?php echo set_value('name', $visitor_data['name']); ?>" name="name">
                                     <span class="text-danger"><?php echo form_error('name'); ?></span>
                                 </div>
@@ -41,7 +41,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="email"><?php echo $this->lang->line('number_of_person'); ?></label> 
+                                    <label for="email"><?php echo $this->lang->line('number_of_person'); ?></label>
                                     <input type="text" class="form-control" value="<?php echo set_value('pepples', $visitor_data['no_of_pepple']); ?>" name="pepples">
                                 </div>
                                 <div class="form-group">
@@ -110,7 +110,7 @@
             }
             ?>">
                 <!-- general form elements -->
-                <div class="box box-primary"> 
+                <div class="box box-primary">
                     <div class="box-header ptbnull">
                         <h3 class="box-title titlefix"><?php echo $this->lang->line('visitor'); ?> <?php echo $this->lang->line('list'); ?></h3>
                         <div class="box-tools pull-right">
@@ -154,11 +154,11 @@
                                                 <td class="mailbox-name"> <?php echo $value['in_time']; ?></td>
                                                 <td class="mailbox-name"> <?php echo $value['out_time']; ?></td>
                                                 <td class="mailbox-date pull-right">
-                                                    <a  data-placement="left" onclick="getRecord(<?php echo $value['id']; ?>)" class="btn btn-default btn-xs" data-target="#visitordetails" data-toggle="modal"  title="<?php echo $this->lang->line('view') ?>"><i class="fa fa-reorder"></i></a> 
+                                                    <a  data-placement="left" onclick="getRecord(<?php echo $value['id']; ?>)" class="btn btn-default btn-xs" data-target="#visitordetails" data-toggle="modal"  title="<?php echo $this->lang->line('view') ?>"><i class="fa fa-reorder"></i></a>
                                                     <?php if ($value['image'] !== "") { ?>
                                                         <a data-placement="left" href="<?php echo base_url(); ?>admin/visitors/download/<?php echo $value['image']; ?>" class="btn btn-default btn-xs" data-toggle="tooltip" title="" data-original-title="<?php echo $this->lang->line('download'); ?>">
                                                             <i class="fa fa-download"></i>
-                                                        </a>  <?php } ?> 
+                                                        </a>  <?php } ?>
                                                     <a data-placement="left" href="<?php echo base_url(); ?>admin/visitors/edit/<?php echo $value['id']; ?>" class="btn btn-default btn-xs" data-toggle="tooltip" title="" data-original-title="<?php echo $this->lang->line('edit'); ?>">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
@@ -216,16 +216,16 @@
 <script type="text/javascript">
                                                             $(function () {
                                                                 $(".timepicker").timepicker({
-                                                                    
+
                                                                 });
                                                             });
 
 
                                                             function getRecord(id) {
-                                                               
+
                                                                 $.ajax({
                                                                     url: '<?php echo base_url(); ?>admin/visitors/details/' + id,
-                                                                    success: function (result) {                                                                     
+                                                                    success: function (result) {
                                                                         $('#getdetails').html(result);
                                                                     }
                                                                 });

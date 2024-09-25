@@ -47,10 +47,13 @@ class Expense extends Admin_Controller
             if (isset($_FILES["documents"]) && !empty($_FILES['documents']['name'])) {
                 $fileInfo = pathinfo($_FILES["documents"]["name"]);
                 $img_name = $insert_id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["documents"]["tmp_name"], "./uploads/school_expense/" . $img_name);
-                $data_img = array('id' => $insert_id, 'documents' => 'uploads/school_expense/' . $img_name);
-
-                $this->expense_model->add($data_img);
+                $upload_result = upload_to_s3($_FILES["documents"]["tmp_name"], $fileInfo, $img_name, "uploads/school_expense/");
+                if ($upload_result['success'])
+                {
+                  $newpath = $upload_result['s3_key'];
+                  $data_img = array('id' => $insert_id, 'documents' => $newpath);
+                  $this->expense_model->add($data_img);
+                }
             }
 
             $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('success_message') . '</div>');
@@ -68,7 +71,7 @@ class Expense extends Admin_Controller
     public function download($documents)
     {
         $this->load->helper('download');
-        $filepath = "./uploads/school_expense/" . $this->uri->segment(6);
+        $filepath = "https://schoollift.s3.us-east-2.amazonaws.com/uploads/school_expense/" . $this->uri->segment(6);
         $data     = file_get_contents($filepath);
         $name     = $this->uri->segment(6);
         force_download($name, $data);
@@ -214,9 +217,15 @@ class Expense extends Admin_Controller
             if (isset($_FILES["documents"]) && !empty($_FILES['documents']['name'])) {
                 $fileInfo = pathinfo($_FILES["documents"]["name"]);
                 $img_name = $id . '.' . $fileInfo['extension'];
-                move_uploaded_file($_FILES["documents"]["tmp_name"], "./uploads/school_expense/" . $img_name);
-                $data_img = array('id' => $id, 'documents' => 'uploads/school_expense/' . $img_name);
-                $this->expense_model->add($data_img);
+                $upload_result = upload_to_s3($_FILES["documents"]["tmp_name"], $fileInfo, $img_name, "uploads/school_expense/");
+                if ($upload_result['success'])
+                {
+                  $newpath = $upload_result['s3_key'];
+                  $data_img = array('id' => $id, 'documents' => $newpath);
+                  $this->expense_model->add($data_img);
+                }
+                // move_uploaded_file($_FILES["documents"]["tmp_name"], "./uploads/school_expense/" . $img_name);
+
             }
             $this->session->set_flashdata('msg', '<div class="alert alert-success text-left">' . $this->lang->line('update_message') . '</div>');
             redirect('admin/expense/index');
@@ -236,7 +245,7 @@ class Expense extends Admin_Controller
         $this->load->view('layout/header', $data);
         $this->load->view('admin/expense/expenseSearch', $data);
         $this->load->view('layout/footer', $data);
-       
+
     }
     public function getexpenselist()
     {
@@ -257,8 +266,8 @@ class Expense extends Admin_Controller
                     $deletebtn = '';
                     $deletebtn = "<a onclick='return confirm(" . $this->lang->line('delete_confirm') . ")' href='".base_url()."admin/expense/delete/".$value->id."' class='btn btn-default btn-xs' data-placement='left' title='" . $this->lang->line('delete') . "' data-toggle='tooltip'><i class='fa fa-trash'></i></a>";
                 }
-             
-                
+
+
                 if($value->documents){
                     $documents="<a data-placement='left' href='".base_url()."admin/expense/download/".$value->documents."' class='btn btn-default btn-xs'  data-toggle='tooltip' title='".$this->lang->line('download')."'>
                          <i class='fa fa-download'></i> </a>" ;
@@ -272,7 +281,7 @@ class Expense extends Admin_Controller
                      $row[]     = $value->note;
                 }
 
-                $row[]     = $value->invoice_no; 
+                $row[]     = $value->invoice_no;
                 $row[]     = date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($value->date));
                 $row[]     = $value->exp_category;
                 $row[]     = $currency_symbol . $value->amount;
@@ -297,10 +306,10 @@ class Expense extends Admin_Controller
         $button_type = $this->input->post('button_type');
 
         if ($button_type == "search_filter") {
-           
+
             $this->form_validation->set_rules('search_type', $this->lang->line('search') . " " . $this->lang->line('type'), 'required|trim|xss_clean');
         } elseif ($button_type == "search_full") {
-            
+
             $this->form_validation->set_rules('search_text', $this->lang->line('keyword'), 'required|trim|xss_clean');
         }
         if ($this->form_validation->run() == false) {
@@ -322,9 +331,9 @@ class Expense extends Admin_Controller
             $search_type = $this->input->post('search_type');
             if($search_type=='period'){
               $date_from= $this->input->post('date_from');
-              $date_to= $this->input->post('date_to');  
+              $date_to= $this->input->post('date_to');
             }
-            
+
             $params      = array('button_type' => $button_type, 'search_type'=>$search_type, 'search_text' => $search_text,'date_from' => $date_from, 'date_to' => $date_to);
             $array       = array('status' => 1, 'error' => '', 'params' => $params);
             echo json_encode($array);
@@ -365,8 +374,8 @@ class Expense extends Admin_Controller
             $resultList         = $this->expense_model->search($search_text, "", "");
             $resultList= $resultList;
         }
-        
-      
+
+
         $m       = json_decode($resultList);
         $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
         $dt_data = array();$grand_total=0;
@@ -376,13 +385,13 @@ class Expense extends Admin_Controller
                 $row       = array();
                 $row[]     = $value->name;
                 $row[]     = $value->invoice_no;
-                $row[]     = $value->exp_category; 
+                $row[]     = $value->exp_category;
                 $row[]     = date($this->customlib->getSchoolDateFormat(), $this->customlib->dateyyyymmddTodateformat($value->date));
                 $row[]     = $currency_symbol . $value->amount;
-                
+
                 $dt_data[] = $row;
             }
-         
+
             $footer_row[]="" ; $footer_row[]="" ; $footer_row[]="" ;
             $footer_row[]= "" ;
             $footer_row[]=  "<b style='font-weight:normal'>".$this->lang->line('grand_total')." :  ".($currency_symbol . number_format($grand_total, 2, '.', ''))."</b>";;
