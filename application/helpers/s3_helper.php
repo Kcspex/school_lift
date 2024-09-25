@@ -73,6 +73,7 @@ if (!function_exists('upload_to_s3')) {
             ];
 
         } catch (S3Exception $e) {
+            error_log($e->getMessage());
             // Return error in case of failure
             return [
                 'success' => false,
