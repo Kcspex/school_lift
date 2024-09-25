@@ -341,10 +341,10 @@ class Staffidcard extends Admin_Controller
                 $upload_result = upload_to_s3($file_path, $file_info, $file_name, "uploads/staff_id_card/signature/");
 
                 if ($upload_result["success"]) {
-                    $background    = $upload_result['s3_key'];
-                if ($this->upload->do_upload('sign_image')) {
-                    $uploadData = $this->upload->data();
-                    $sign_image = $uploadData['file_name'];
+                    $sign_image    = $upload_result['s3_key'];
+                    // if ($this->upload->do_upload('sign_image')) {
+                    // $uploadData = $this->upload->data();
+                    // $sign_image = $uploadData['file_name'];
                 } else {
                     $sign_image = $this->input->post('old_sign_image');
                 }
