@@ -105,7 +105,7 @@ class ImageResize {
                 //upload image
                 if (move_uploaded_file($this->curr_tmp_name, $upload_image)) {
                     //thumbnail creation
-                    $this->image_size_info = filesize($this->curr_tmp_name);
+                    $this->image_size_info = filesize($upload_image);
 
                     $img_array = array(
                         'store_name' => $this->new_file_name,
