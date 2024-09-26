@@ -132,8 +132,8 @@ class Media extends Admin_Controller
         $allowed_mime_type = array_map('trim', array_map('strtolower', explode(',', $result->image_mime)));
 
         if (isset($_FILES['files']) && !empty($_FILES['files'])) {
-            $destination_path = "uploads/gallery/media/";
-            $thumb_path       = "uploads/gallery/media/thumb/";
+            $destination_path = "media_uploads/gallery/media/";
+            $thumb_path       = "media_uploads/gallery/media/thumb/";
             $responses        = $this->imageresize->resize($_FILES["files"], $destination_path, $thumb_path, "media");
             $response_array   = array();
             if ($responses) {
