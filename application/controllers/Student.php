@@ -498,9 +498,9 @@ class Student extends Admin_Controller
                 $data_insert['admission_no'] = $this->input->post('admission_no');
             }
             if ($insert) {
-		$domain = $_SERVER['HTTP_HOST'];
-            $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
-            $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
+		            $domain = $_SERVER['HTTP_HOST'];
+                $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+                $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
                 $insert_id = $this->student_model->add($data_insert, $data_setting);
                 if (!empty($custom_value_array)) {
                     $this->customfield_model->insertRecord($custom_value_array, $insert_id);
@@ -553,8 +553,9 @@ class Student extends Admin_Controller
 
                     $fileInfo = pathinfo($_FILES["file"]["name"]);
                     $img_name = $domain . $insert_id . '.' . $fileInfo['extension'];
-		    $contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
-		    try {
+                    $fileExtension = strtolower($fileInfo['extension']);
+                $contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
+	              try {
                         $s3 = new S3Client([
                             'version' => 'latest',
                             'region'  => 'us-east-2',
@@ -569,7 +570,7 @@ class Student extends Admin_Controller
                         echo json_encode($array);
                      }
 
-		    $bucket = 'schoollift';
+                $bucket = 'schoollift';
                 $key = 'uploads/student_images/' . $img_name;
 
                 try {
@@ -609,9 +610,6 @@ class Student extends Admin_Controller
                       $errorMsg = $upload_result['error'];
                       $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                     }
-                    // move_uploaded_file($_FILES["father_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                    // $data_img = array('id' => $insert_id, 'father_pic' => 'uploads/student_images/' . $img_name);
-                    // $this->student_model->add($data_img);
                 }
                 if (isset($_FILES["mother_pic"]) && !empty($_FILES['mother_pic']['name'])) {
                     $fileInfo = pathinfo($_FILES["mother_pic"]["name"]);
@@ -627,9 +625,6 @@ class Student extends Admin_Controller
                       $errorMsg = $upload_result['error'];
                       $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                     }
-                    // move_uploaded_file($_FILES["mother_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                    // $data_img = array('id' => $insert_id, 'mother_pic' => 'uploads/student_images/' . $img_name);
-                    // $this->student_model->add($data_img);
                 }
 
                 if (isset($_FILES["guardian_pic"]) && !empty($_FILES['guardian_pic']['name'])) {
@@ -646,23 +641,15 @@ class Student extends Admin_Controller
                       $errorMsg = $upload_result['error'];
                       $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                     }
-                    // move_uploaded_file($_FILES["guardian_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
-                    // $data_img = array('id' => $insert_id, 'guardian_pic' => 'uploads/student_images/' . $img_name);
-                    // $this->student_model->add($data_img);
                 }
 
                 if (isset($_FILES["first_doc"]) && !empty($_FILES['first_doc']['name'])) {
-                    $uploaddir = './uploads/student_documents/' . $domian . $insert_id . '/';
-                    if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                        die("Error creating folder $uploaddir");
-                    }
                     $fileInfo    = pathinfo($_FILES["first_doc"]["name"]);
                     $first_title = $this->input->post('first_title');
                     $file_name   = $_FILES['first_doc']['name'];
                     $exp         = explode(' ', $file_name);
                     $imp         = implode('_', $exp);
-                    $img_name    = $uploaddir . $imp;
-                    $upload_result = upload_to_s3($_FILES["first_doc"]["tmp_name"], $fileInfo, $imp, 'uploads/student_documents/' . $domian . $insert_id . '/');
+                    $upload_result = upload_to_s3($_FILES["first_doc"]["tmp_name"], $fileInfo, $imp, 'uploads/student_documents/' . $insert_id . '/');
                     if ($upload_result['success'])
                     {
                       $imp = $upload_result['new_image_name'];
@@ -673,22 +660,14 @@ class Student extends Admin_Controller
                       $errorMsg = $upload_result['error'];
                       $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                     }
-                    // move_uploaded_file($_FILES["first_doc"]["tmp_name"], $img_name);
-                    // $data_img = array('student_id' => $insert_id, 'title' => $first_title, 'doc' => $imp);
-                    // $this->student_model->adddoc($data_img);
                 }
                 if (isset($_FILES["second_doc"]) && !empty($_FILES['second_doc']['name'])) {
-                    $uploaddir = './uploads/student_documents/' . $domain. $insert_id . '/';
-                    if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                        die("Error creating folder $uploaddir");
-                    }
                     $fileInfo     = pathinfo($_FILES["second_doc"]["name"]);
                     $second_title = $this->input->post('second_title');
                     $file_name    = $_FILES['second_doc']['name'];
                     $exp          = explode(' ', $file_name);
                     $imp          = implode('_', $exp);
-                    $img_name     = $uploaddir . $imp;
-                    $upload_result = upload_to_s3($_FILES["second_doc"]["tmp_name"], $fileInfo, $imp, 'uploads/student_documents/' . $domain. $insert_id . '/');
+                    $upload_result = upload_to_s3($_FILES["second_doc"]["tmp_name"], $fileInfo, $imp, 'uploads/student_documents/' . $insert_id . '/');
                     if ($upload_result['success'])
                     {
                       $imp = $upload_result['new_image_name'];
@@ -699,23 +678,15 @@ class Student extends Admin_Controller
                       $errorMsg = $upload_result['error'];
                       $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                     }
-                    // move_uploaded_file($_FILES["second_doc"]["tmp_name"], $img_name);
-                    // $data_img = array('student_id' => $insert_id, 'title' => $second_title, 'doc' => $imp);
-                    // $this->student_model->adddoc($data_img);
                 }
 
                 if (isset($_FILES["fourth_doc"]) && !empty($_FILES['fourth_doc']['name'])) {
-                    $uploaddir = './uploads/student_documents/' . $domain. $insert_id . '/';
-                    if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                        die("Error creating folder $uploaddir");
-                    }
                     $fileInfo     = pathinfo($_FILES["fourth_doc"]["name"]);
                     $fourth_title = $this->input->post('fourth_title');
                     $file_name    = $_FILES['fourth_doc']['name'];
                     $exp          = explode(' ', $file_name);
                     $imp          = implode('_', $exp);
-                    $img_name     = $uploaddir . $imp;
-                    $upload_result = upload_to_s3($_FILES["fourth_doc"]["tmp_name"], $fileInfo, $imp, 'uploads/student_documents/' . $domain. $insert_id . '/');
+                    $upload_result = upload_to_s3($_FILES["fourth_doc"]["tmp_name"], $fileInfo, $imp, 'uploads/student_documents/' . $insert_id . '/');
                     if ($upload_result['success'])
                     {
                       $imp = $upload_result['new_image_name'];
@@ -726,22 +697,14 @@ class Student extends Admin_Controller
                       $errorMsg = $upload_result['error'];
                       $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                     }
-                    // move_uploaded_file($_FILES["fourth_doc"]["tmp_name"], $img_name);
-                    // $data_img = array('student_id' => $insert_id, 'title' => $fourth_title, 'doc' => $imp);
-                    // $this->student_model->adddoc($data_img);
                 }
                 if (isset($_FILES["fifth_doc"]) && !empty($_FILES['fifth_doc']['name'])) {
-                    $uploaddir = './uploads/student_documents/' . $domain. $insert_id . '/';
-                    if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                        die("Error creating folder $uploaddir");
-                    }
                     $fileInfo    = pathinfo($_FILES["fifth_doc"]["name"]);
                     $fifth_title = $this->input->post('fifth_title');
                     $file_name   = $_FILES['fifth_doc']['name'];
                     $exp         = explode(' ', $file_name);
                     $imp         = implode('_', $exp);
-                    $img_name    = $uploaddir . $imp;
-                    $upload_result = upload_to_s3($_FILES["fifth_doc"]["tmp_name"], $fileInfo, $imp, 'uploads/student_documents/' . $domain. $insert_id . '/');
+                    $upload_result = upload_to_s3($_FILES["fifth_doc"]["tmp_name"], $fileInfo, $imp, 'uploads/student_documents/' . $insert_id . '/');
                     if ($upload_result['success'])
                     {
                       $imp = $upload_result['new_image_name'];
@@ -752,9 +715,6 @@ class Student extends Admin_Controller
                       $errorMsg = $upload_result['error'];
                       $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                     }
-                    // move_uploaded_file($_FILES["fifth_doc"]["tmp_name"], $img_name);
-                    // $data_img = array('student_id' => $insert_id, 'title' => $fifth_title, 'doc' => $imp);
-                    // $this->student_model->adddoc($data_img);
                 }
 
                 $sender_details = array('student_id' => $insert_id, 'contact_no' => $this->input->post('guardian_phone'), 'email' => $this->input->post('guardian_email'));
@@ -801,29 +761,19 @@ class Student extends Admin_Controller
 
             $student_id = $this->input->post('student_id');
             if (isset($_FILES["first_doc"]) && !empty($_FILES['first_doc']['name'])) {
-                $uploaddir = './uploads/student_documents/' . $domain . $student_id . '/';
-                if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                    die("Error creating folder $uploaddir");
-                }
-
                 $fileInfo    = pathinfo($_FILES["first_doc"]["name"]);
                 $first_title = $this->input->post('first_title');
                 $file_name   = $_FILES['first_doc']['name'];
                 $exp         = explode(' ', $file_name);
                 $imp         = implode('_', $exp);
                 $name        = basename($imp);
-                $img_name    = $uploaddir . $name;
-                $upload_result = upload_to_s3($_FILES["first_doc"]["tmp_name"], $fileInfo, $imp, 'uploads/student_documents/' . $domain . $student_id . '/');
+                $upload_result = upload_to_s3($_FILES["first_doc"]["tmp_name"], $fileInfo, $imp, 'uploads/student_documents/' . $student_id . '/');
                 if ($upload_result['success'])
                 {
                   $imp = $upload_result['new_image_name'];
                   $data_img = array('student_id' => $student_id, 'title' => $first_title, 'doc' => $imp);
                   $this->student_model->adddoc($data_img);
                 }
-                // else {
-                //   $errorMsg = $upload_result['error'];
-                //   $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
-                // }
             }
 
             $msg   = $this->lang->line('success_message');
@@ -1558,34 +1508,34 @@ class Student extends Admin_Controller
                 'fees_discount' => $fees_discount,
             );
             $insert_id = $this->student_model->add_student_session($data_new);
+
             if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
+                $fileInfo = pathinfo($_FILES["file"]["name"]);
+    		        $domain = $_SERVER['HTTP_HOST'];
+                $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+                $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
 
-		$fileInfo = pathinfo($_FILES["file"]["name"]);
-		$domain = $_SERVER['HTTP_HOST'];
-            $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
-            $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
+            		$img_name = $domain . $id . '.' . $fileInfo['extension'];
 
-		$img_name = $domain . $id . '.' . $fileInfo['extension'];
-                // echo $id;
-                // exit();
+                $fileExtension = strtolower($fileInfo['extension']);
 
-			  $contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
-                    try {
-                        $s3 = new S3Client([
-                            'version' => 'latest',
-                            'region'  => 'us-east-2',
-                            'credentials' => [
-                                'key'    => 'AKIAXC7XRFGT25OMXJ22',
-                                'secret' => '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',
-                            ],
-                        ]);
+                $contentType = isset($mimeTypes[$fileExtension]) ? $mimeTypes[$fileExtension] : 'application/octet-stream';
+                try {
+                    $s3 = new S3Client([
+                        'version' => 'latest',
+                        'region'  => 'us-east-2',
+                        'credentials' => [
+                            'key'    => 'AKIAXC7XRFGT25OMXJ22',
+                            'secret' => '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',
+                        ],
+                    ]);
 
-                     } catch (Exception $e) {
-                        $array = array('success' => false, 'error' => '', 'message' => 'error connecting to s3');
-                        echo json_encode($array);
-                     }
+                 } catch (Exception $e) {
+                    $array = array('success' => false, 'error' => '', 'message' => 'error connecting to s3');
+                    echo json_encode($array);
+                 }
 
-                    $bucket = 'schoollift';
+                $bucket = 'schoollift';
                 $key = 'uploads/student_images/' . $img_name;
 
                 try {
@@ -1625,7 +1575,6 @@ class Student extends Admin_Controller
                   $errorMsg = $upload_result['error'];
                   $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                 }
-                // move_uploaded_file($_FILES["father_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
 
             }
 
@@ -1643,7 +1592,6 @@ class Student extends Admin_Controller
                   $errorMsg = $upload_result['error'];
                   $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                 }
-                // move_uploaded_file($_FILES["mother_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
             }
 
             if (isset($_FILES["guardian_pic"]) && !empty($_FILES['guardian_pic']['name'])) {
@@ -1660,7 +1608,6 @@ class Student extends Admin_Controller
                   $errorMsg = $upload_result['error'];
                   $this->session->set_flashdata('msg', '<div class="alert alert-danger text-left">' . $errorMsg . '</div>');
                 }
-                // move_uploaded_file($_FILES["guardian_pic"]["tmp_name"], "./uploads/student_images/" . $img_name);
             }
 
             if (isset($siblings_counts) && ($total_siblings == $siblings_counts)) {
