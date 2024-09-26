@@ -32,7 +32,9 @@ class Student extends Admin_Controller
 
         $data['title']       = 'Student List';
         $student_result      = $this->student_model->get();
+        $sch_setting         = $this->sch_setting_detail;
         $data['studentlist'] = $student_result;
+        $data['sch_setting'] = $sch_setting;
         $this->load->view('layout/header', $data);
         $this->load->view('student/studentList', $data);
         $this->load->view('layout/footer', $data);
