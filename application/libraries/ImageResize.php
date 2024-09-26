@@ -100,6 +100,11 @@ class ImageResize {
                     mkdir($this->destination_dir, 0777, true);
                 }
 
+                if (!file_exists($this->thumbnail_destination_dir)) {
+                    // Create the directory recursively with appropriate permissions
+                    mkdir($this->thumbnail_destination_dir, 0777, true);
+                }
+
                 //upload image path
                 $upload_image = $this->destination_dir . basename($fileName);
                 //upload image
