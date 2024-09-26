@@ -158,28 +158,17 @@ class Media extends Admin_Controller
 
                 if ($validation == 1) {
                     foreach ($responses['images'] as $key => $value) {
-                        // Prepare for S3 upload
-                        $file_path = $value['dir_path'] . '/' . $value['store_name']; // Assuming dir_path is the temp directory for resized images
-                        $img_name = $this->customlib->uniqueFileName('media-', $value['store_name']);
-
-                        if ($upload_result['success']) {
-                            $data = array(
-                                'img_name'   => $value['store_name'],
-                                'file_type'  => $value['file_type'],
-                                'file_size'  => $value['file_size'],
-                                'thumb_name' => $value['store_name'],
-                                'thumb_path' => $value['thumb_path'],
-                                'dir_path'   => $value['dir_path'],
-                            );
-                            $insert_id         = $this->cms_media_model->add($data);
-                            $data['record_id'] = $insert_id;
-                            $img_array[]       = $data;
-                        } else {
-                            $response_array['status'] = 1; // Error during upload
-                            $response_array['msg'] = $upload_result['error'];
-                            echo json_encode($response_array);
-                            return;
-                        }
+                        $data = array(
+                            'img_name'   => $value['store_name'],
+                            'file_type'  => $value['file_type'],
+                            'file_size'  => $value['file_size'],
+                            'thumb_name' => $value['store_name'],
+                            'thumb_path' => $value['thumb_path'],
+                            'dir_path'   => $value['dir_path'],
+                        );
+                        $insert_id         = $this->cms_media_model->add($data);
+                        $data['record_id'] = $insert_id;
+                        $img_array[]       = $data;
                     }
                     $response_array['status'] = 0;
                     $response_array['msg']    = $this->lang->line('success_message');
@@ -205,33 +194,32 @@ class Media extends Admin_Controller
         $is_video = "0";
         if ($result->file_type == 'image/png' || $result->file_type == 'image/jpeg' || $result->file_type == 'image/jpeg' || $result->file_type == 'image/jpeg' || $result->file_type == 'image/gif') {
 
-            $file     = "https://schoollift.s3.us-east-2.amazonaws.com/" . $result->dir_path . $result->img_name;
-            $file_src = "https://schoollift.s3.us-east-2.amazonaws.com/" . $result->thumb_path . $result->img_name;
-
+            $file     = base_url() . $result->dir_path . $result->img_name;
+            $file_src = base_url() . $result->thumb_path . $result->img_name;
             $is_image = 1;
         } elseif ($result->file_type == 'video') {
-            $file     = "https://schoollift.s3.us-east-2.amazonaws.com/" . $result->thumb_path . $result->img_name;
+            $file     = base_url() . $result->thumb_path . $result->img_name;
             $file_src = $result->vid_url;
 
             $is_video = 1;
         } elseif ($result->file_type == 'text/plain') {
             $file     = base_url('backend/images/txticon.png');
-            $file_src = "https://schoollift.s3.us-east-2.amazonaws.com/" . $result->dir_path . $result->img_name;
+            $file_src = base_url() . $result->dir_path . $result->img_name;
         } elseif ($result->file_type == 'application/zip' || $result->file_type == 'application/x-rar') {
             $file     = base_url('backend/images/zipicon.png');
-            $file_src = "https://schoollift.s3.us-east-2.amazonaws.com/" . $result->dir_path . $result->img_name;
+            $file_src = base_url() . $result->dir_path . $result->img_name;
         } elseif ($result->file_type == 'application/pdf') {
             $file     = base_url('backend/images/pdficon.png');
-            $file_src = "https://schoollift.s3.us-east-2.amazonaws.com/" . $result->dir_path . $result->img_name;
+            $file_src = base_url() . $result->dir_path . $result->img_name;
         } elseif ($result->file_type == 'application/msword') {
             $file     = base_url('backend/images/wordicon.png');
-            $file_src = "https://schoollift.s3.us-east-2.amazonaws.com/" . $result->dir_path . $result->img_name;
+            $file_src = base_url() . $result->dir_path . $result->img_name;
         } elseif ($result->file_type == 'application/vnd.ms-excel') {
             $file     = base_url('backend/images/excelicon.png');
-            $file_src = "https://schoollift.s3.us-east-2.amazonaws.com/" . $result->dir_path . $result->img_name;
+            $file_src = base_url() . $result->dir_path . $result->img_name;
         } else {
             $file     = base_url('backend/images/docicon.png');
-            $file_src = b"https://schoollift.s3.us-east-2.amazonaws.com/" . $result->dir_path . $result->img_name;
+            $file_src = base_url() . $result->dir_path . $result->img_name;
         }
 //==============
         $output = '';

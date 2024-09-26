@@ -88,75 +88,71 @@ class ImageResize {
 
                 $filename_err = explode(".", $this->new_file_name);
                 $file_ext = mime_content_type($this->file_data['tmp_name'][$x]);
-                $fileName = $this->new_file_name;
+                $domain = $_SERVER['HTTP_HOST'];
+                $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+                $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
+
+                $fileName = $domain . '.' . $this->new_file_name;
                 //upload image path
                 $upload_image = $this->destination_dir . basename($fileName);
                 //upload image
-                // $upload_result = $this->upload_to_s3($upload_image, $this->new_file_name);
-                $upload_result = upload_to_s3($this->curr_tmp_name, pathinfo($this->file_data['name'][$x]), $fileName, $this->destination_dir);
-                // if (move_uploaded_file($this->curr_tmp_name, $upload_image)) {
-                if ($upload_result['success']) {
+                if (move_uploaded_file($this->curr_tmp_name, $upload_image)) {
+                    //thumbnail creation
+                    $this->image_size_info = filesize($this->curr_tmp_name);
 
-                    $thumbnail_upload_result = upload_to_s3($this->curr_tmp_name, pathinfo($this->file_data['name'][$x]), $fileName, $this->thumbnail_destination_dir);
-                    if ($thumbnail_upload_result['success']) {
-                        $new_image_name = $thumbnail_upload_result['new_image_name'];
-                        //thumbnail creation
-                        $this->image_size_info = filesize($this->curr_tmp_name);
+                    $img_array = array(
+                        'store_name' => $this->new_file_name,
+                        'file_type' => $file_ext,
+                        'file_size' => $this->image_size_info,
+                        'thumb_name' => $this->new_file_name,
+                        'thumb_path' => $this->thumbnail_destination_dir,
+                        'dir_path' => $this->destination_dir,
+                        'height' => 0,
+                        'width' => 0,
+                    );
 
-                        $img_array = array(
-                            'store_name' => $new_image_name,
-                            'file_type' => $file_ext,
-                            'file_size' => $this->image_size_info,
-                            'thumb_name' => $new_image_name,
-                            'thumb_path' => $this->thumbnail_destination_dir,
-                            'dir_path' => $this->destination_dir,
-                            'height' => 0,
-                            'width' => 0,
-                        );
+                    if ($this->generate_thumbnails) {
+                        if ($file_ext == 'image/jpeg' || $file_ext == 'image/png' || $file_ext == 'image/gif') {
+                            $thumbnail = $this->thumbnail_destination_dir . $fileName;
+                            list($width, $height) = getimagesize($upload_image);
+                            $img_array['height'] = $height;
+                            $img_array['width'] = $width;
+                            $thumb_width = $this->thumbnail_size;
+                            $thumb_height = $this->thumbnail_size;
+                            $thumb_create = imagecreatetruecolor($thumb_width, $thumb_height);
 
-                        if ($this->generate_thumbnails) {
-                            if ($file_ext == 'image/jpeg' || $file_ext == 'image/png' || $file_ext == 'image/gif') {
-                                $thumbnail = $this->thumbnail_destination_dir . $fileName;
-                                list($width, $height) = getimagesize("https://schoollift.s3.us-east-2.amazonaws.com/" . $upload_image);
-                                $img_array['height'] = $height;
-                                $img_array['width'] = $width;
-                                $thumb_width = $this->thumbnail_size;
-                                $thumb_height = $this->thumbnail_size;
-                                $thumb_create = imagecreatetruecolor($thumb_width, $thumb_height);
+                            switch ($file_ext) {
+                                case 'image/jpeg':
+                                    $source = imagecreatefromjpeg($upload_image);
+                                    break;
+                                case 'image/png':
+                                    $source = imagecreatefrompng($upload_image);
+                                    break;
+                                case 'image/gif':
+                                    $source = imagecreatefromgif($upload_image);
+                                    break;
+                                default:
 
-                                switch ($file_ext) {
-                                    case 'image/jpeg':
-                                        $source = imagecreatefromjpeg($upload_image);
-                                        break;
-                                    case 'image/png':
-                                        $source = imagecreatefrompng($upload_image);
-                                        break;
-                                    case 'image/gif':
-                                        $source = imagecreatefromgif($upload_image);
-                                        break;
-                                    default:
+                            }
 
-                                }
+                            imagecopyresized($thumb_create, $source, 0, 0, 0, 0, $thumb_width, $thumb_height, $width, $height);
+                            switch ($file_ext) {
+                                case 'image/jpeg':
+                                    imagejpeg($thumb_create, $thumbnail, 100);
+                                    break;
+                                case 'image/png':
+                                    imagepng($thumb_create, $thumbnail, 9);
+                                    break;
 
-                                imagecopyresized($thumb_create, $source, 0, 0, 0, 0, $thumb_width, $thumb_height, $width, $height);
-                                switch ($file_ext) {
-                                    case 'image/jpeg':
-                                        imagejpeg($thumb_create, $thumbnail, 100);
-                                        break;
-                                    case 'image/png':
-                                        imagepng($thumb_create, $thumbnail, 9);
-                                        break;
+                                case 'image/gif':
+                                    imagegif($thumb_create, $thumbnail, 100);
+                                    break;
+                                default:
 
-                                    case 'image/gif':
-                                        imagegif($thumb_create, $thumbnail, 100);
-                                        break;
-                                    default:
-
-                                }
                             }
                         }
-                        $this->resized_response[] = $img_array;
                     }
+                    $this->resized_response[] = $img_array;
                 }
 
                 //=========
@@ -246,7 +242,6 @@ class ImageResize {
                 return false;
         }
     }
-
 
     //get image info
     private function get_image_info() {
