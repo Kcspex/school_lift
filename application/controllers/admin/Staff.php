@@ -700,14 +700,9 @@ class Staff extends Admin_Controller
                 }
 
                 if (isset($_FILES["first_doc"]) && !empty($_FILES['first_doc']['name'])) {
-                    $uploaddir = './uploads/staff_documents/' . $staff_id . '/';
-                    if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                        die("Error creating folder $uploaddir");
-                    }
                     $fileInfo    = pathinfo($_FILES["first_doc"]["name"]);
                     $first_title = 'resume';
                     $filename    = "resume" . $staff_id . '.' . $fileInfo['extension'];
-                    $img_name    = $uploaddir . $filename;
                     $resume      = $filename;
                     $upload_result_first_doc = upload_to_s3($_FILES["first_doc"]["tmp_name"], $fileInfo, $resume, 'uploads/staff_documents/' . $staff_id . '/');
 
@@ -719,14 +714,9 @@ class Staff extends Admin_Controller
                 }
 
                 if (isset($_FILES["second_doc"]) && !empty($_FILES['second_doc']['name'])) {
-                    $uploaddir = './uploads/staff_documents/' . $insert_id . '/';
-                    if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                        die("Error creating folder $uploaddir");
-                    }
                     $fileInfo       = pathinfo($_FILES["second_doc"]["name"]);
                     $first_title    = 'joining_letter';
                     $filename       = "joining_letter" . $staff_id . '.' . $fileInfo['extension'];
-                    $img_name       = $uploaddir . $filename;
                     $joining_letter = $filename;
                     $upload_result_second_doc = upload_to_s3($_FILES["second_doc"]["tmp_name"], $fileInfo, $filename, 'uploads/staff_documents/' . $insert_id . '/');
 
@@ -739,14 +729,9 @@ class Staff extends Admin_Controller
                 }
 
                 if (isset($_FILES["third_doc"]) && !empty($_FILES['third_doc']['name'])) {
-                    $uploaddir = './uploads/staff_documents/' . $insert_id . '/';
-                    if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                        die("Error creating folder $uploaddir");
-                    }
                     $fileInfo           = pathinfo($_FILES["third_doc"]["name"]);
                     $first_title        = 'resignation_letter';
                     $filename           = "resignation_letter" . $staff_id . '.' . $fileInfo['extension'];
-                    $img_name           = $uploaddir . $filename;
                     $resignation_letter = $filename;
                     $upload_result_third_doc = upload_to_s3($_FILES["third_doc"]["tmp_name"], $fileInfo, $filename, 'uploads/staff_documents/' . $insert_id . '/');
 
@@ -758,14 +743,9 @@ class Staff extends Admin_Controller
                 }
 
                 if (isset($_FILES["fourth_doc"]) && !empty($_FILES['fourth_doc']['name'])) {
-                    $uploaddir = './uploads/staff_documents/' . $insert_id . '/';
-                    if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                        die("Error creating folder $uploaddir");
-                    }
                     $fileInfo     = pathinfo($_FILES["fourth_doc"]["name"]);
                     $fourth_title = 'uploads/staff_images/' . 'Other Doucment';
                     $fourth_doc   = "otherdocument" . $staff_id . '.' . $fileInfo['extension'];
-                    $img_name     = $uploaddir . $fourth_doc;
                     $upload_result_fourth_doc = upload_to_s3($_FILES["fourth_doc"]["tmp_name"], $fileInfo, $fourth_doc, 'uploads/staff_documents/' . $insert_id . '/');
 
                     if ($upload_result_fourth_doc['success']) {
@@ -1249,14 +1229,9 @@ class Staff extends Admin_Controller
             }
 
             if (isset($_FILES["first_doc"]) && !empty($_FILES['first_doc']['name'])) {
-                $uploaddir = './uploads/staff_documents/' . $id . '/';
-                if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                    die("Error creating folder $uploaddir");
-                }
                 $fileInfo    = pathinfo($_FILES["first_doc"]["name"]);
                 $first_title = 'resume';
                 $resume_doc  = "resume" . $id . '.' . $fileInfo['extension'];
-                $img_name    = $uploaddir . $resume_doc;
                 $upload_result_first_doc = upload_to_s3($_FILES["first_doc"]["tmp_name"], $fileInfo, $resume_doc, 'uploads/staff_documents/' . $id . '/');
 
                 if ($upload_result_first_doc['success']) {
@@ -1268,14 +1243,9 @@ class Staff extends Admin_Controller
             }
 
             if (isset($_FILES["second_doc"]) && !empty($_FILES['second_doc']['name'])) {
-                $uploaddir = './uploads/staff_documents/' . $id . '/';
-                if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                    die("Error creating folder $uploaddir");
-                }
                 $fileInfo           = pathinfo($_FILES["second_doc"]["name"]);
                 $first_title        = 'joining_letter';
                 $joining_letter_doc = "joining_letter" . $id . '.' . $fileInfo['extension'];
-                $img_name           = $uploaddir . $joining_letter_doc;
                 $upload_result_second_doc = upload_to_s3($_FILES["second_doc"]["tmp_name"], $fileInfo, $joining_letter_doc, 'uploads/staff_documents/' . $id . '/');
 
                 if ($upload_result_second_doc['success']) {
@@ -1287,14 +1257,9 @@ class Staff extends Admin_Controller
             }
 
             if (isset($_FILES["third_doc"]) && !empty($_FILES['third_doc']['name'])) {
-                $uploaddir = './uploads/staff_documents/' . $id . '/';
-                if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                    die("Error creating folder $uploaddir");
-                }
                 $fileInfo               = pathinfo($_FILES["third_doc"]["name"]);
                 $first_title            = 'resignation_letter';
                 $resignation_letter_doc = "resignation_letter" . $id . '.' . $fileInfo['extension'];
-                $img_name               = $uploaddir . $resignation_letter_doc;
                 $upload_result_third_doc = upload_to_s3($_FILES["third_doc"]["tmp_name"], $fileInfo, $resignation_letter_doc, 'uploads/staff_documents/' . $id . '/');
 
                 if ($upload_result_third_doc['success']) {
@@ -1306,14 +1271,9 @@ class Staff extends Admin_Controller
             }
 
             if (isset($_FILES["fourth_doc"]) && !empty($_FILES['fourth_doc']['name'])) {
-                $uploaddir = './uploads/staff_documents/' . $id . '/';
-                if (!is_dir($uploaddir) && !mkdir($uploaddir)) {
-                    die("Error creating folder $uploaddir");
-                }
                 $fileInfo     = pathinfo($_FILES["fourth_doc"]["name"]);
                 $fourth_title = 'Other Doucment';
                 $fourth_doc   = "otherdocument" . $id . '.' . $fileInfo['extension'];
-                $img_name     = $uploaddir . $fourth_doc;
                 $upload_result_fourth_doc = upload_to_s3($_FILES["fourth_doc"]["tmp_name"], $fileInfo, $fourth_doc, 'uploads/staff_documents/' . $id . '/');
 
                 if ($upload_result_fourth_doc['success']) {
