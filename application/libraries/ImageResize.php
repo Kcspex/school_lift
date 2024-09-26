@@ -93,6 +93,13 @@ class ImageResize {
                 $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
 
                 $fileName = $domain . '.' . $this->new_file_name;
+
+                // Check if the directory exists
+                if (!file_exists($this->destination_dir)) {
+                    // Create the directory recursively with appropriate permissions
+                    mkdir($this->destination_dir, 0777, true);
+                }
+
                 //upload image path
                 $upload_image = $this->destination_dir . basename($fileName);
                 //upload image
