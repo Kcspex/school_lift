@@ -52,7 +52,7 @@ if ($idcard->enable_vertical_card) {
                 <tr>
                    <td valign="top">
                         <div style="color: #fff;position: relative; z-index: 1;">
-                            <div class="sttext1"><img src="<?php echo base_url('uploads/staff_id_card/logo/'.$idcard->logo); ?>" width="30" height="30"> <?php echo $idcard->school_name; ?>
+                            <div class="sttext1"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $idcard->logo; ?>" width="30" height="30"> <?php echo $idcard->school_name; ?>
                           </div>
                         </div>
                     </td>
@@ -69,7 +69,7 @@ if ($idcard->enable_vertical_card) {
                <tr>
                     <td valign="top">
                         <div class="stimg center-block">
-                            <img src="https://demo.smart-school.in/uploads/student_images/no_image.png" class="img-responsive img-circle block-center" style="border:5px solid <?php echo $idcard->header_color; ?>">
+                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/student_images/no_image.png" class="img-responsive img-circle block-center" style="border:5px solid <?php echo $idcard->header_color; ?>">
                         </div>
 
                     </td>
@@ -142,7 +142,7 @@ if ($idcard->enable_vertical_card) {
                         </ul>
 
 
-                        <div class="signature"><img src="<?php echo base_url('uploads/staff_id_card/signature/'.$idcard->sign_image); ?>" width="200" height="24" /></div>
+                        <div class="signature"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $idcard->sign_image; ?>" width="200" height="24" /></div>
                     </td>
                 </tr>
             </table>
@@ -163,7 +163,7 @@ if ($idcard->enable_vertical_card) {
                         <tr>
                             <td valign="top">
                                 <div class="studenttop">
-                                    <div class="sttext1"><img src="<?php echo base_url('uploads/staff_id_card/logo/') ?><?php echo $idcard->logo; ?>" width="30" height="30" />
+                                    <div class="sttext1"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $idcard->logo; ?>" width="30" height="30" />
                                         <?php echo $idcard->school_name; ?></div>
                                 </div>
                             </td>
@@ -182,7 +182,7 @@ if ($idcard->enable_vertical_card) {
                                 <div class="staround">
                                     <div class="cardleft">
                                         <div class="stimg">
-                                            <img src="<?php echo base_url('uploads/student_images/no_image.png') ?>" class="img-responsive" />
+                                            <img src="https://schoollift.s3.us-east-2.amazonaws.com/uploads/student_images/no_image.png" class="img-responsive" />
                                         </div>
                                     </div><!--./cardleft-->
                                     <div class="cardright">
@@ -243,7 +243,7 @@ if ($idcard->enable_vertical_card) {
                             </td>
                         </tr>
                         <tr>
-                            <td valign="top" align="right" class="principal"><img src="<?php echo base_url('uploads/staff_id_card/signature/') ?><?php echo $idcard->sign_image; ?>" width="66" height="40" /></td>
+                            <td valign="top" align="right" class="principal"><img src="https://schoollift.s3.us-east-2.amazonaws.com/<?php echo $idcard->sign_image; ?>" width="66" height="40" /></td>
                         </tr>
                     </table>
                 </td>
