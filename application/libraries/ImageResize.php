@@ -92,7 +92,7 @@ class ImageResize {
                 $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
                 $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
 
-                $fileName = $domain . '.' . $this->new_file_name;
+                $fileName = $domain . '_' . $this->new_file_name;
 
                 // Check if the directory exists
                 if (!file_exists($this->destination_dir)) {
@@ -113,10 +113,10 @@ class ImageResize {
                     $this->image_size_info = filesize($upload_image);
 
                     $img_array = array(
-                        'store_name' => $this->new_file_name,
+                        'store_name' => $fileName,
                         'file_type' => $file_ext,
                         'file_size' => $this->image_size_info,
-                        'thumb_name' => $this->new_file_name,
+                        'thumb_name' => $fileName,
                         'thumb_path' => $this->thumbnail_destination_dir,
                         'dir_path' => $this->destination_dir,
                         'height' => 0,
@@ -189,13 +189,16 @@ class ImageResize {
                 if (is_uploaded_file($this->curr_tmp_name)) {
                     $this->curr_tmp_name = $this->file_data['tmp_name'][$x];
                     $this->get_image_info();
+                    $domain = $_SERVER['HTTP_HOST'];
+                    $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+                    $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
 
                     if ($this->random_file_name && !empty($this->unique_rnd_name)) {
-                        $this->new_file_name = $this->thumbnail_prefix . $this->unique_rnd_name[$x];
+                        $this->new_file_name = $domain . '_' . $this->thumbnail_prefix . $this->unique_rnd_name[$x];
                     } else if ($this->random_file_name) {
-                        $this->new_file_name = $this->thumbnail_prefix . uniqid() . $this->get_extension();
+                        $this->new_file_name = $domain . '_' . $this->thumbnail_prefix . uniqid() . $this->get_extension();
                     } else {
-                        $this->new_file_name = $this->thumbnail_prefix . $this->file_data['name'][$x];
+                        $this->new_file_name = $domain . '_' . $this->thumbnail_prefix . $this->file_data['name'][$x];
                     }
 
                     $this->image_res = $this->get_image_resource();
@@ -330,7 +333,22 @@ class ImageResize {
             ),
         );
 
-        $filename = uniqid() . $file_extenstion;
+        // Check if the directory exists
+        if (!file_exists($destination_path)) {
+            // Create the directory recursively with appropriate permissions
+            mkdir($destination_path, 0777, true);
+        }
+
+        if (!file_exists($thumb_path)) {
+            // Create the directory recursively with appropriate permissions
+            mkdir($thumb_path, 0777, true);
+        }
+
+        $domain = $_SERVER['HTTP_HOST'];
+        $full_domain = preg_replace('/^www\./i', '', $domain); // Remove "www." if it exists
+        $domain = preg_replace('/\.(com\.ng|com|ng|org\.ng|org)$/i', '', $full_domain); // Remove common extensions
+
+        $filename = $domain . "_" . uniqid() . $file_extenstion;
 
         if (copy($image, $destination_path . '/' . $filename, stream_context_create($contextOptions))) {
             $this->videoThumbnail($destination_path . '/' . $filename, $thumb_path . '/' . $filename);
