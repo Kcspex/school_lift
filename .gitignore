@@ -1,1 +1,5 @@
 application/controllers/Schsettings.php
+db/
+database/
+backup/
+vendor/
