@@ -453,7 +453,7 @@ class Student_model extends MY_Model
         $this->datatables->join('categories', 'students.category_id = categories.id', 'left');
         $this->datatables->join('school_houses', 'students.school_house_id = school_houses.id', 'left');
         $this->datatables->group_start();
-        $this->datatables->or_like_string('students.firstname,students.middlename,students.lastname,school_houses.house_name,students.guardian_name,students.adhar_no,students.samagra_id,students.roll_no,students.admission_no,students.mobileno,students.email,students.religion,students.cast,students.gender,students.current_address,students.permanent_address,students.blood_group,students.bank_name,students.ifsc_code,students.father_name,students.father_phone,students.father_occupation,students.mother_name,students.mother_phone,students.mother_occupation,students.guardian_name,students.guardian_relation,students.guardian_phone,students.guardian_occupation,students.guardian_address,students.guardian_email,students.previous_school,students.note', $searchterm); 
+        $this->datatables->or_like_string('students.firstname,students.middlename,students.lastname,school_houses.house_name,students.guardian_name,students.adhar_no,students.samagra_id,students.roll_no,students.admission_no,students.mobileno,students.email,students.religion,students.cast,students.gender,students.current_address,students.permanent_address,students.blood_group,students.bank_name,students.ifsc_code,students.father_name,students.father_phone,students.father_occupation,students.mother_name,students.mother_phone,students.mother_occupation,students.guardian_name,students.guardian_relation,students.guardian_phone,students.guardian_occupation,students.guardian_address,students.guardian_email,students.previous_school,students.note', $searchterm);
         $this->datatables->group_end();
         $this->datatables->where('student_session.session_id', $this->current_session);
         $this->datatables->where('students.is_active', 'yes');
@@ -502,7 +502,7 @@ class Student_model extends MY_Model
         return $query->result_array();
     }
 
-    
+
 
     public function searchByClassSectionWithoutCurrent($class_id = null, $section_id = null, $student_id = null)
     {
@@ -527,11 +527,11 @@ class Student_model extends MY_Model
         return $query->result_array();
     }
 
-   
+
 
     public function searchdatatableByClassSectionCategoryGenderRte($class_id = null, $section_id = null
         , $category = null, $gender = null, $rte = null) {
-       
+
         if ($class_id != null) {
             $this->datatables->where('student_session.class_id', $class_id);
         }
@@ -547,9 +547,9 @@ class Student_model extends MY_Model
         if ($rte != null) {
             $this->datatables->where('students.rte', $rte);
         }
-      
+
          $this->datatables->select('classes.id AS `class_id`,student_session.id as student_session_id,students.id,classes.class,sections.id AS `section_id`,sections.section,students.id,students.admission_no , students.roll_no,students.admission_date,students.firstname,students.middlename,  students.lastname,students.image,    students.mobileno, students.email ,students.state ,   students.city , students.pincode ,     students.religion,     students.dob ,students.current_address,    students.permanent_address,students.category_id, categories.category,   students.adhar_no,students.samagra_id,students.bank_account_no,students.bank_name, students.ifsc_code , students.guardian_name , students.guardian_relation,students.guardian_phone,students.guardian_address,students.is_active ,students.created_at ,students.updated_at,students.father_name,students.rte,students.gender')
-        
+
         ->searchable('sections.section,students.admission_no,students.firstname,students.father_name,students.dob,students.gender,categories.category,students.mobileno,students.samagra_id,students.adhar_no,students.rte')
         ->orderable('sections.section,students.admission_no,students.firstname,students.father_name,students.dob,students.gender,categories.category,students.mobileno,students.samagra_id,students.adhar_no,students.rte')
         ->join('student_session', 'student_session.student_id = students.id')
@@ -563,7 +563,7 @@ class Student_model extends MY_Model
         return $this->datatables->generate('json');
     }
 
- 
+
 
 
     public function searchFullText($searchterm, $carray = null)
@@ -583,7 +583,7 @@ class Student_model extends MY_Model
                 $this->db->join('custom_field_values as ' . $tb_counter, 'students.id = ' . $tb_counter . '.belong_table_id AND ' . $tb_counter . '.custom_field_id = ' . $custom_fields_value->id, 'left');
                 array_push($field_var_array_name,'table_custom_' . $i . '.field_value');
                 $i++;
-               
+
             }
         }
 
@@ -611,7 +611,7 @@ class Student_model extends MY_Model
         $this->datatables->join('categories', 'students.category_id = categories.id', 'left');
         $this->datatables->join('school_houses', 'students.school_house_id = school_houses.id', 'left');
         $this->datatables->group_start();
-        $this->datatables->or_like_string('students.firstname,students.middlename,students.lastname,school_houses.house_name,students.guardian_name,students.adhar_no,students.samagra_id,students.roll_no,students.admission_no,students.mobileno,students.email,students.religion,students.cast,students.gender,students.current_address,students.permanent_address,students.blood_group,students.bank_name,students.ifsc_code,students.father_name,students.father_phone,students.father_occupation,students.mother_name,students.mother_phone,students.mother_occupation,students.guardian_name,students.guardian_relation,students.guardian_phone,students.guardian_occupation,students.guardian_address,students.guardian_email,students.previous_school,students.note', $searchterm); 
+        $this->datatables->or_like_string('students.firstname,students.middlename,students.lastname,school_houses.house_name,students.guardian_name,students.adhar_no,students.samagra_id,students.roll_no,students.admission_no,students.mobileno,students.email,students.religion,students.cast,students.gender,students.current_address,students.permanent_address,students.blood_group,students.bank_name,students.ifsc_code,students.father_name,students.father_phone,students.father_occupation,students.mother_name,students.mother_phone,students.mother_occupation,students.guardian_name,students.guardian_relation,students.guardian_phone,students.guardian_occupation,students.guardian_address,students.guardian_email,students.previous_school,students.note', $searchterm);
         $this->datatables->group_end();
         $this->datatables->where('student_session.session_id', $this->current_session);
         $this->datatables->where('students.is_active', 'yes');
@@ -620,7 +620,7 @@ class Student_model extends MY_Model
         $this->datatables->sort('students.id');
         $this->datatables->from('students');
         return $this->datatables->generate('json');
-       
+
     }
 
     public function searchusersbyFullText($searchterm, $carray = null)
@@ -736,7 +736,7 @@ class Student_model extends MY_Model
             $this->datatables->where($condition);
         }
 
-      
+
         /*----------------------------------------*/
         $this->datatables->select('classes.id AS `class_id`,students.id,classes.class,sections.id AS `section_id`,sections.section,students.id,students.admission_no , students.roll_no,students.admission_date,students.firstname,students.middlename,  students.lastname,students.image,    students.mobileno, students.email ,students.state ,   students.city , students.pincode ,     students.religion,     students.dob ,students.current_address,    students.permanent_address,IFNULL(students.category_id, 0) as `category_id`,IFNULL(categories.category, "") as `category`,      students.adhar_no,students.samagra_id,students.bank_account_no,students.bank_name, students.ifsc_code ,students.father_name , students.guardian_name , students.guardian_relation,students.guardian_phone,students.guardian_address,students.is_active ,students.created_at ,students.updated_at,students.gender,students.rte,student_session.session_id,' . $field_variable);
          $this->datatables->searchable('admission_no,students.firstname,classes.class,students.father_name,students.dob,students.admission_date,students.gender,categories.category,student.mobileno');
@@ -749,13 +749,13 @@ class Student_model extends MY_Model
         $this->datatables->where('students.is_active', 'yes');
 
         $this->datatables->group_start();
-        $this->datatables->or_like_string('students.firstname,students.lastname,students.guardian_name,students.adhar_no,students.samagra_id,students.roll_no,students.admission_no', $searchterm); 
+        $this->datatables->or_like_string('students.firstname,students.lastname,students.guardian_name,students.adhar_no,students.samagra_id,students.roll_no,students.admission_no', $searchterm);
         $this->datatables->group_end();
-        
+
         $this->datatables->sort('students.id');
         $this->datatables->from('students');
         return $this->datatables->generate('json');
-      
+
     }
 
     public function student_ratio()
@@ -831,7 +831,7 @@ class Student_model extends MY_Model
         return $query->result_array();
     }
 
-  
+
     public function sibling_reportsearch($searchterm, $carray = null, $condition = null)
     {
 
@@ -876,7 +876,7 @@ class Student_model extends MY_Model
         return $query->result_array();
     }
 
-     
+
     public function getStudentListBYStudentsessionID($array)
     {
         $array = implode(',', $array);
@@ -1274,7 +1274,7 @@ class Student_model extends MY_Model
         return $query->row_array();
     }
 
-    
+
 
     public function searchdatatablebyAdmissionDetails($class_id, $year)
     {
@@ -1294,7 +1294,7 @@ class Student_model extends MY_Model
         ->join('sessions', 'student_session.session_id = sessions.id')
         ->where($data)
         ->group_by('students.id')
-        ->orderable('students.admission_no,students.firstname,students.admission_date," "," "," ",students.mobileno,students.guardian_name,students.guardian_phone')           
+        ->orderable('students.admission_no,students.firstname,students.admission_date," "," "," ",students.mobileno,students.guardian_name,students.guardian_phone')
         ->sort('students.id')
         ->from('students');
         return $this->datatables->generate('json');
@@ -1497,6 +1497,44 @@ class Student_model extends MY_Model
         //SELECT `students`.`firstname`, `students`.`id`, `students`.`lastname`, `students`.`image`, `student_session`.`section_id` FROM `students` JOIN `student_session` ON `students`.`id` = `student_session`.`student_id` WHERE `student_session`.`class_id` = '1' AND `student_session`.`session_id` = '14' AND `students`.`is_active` = 'yes'
     }
 
+    // public function getStudentsByArray($array)
+    // {
+    //     $i             = 1;
+    //     $custom_fields = $this->customfield_model->get_custom_fields('students');
+    //
+    //     $field_var_array = array();
+    //     if (!empty($custom_fields)) {
+    //         foreach ($custom_fields as $custom_fields_key => $custom_fields_value) {
+    //             $tb_counter = "table_custom_" . $i;
+    //
+    //             // Sanitize custom field name
+    //             $field_name = preg_replace('/[^a-zA-Z0-9_]/', '_', $custom_fields_value->name);
+    //
+    //             array_push($field_var_array, "`{$tb_counter}`.`field_value` as `{$field_name}`");
+    //             $this->db->join("`custom_field_values` as `{$tb_counter}`", "`students`.`id` = `{$tb_counter}`.`belong_table_id` AND `{$tb_counter}`.`custom_field_id` = {$custom_fields_value->id}", 'left');
+    //             $i++;
+    //         }
+    //     }
+    //
+    //     $field_variable = implode(',', $field_var_array);
+    //
+    //     $this->db->select('classes.id AS `class_id`, student_session.id as student_session_id, students.id, classes.class, sections.id AS `section_id`, sections.section, students.id, students.admission_no, students.roll_no, students.admission_date, students.firstname, students.middlename, students.lastname, students.image, students.mobileno, students.email, students.state, students.city, students.pincode, students.religion, students.dob, students.current_address, students.blood_group, students.permanent_address, IFNULL(students.category_id, 0) as `category_id`, IFNULL(categories.category, "") as `category`, students.adhar_no, students.samagra_id, students.bank_account_no, students.cast, students.bank_name, students.ifsc_code, students.guardian_name, students.guardian_relation, students.guardian_phone, students.guardian_address, students.is_active, students.created_at, students.mother_name, students.updated_at, students.father_name, students.rte, students.gender, users.id as `user_tbl_id`, users.username, users.password as `user_tbl_password`, users.is_active as `user_tbl_active`, ' . $field_variable)
+    //         ->from('students')
+    //         ->join('student_session', 'student_session.student_id = students.id')
+    //         ->join('classes', 'student_session.class_id = classes.id')
+    //         ->join('sections', 'sections.id = student_session.section_id')
+    //         ->join('categories', 'students.category_id = categories.id', 'left')
+    //         ->join('users', 'users.user_id = students.id', 'left')
+    //         ->where('student_session.session_id', $this->current_session)
+    //         ->where('users.role', 'student')
+    //         ->where_in('students.id', $array)
+    //         ->order_by('students.id');
+    //
+    //     $query = $this->db->get();
+    //     return $query->result();
+    // }
+
+
     public function getStudentsByArray($array)
     {
         $i             = 1;
@@ -1506,7 +1544,9 @@ class Student_model extends MY_Model
         if (!empty($custom_fields)) {
             foreach ($custom_fields as $custom_fields_key => $custom_fields_value) {
                 $tb_counter = "table_custom_" . $i;
-                array_push($field_var_array, 'table_custom_' . $i . '.field_value as ' . $custom_fields_value->name);
+                // Sanitize custom field name
+                $field_name = preg_replace('/[^a-zA-Z0-9_]/', '_', $custom_fields_value->name);
+                array_push($field_var_array, 'table_custom_' . $i . '.field_value as ' . $field_name);
                 $this->db->join('custom_field_values as ' . $tb_counter, 'students.id = ' . $tb_counter . '.belong_table_id AND ' . $tb_counter . '.custom_field_id = ' . $custom_fields_value->id, 'left');
                 $i++;
             }
@@ -1869,7 +1909,7 @@ class Student_model extends MY_Model
 
             }
         }
-        
+
         $field_variable = implode(',', $field_var_array);
         $field_name = implode(',', $field_var_array_name);
 
@@ -1892,7 +1932,7 @@ class Student_model extends MY_Model
             ->orderable('students.admission_no,students.firstname,classes.class,students.father_name,students.dob,students.gender,categories.category,students.mobileno,'.$field_name)
             ->from('students');
 
-        
+
         $this->datatables->sort('students.admission_no', 'asc');
         return $this->datatables->generate('json');
 
