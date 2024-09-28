@@ -263,8 +263,7 @@ $currency_symbol = $this->customlib->getSchoolCurrencyFormat();
                     success: function (response) {
 
                         Popup(response.page);
-                    }
-
+                    },
                     error: function (xhr, status, error) {
                         console.log("Error Details:", xhr.responseText);  // This will log the full error message
                         console.log("Status:", status);
